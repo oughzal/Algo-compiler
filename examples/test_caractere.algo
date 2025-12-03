@@ -10,8 +10,8 @@ variables
 début
     // Test 1: Affectation de caractères
     écrire("=== Test 1: Affectation de caractères ===")
-    c1 := 'A'
-    c2 := 'z'
+    c1 = 'A'
+    c2 = 'z'
     écrire("c1 =", c1)
     écrire("c2 =", c2)
     écrire("")
@@ -25,21 +25,21 @@ début
 
     // Test 3: Caractères spéciaux avec échappement
     écrire("=== Test 3: Caractères spéciaux ===")
-    c1 := '\n'
+    c1 = '\n'
     écrire("Caractère nouvelle ligne (affiché comme code)")
-    c1 := '\t'
+    c1 = '\t'
     écrire("Caractère tabulation (affiché comme code)")
-    c1 := '\''
+    c1 = '\''
     écrire("Apostrophe:", c1)
     écrire("")
 
     // Test 4: Tableau de caractères
     écrire("=== Test 4: Tableau de caractères ===")
-    lettres[0] := 'H'
-    lettres[1] := 'e'
-    lettres[2] := 'l'
-    lettres[3] := 'l'
-    lettres[4] := 'o'
+    lettres[0] = 'H'
+    lettres[1] = 'e'
+    lettres[2] = 'l'
+    lettres[3] = 'l'
+    lettres[4] = 'o'
 
     écrire("Lettres dans le tableau:")
     pour i de 0 à 4 faire
@@ -49,22 +49,22 @@ début
 
     // Test 5: Concaténation avec chaînes
     écrire("=== Test 5: Concaténation ===")
-    c1 := 'A'
-    nom := "lice"
+    c1 = 'A'
+    nom = "lice"
     écrire("Nom complet:", c1, nom)
     écrire("")
 
     // Test 6: Comparaison de caractères
     écrire("=== Test 6: Comparaison ===")
-    c1 := 'A'
-    c2 := 'B'
+    c1 = 'A'
+    c2 = 'B'
     si c1 < c2 alors
         écrire("'A' est avant 'B' dans l'alphabet")
     finsi
 
-    c1 := 'X'
-    c2 := 'X'
-    si c1 = c2 alors
+    c1 = 'X'
+    c2 = 'X'
+    si c1 == c2 alors
         écrire("'X' est égal à 'X'")
     finsi
 

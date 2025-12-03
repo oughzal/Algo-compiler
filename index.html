@@ -23,7 +23,7 @@
                     <li><a href="#install">Installation</a></li>
                     <li><a href="#docs">Documentation</a></li>
                     <li><a href="#examples">Exemples</a></li>
-                    <li><a href="https://github.com/algo-compiler/algo-compiler" target="_blank" class="btn-primary">GitHub</a></li>
+                    <li><a href="https://github.com/oughzal/algo-compiler" target="_blank" class="btn-primary">GitHub</a></li>
                 </ul>
             </div>
         </nav>
@@ -114,7 +114,7 @@ fin</code></pre>
                 <div class="feature-card">
                     <div class="feature-icon">🛠️</div>
                     <h3>Extension VS Code</h3>
-                    <p>Coloration syntaxique, snippets, exécution directe avec Ctrl+Shift+R.</p>
+                    <p>Disponible sur le VS Marketplace (publisher: omarcomputer). Coloration syntaxique, 30+ snippets, exécution directe avec Ctrl+Shift+R.</p>
                 </div>
             </div>
         </div>
@@ -307,9 +307,14 @@ cd algo-compiler</code></pre>
             <div class="install-vscode">
                 <h3>📦 Extension VS Code</h3>
                 <p>Installez l'extension pour une expérience complète :</p>
-                <pre><code>cd algo-compiler-vscode
-.\install.ps1</code></pre>
-                <p>Ou installez manuellement le fichier <code>algo-compiler-1.3.0.vsix</code> dans VS Code</p>
+
+                <h4>Option 1 : Depuis VS Marketplace (Recommandé)</h4>
+                <p>Dans VS Code : Extensions (Ctrl+Shift+X) → Rechercher "Algo Compiler" → Install</p>
+                <pre><code>code --install-extension omarcomputer.algo-compiler</code></pre>
+
+                <h4>Option 2 : Depuis VSIX</h4>
+                <p>Téléchargez <code>algo-compiler-1.3.0-omarcomputer.vsix</code> depuis <a href="https://github.com/oughzal/algo-compiler/releases/latest" target="_blank">GitHub Releases</a></p>
+                <pre><code>code --install-extension algo-compiler-1.3.0-omarcomputer.vsix</code></pre>
             </div>
         </div>
     </section>
