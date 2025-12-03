@@ -1,9 +1,35 @@
-node_modules/
-.vscode/
-.vscode-test/
-src/
-*.vsix
-tsconfig.json
-.eslintrc.json
+# Fichiers de développement
+.vscode/**
+.vscode-test/**
+src/**
 .gitignore
+tsconfig.json
+*.map
+
+# Tests
+test/**
+**/*.test.ts
+
+# Documentation de développement
+INSTALLATION.md
+SUMMARY.md
+install.bat
+install.ps1
+
+# Node
+node_modules/**
+npm-debug.log
+yarn-error.log
+
+# Build
+out/test/**
+*.vsix
+
+# Git
+.git/**
+.github/**
+
+# Autres
+.DS_Store
 *.log
+

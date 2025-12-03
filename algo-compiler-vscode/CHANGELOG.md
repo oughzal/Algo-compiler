@@ -5,6 +5,13 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 ## [1.3.0] - 2025-12-03
 
 ### ✨ Ajouté
+- 🔀 **Instruction `selon` (switch/when)**
+  - Syntaxe style Kotlin : `selon(expr) cas val: action finselon`
+  - Break automatique (pas de fall-through)
+  - Support entiers, chaînes, caractères
+  - Cas par défaut optionnel : `defaut:`
+  - 5 nouveaux snippets : `selon`, `selons`, `selonmenu`, `cas`, `defaut`
+
 - 🔤 **Support complet du type `caractere`**
   - Nouveau type de données pour les caractères
   - Littéraux avec échappements: `'a'`, `'\n'`, `'\t'`, `'\''`, `'\\'`

@@ -280,5 +280,60 @@
             "position(${1:texte}, ${2:sous_chaine})"
         ],
         "description": "Trouver position d'une sous-chaîne"
+    },
+    "Selon": {
+        "prefix": "selon",
+        "body": [
+            "selon(${1:expression})",
+            "    cas ${2:valeur1}: ${3:instruction1}",
+            "    cas ${4:valeur2}: ${5:instruction2}",
+            "    defaut: ${6:instructionDefaut}",
+            "finselon"
+        ],
+        "description": "Structure selon (switch)"
+    },
+    "Selon simple": {
+        "prefix": "selons",
+        "body": [
+            "selon(${1:variable})",
+            "    cas ${2:1}: ${3:ecrireln(\"Cas 1\")}",
+            "    cas ${4:2}: ${5:ecrireln(\"Cas 2\")}",
+            "    defaut: ${6:ecrireln(\"Autre\")}",
+            "finselon"
+        ],
+        "description": "Structure selon simple"
+    },
+    "Selon menu": {
+        "prefix": "selonmenu",
+        "body": [
+            "ecrireln(\"=== MENU ===\")",
+            "ecrireln(\"1. ${1:Option 1}\")",
+            "ecrireln(\"2. ${2:Option 2}\")",
+            "ecrireln(\"3. ${3:Option 3}\")",
+            "ecrire(\"Votre choix: \")",
+            "lire(${4:choix})",
+            "",
+            "selon(${4:choix})",
+            "    cas 1: ${5:ecrireln(\"Option 1 sélectionnée\")}",
+            "    cas 2: ${6:ecrireln(\"Option 2 sélectionnée\")}",
+            "    cas 3: ${7:ecrireln(\"Option 3 sélectionnée\")}",
+            "    defaut: ${8:ecrireln(\"Choix invalide\")}",
+            "finselon"
+        ],
+        "description": "Menu interactif avec selon"
+    },
+    "Cas": {
+        "prefix": "cas",
+        "body": [
+            "cas ${1:valeur}: ${2:instruction}"
+        ],
+        "description": "Un cas dans une structure selon"
+    },
+    "Defaut": {
+        "prefix": "defaut",
+        "body": [
+            "defaut: ${1:instruction}"
+        ],
+        "description": "Cas par défaut dans selon"
     }
 }

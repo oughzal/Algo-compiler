@@ -1,83 +1,388 @@
 # Algo Compiler - Extension VS Code
 
-Extension Visual Studio Code pour le **Compilateur Algo** - Permet d'écrire, éditer et exécuter des programmes en pseudocode algorithmique français.
+[![Version](https://img.shields.io/visual-studio-marketplace/v/omarcomputer.algo-compiler)](https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/omarcomputer.algo-compiler)](https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/omarcomputer.algo-compiler)](https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler)
+
+Extension Visual Studio Code pour **Algo-Compiler** - Écrivez, éditez et exécutez des programmes en pseudocode algorithmique français avec **40 fonctions intégrées** !
+
+🌐 **Site web** : [https://oughzal.github.io/algo-compiler/](https://oughzal.github.io/algo-compiler/)
+
+---
 
 ## ✨ Fonctionnalités
 
-### 📝 Coloration syntaxique complète
-- Mots-clés: `algorithme`, `début`, `fin`, `si`, `pour`, `tantque`, etc.
-- Déclarations: `variables`, `var`, `constantes`, `const`, `fonction`, `procedure`
-- Types de données: `entier`, `reel`, `chaine`, `caractere`, `booleen`, `tableau`
-- **40 fonctions intégrées**:
-  - Mathématiques: `abs`, `min`, `max`, `racine`, `puissance`, `sin`, `cos`, etc.
-  - Chaînes: `longueur`, `majuscule`, `contient`, `position`, `estVide`, etc.
-  - Caractères: `ord`, `chr`, `estLettre`, `estChiffre`, `versMajuscule`, etc.
-  - Conversions: `versEntier`, `versReel`, `versChaine`
-- Opérateurs arithmétiques: `+`, `-`, `*`, `/`, `div`, `mod`, `%`
-- Opérateurs logiques: `et`, `ou`, `non`
-- Commentaires: `//` (ligne), `#` (ligne Python), `/* */` (bloc)
+### 🎨 Coloration Syntaxique Complète
+- **Mots-clés** : `algorithme`, `début`, `fin`, `si`, `pour`, `tantque`, etc.
+- **Types** : `entier`, `reel`, `chaine`, `caractere`, `booleen`, `tableau`
+- **40 fonctions intégrées** avec coloration dédiée :
+  - Mathématiques (15) : `abs`, `min`, `max`, `racine`, `sin`, `cos`...
+  - Chaînes (9) : `longueur`, `contient`, `position`, `estVide`...
+  - Caractères (8) : `ord`, `chr`, `estLettre`, `estChiffre`...
+  - Conversions (3) : `versEntier`, `versReel`, `versChaine`
+  - Aléatoires (3) : `aleatoire()` et variantes
+- **Opérateurs** : `+`, `-`, `*`, `/`, `div`, `mod`, `et`, `ou`, `non`
+- **Commentaires** : `//`, `#`, `/* */`
 
-### ▶️ Exécution directe
-- **Exécuter**: `Ctrl+Shift+R` (Cmd+Shift+R sur Mac)
-- Bouton dans la barre d'outils de l'éditeur
-- Menu contextuel (clic droit)
-- Palette de commandes: `Algo: Exécuter le fichier Algo`
+### ▶️ Exécution Directe
+- **Raccourci** : `Ctrl+Shift+R` (Windows/Linux) ou `Cmd+Shift+R` (Mac)
+- **Bouton** dans la barre d'outils
+- **Menu contextuel** : Clic droit → "Algo: Exécuter"
+- **Palette** : `Ctrl+Shift+P` → "Algo: Exécuter le fichier Algo"
+- Sortie dans le terminal intégré avec support interactif (`lire`)
 
-### 🎨 Snippets intelligents
-- `algo` - Structure complète d'algorithme
-- `fonction` - Définir une fonction
-- `procedure` - Définir une procédure
-- `si` - Structure conditionnelle
-- `pour` - Boucle pour
-- `tantque` - Boucle tantque
-- `tableau` - Déclarer un tableau
-- `variables` - Bloc de variables
-- `const` - Bloc de constantes
-- `div`, `mod` - Opérateurs division/modulo
-- `//`, `#`, `/*` - Commentaires
-- Et plus encore...
+### 📦 30+ Snippets Intelligents
+Tapez le préfixe et appuyez sur `Tab` :
+- `algo` → Structure complète d'algorithme
+- `fonction` → Définir une fonction
+- `procedure` → Définir une procédure
+- `si` → Structure conditionnelle
+- `pour` → Boucle pour
+- `tantque` → Boucle tantque
+- `tableau` → Déclarer un tableau
+- `ord`, `chr`, `min`, `max`, `contient`... → Fonctions intégrées
+- Et bien plus !
 
-### 🔧 Configuration
-Accédez aux paramètres via `File > Preferences > Settings` puis recherchez "Algo Compiler":
+### ⚙️ Configuration Flexible
+- Chemin du compilateur (auto-détection ou manuel)
+- Chemin Java personnalisable
+- Options d'affichage
+- Nettoyage de sortie configurable
 
-- `algoCompiler.compilerPath` - Chemin vers le JAR du compilateur (auto-détecté par défaut)
-- `algoCompiler.javaPath` - Chemin vers Java (`java` par défaut)
-- `algoCompiler.clearOutputBeforeRun` - Effacer la console avant exécution
-- `algoCompiler.showExecutionTime` - Afficher le temps d'exécution
+---
 
 ## 📦 Installation
 
-### Prérequis
-1. **Java 21 ou supérieur** doit être installé
-2. Le **compilateur Algo** doit être compilé:
-   ```bash
-   cd Algo-compiler
-   gradlew build
-   ```
+### Étape 1 : Installer Java 21+
 
-### Installation de l'extension
+Le compilateur nécessite **Java 21 ou supérieur**.
 
-#### Option 1: Depuis le fichier VSIX
-1. Compiler l'extension:
-   ```bash
-   cd algo-compiler-vscode
-   npm install
-   npm run compile
-   npm run package
-   ```
-2. Installer dans VS Code:
-   - `Ctrl+Shift+P` → `Extensions: Install from VSIX...`
-   - Sélectionner le fichier `.vsix` généré
+#### Windows
+```powershell
+# Vérifier Java
+java -version
 
-#### Option 2: Mode développement
-1. Ouvrir le dossier `algo-compiler-vscode` dans VS Code
-2. Installer les dépendances:
-   ```bash
-   npm install
-   ```
-3. Appuyer sur `F5` pour lancer l'extension en mode debug
+# Si Java n'est pas installé, télécharger depuis :
+# https://www.oracle.com/java/technologies/downloads/
+# ou https://adoptium.net/
+```
+
+#### macOS
+```bash
+# Avec Homebrew
+brew install openjdk@21
+
+# Vérifier
+java -version
+```
+
+#### Linux
+```bash
+# Ubuntu/Debian
+sudo apt install openjdk-21-jdk
+
+# Fedora
+sudo dnf install java-21-openjdk
+
+# Vérifier
+java -version
+```
+
+### Étape 2 : Télécharger le Compilateur
+
+#### Option A : Depuis GitHub Releases (Recommandé)
+
+1. Allez sur [GitHub Releases](https://github.com/oughzal/algo-compiler/releases/latest)
+2. Téléchargez **`algo-compiler-1.0.0.jar`**
+3. Placez-le dans un dossier de votre choix, par exemple :
+   - Windows : `C:\Program Files\algo-compiler\algo-compiler-1.0.0.jar`
+   - macOS/Linux : `/usr/local/bin/algo-compiler-1.0.0.jar` ou `~/algo-compiler/algo-compiler-1.0.0.jar`
+
+#### Option B : Compiler depuis les sources
+
+```bash
+# Cloner le repo
+git clone https://github.com/oughzal/algo-compiler.git
+cd algo-compiler
+
+# Compiler (Windows)
+.\gradlew.bat build
+
+# Compiler (macOS/Linux)
+./gradlew build
+
+# Le JAR sera dans : build/libs/algo-compiler-1.0.0.jar
+```
+
+### Étape 3 : Installer l'Extension VS Code
+
+#### Option A : Depuis le VS Marketplace (Recommandé)
+
+1. Ouvrir VS Code
+2. Aller dans **Extensions** (`Ctrl+Shift+X`)
+3. Rechercher **"Algo Compiler"**
+4. Cliquer sur **Install**
+
+#### Option B : Depuis un fichier VSIX
+
+1. Télécharger `algo-compiler-1.3.0.vsix` depuis [GitHub Releases](https://github.com/oughzal/algo-compiler/releases/latest)
+2. Dans VS Code : `Ctrl+Shift+P` → `Extensions: Install from VSIX...`
+3. Sélectionner le fichier téléchargé
+
+### Étape 4 : Configurer l'Extension
+
+1. Ouvrir les **Paramètres** : `File > Preferences > Settings` (ou `Ctrl+,`)
+2. Rechercher **"Algo Compiler"**
+3. Configurer **Compiler Path** :
+   - Windows : `C:\Program Files\algo-compiler\algo-compiler-1.0.0.jar`
+   - macOS/Linux : `/usr/local/bin/algo-compiler-1.0.0.jar`
+   
+   *Si vous avez compilé depuis les sources, utilisez le chemin vers `build/libs/algo-compiler-1.0.0.jar`*
+
+4. (Optionnel) Configurer **Java Path** si Java n'est pas dans le PATH :
+   - Windows : `C:\Program Files\Java\jdk-21\bin\java.exe`
+   - macOS : `/usr/libexec/java_home -v 21`
+   - Linux : `/usr/bin/java`
+
+---
 
 ## 🚀 Utilisation
+
+### Créer votre premier programme
+
+1. **Créer un fichier** avec l'extension `.algo` (ex: `test.algo`)
+
+2. **Utiliser le snippet** : Tapez `algo` puis `Tab`
+   ```algo
+   algorithme MonPremierProgramme
+
+   variables
+       nom : chaine
+       age : entier
+
+   debut
+       ecrire("Entrez votre nom: ")
+       lire(nom)
+       
+       ecrire("Entrez votre âge: ")
+       lire(age)
+       
+       ecrireln("Bonjour ", nom, " !")
+       ecrireln("Vous avez ", age, " ans.")
+   fin
+   ```
+
+3. **Exécuter** : `Ctrl+Shift+R` ou clic droit → "Algo: Exécuter"
+
+4. Le programme s'exécute dans le **Terminal** intégré !
+
+### Exemples de Code
+
+#### Utiliser les 40 fonctions intégrées
+
+```algo
+algorithme ExemplesFonctions
+
+variables
+    texte : chaine
+    c : caractere
+    resultat : entier
+
+debut
+    // Fonctions de chaînes
+    texte = "Bonjour le monde"
+    
+    si contient(texte, "monde") alors
+        resultat = position(texte, "monde")
+        ecrireln("'monde' trouvé à la position: ", resultat)
+    finsi
+    
+    ecrireln("Longueur: ", longueur(texte))
+    ecrireln("Majuscules: ", majuscule(texte))
+    
+    // Fonctions de caractères
+    c = 'A'
+    ecrireln("Code ASCII de 'A': ", ord(c))
+    ecrireln("Caractère de code 66: ", chr(66))
+    
+    si estMajuscule(c) alors
+        ecrireln("'A' est une majuscule")
+    finsi
+    
+    // Fonctions mathématiques
+    ecrireln("min(5, 10) = ", min(5, 10))
+    ecrireln("max(5, 10) = ", max(5, 10))
+    ecrireln("racine(16) = ", racine(16))
+fin
+```
+
+#### Type Caractère
+
+```algo
+algorithme TypeCaractere
+
+variables
+    lettre : caractere
+    code : entier
+
+debut
+    lettre = 'A'
+    code = ord(lettre)
+    
+    ecrireln("Caractère: ", lettre)
+    ecrireln("Code ASCII: ", code)
+    
+    lettre = chr(code + 1)
+    ecrireln("Caractère suivant: ", lettre)
+fin
+```
+
+### Raccourcis Clavier
+
+| Raccourci | Action |
+|-----------|--------|
+| `Ctrl+Shift+R` | Exécuter le fichier algo |
+| `Ctrl+Space` | Autocomplétion |
+| `Tab` | Compléter un snippet |
+
+---
+
+## ⚙️ Configuration Avancée
+
+### Paramètres Disponibles
+
+Accédez via `File > Preferences > Settings` → Rechercher "Algo Compiler"
+
+| Paramètre | Description | Défaut |
+|-----------|-------------|--------|
+| `algoCompiler.compilerPath` | Chemin vers algo-compiler-1.0.0.jar | Auto-détecté |
+| `algoCompiler.javaPath` | Chemin vers l'exécutable Java | `java` |
+| `algoCompiler.clearOutputBeforeRun` | Effacer la sortie avant exécution | `true` |
+| `algoCompiler.showExecutionTime` | Afficher le temps d'exécution | `true` |
+
+### Configuration Manuelle (settings.json)
+
+```json
+{
+  "algoCompiler.compilerPath": "C:\\Program Files\\algo-compiler\\algo-compiler-1.0.0.jar",
+  "algoCompiler.javaPath": "C:\\Program Files\\Java\\jdk-21\\bin\\java.exe",
+  "algoCompiler.clearOutputBeforeRun": true,
+  "algoCompiler.showExecutionTime": true
+}
+```
+
+### Vérifier la Configuration
+
+1. Ouvrir un fichier `.algo`
+2. Essayer d'exécuter (`Ctrl+Shift+R`)
+3. Si erreur : vérifier les chemins dans les paramètres
+
+---
+
+## 🎓 Ressources
+
+### Documentation
+- 🌐 **Site web** : [https://oughzal.github.io/algo-compiler/](https://oughzal.github.io/algo-compiler/)
+- 📚 **Guide complet** : [README.md](https://github.com/oughzal/algo-compiler/blob/main/README.md)
+- 🚀 **Démarrage rapide** : [QUICKSTART.md](https://github.com/oughzal/algo-compiler/blob/main/QUICKSTART.md)
+- 🧮 **40 fonctions** : [FONCTIONS_INTEGREES_COURANTES.md](https://github.com/oughzal/algo-compiler/blob/main/FONCTIONS_INTEGREES_COURANTES.md)
+
+### Exemples
+Plus de 30 exemples disponibles dans le dossier [examples/](https://github.com/oughzal/algo-compiler/tree/main/examples) :
+- Hello World
+- Factorielle
+- Jeu de devinette
+- Manipulation de chaînes
+- Type caractère
+- Tableaux
+- Et bien plus !
+
+### Support
+- 🐛 **Signaler un bug** : [GitHub Issues](https://github.com/oughzal/algo-compiler/issues)
+- 💬 **Discussions** : [GitHub Discussions](https://github.com/oughzal/algo-compiler/discussions)
+- 📖 **Releases** : [GitHub Releases](https://github.com/oughzal/algo-compiler/releases)
+
+---
+
+## 🔧 Dépannage
+
+### L'extension ne trouve pas le compilateur
+
+**Solution** : Configurer manuellement le chemin dans les paramètres
+1. `Ctrl+,` → Rechercher "Algo Compiler"
+2. Définir **Compiler Path** avec le chemin complet vers le JAR
+
+### Java n'est pas trouvé
+
+**Solution** : Vérifier que Java 21+ est installé
+```bash
+java -version
+```
+Si non installé, télécharger depuis [Oracle](https://www.oracle.com/java/technologies/downloads/) ou [Adoptium](https://adoptium.net/)
+
+### L'exécution ne fonctionne pas
+
+**Vérifications** :
+1. Java 21+ installé : `java -version`
+2. Compilateur téléchargé et chemin correct
+3. Fichier `.algo` sauvegardé
+4. Vérifier la sortie du terminal pour les erreurs
+
+### Erreur "Cannot find Java"
+
+**Solution** : Configurer le chemin Java manuellement
+- Paramètres → `algoCompiler.javaPath` → Chemin vers `java.exe` (Windows) ou `java` (macOS/Linux)
+
+---
+
+## 📝 Notes de Version
+
+### v1.3.0 (Actuelle)
+- ✅ Support de 40 fonctions intégrées
+- ✅ Type `caractere` avec coloration
+- ✅ 30+ snippets enrichis
+- ✅ Amélioration de la coloration syntaxique
+- ✅ Documentation mise à jour
+
+### v1.2.0
+- ✅ Exécution interactive avec `lire`
+- ✅ Support de `ecrireln`
+- ✅ Améliorations de stabilité
+
+Voir [CHANGELOG.md](CHANGELOG.md) pour l'historique complet.
+
+---
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! 
+
+1. Fork le projet
+2. Créer une branche (`git checkout -b feature/AmazingFeature`)
+3. Commit les changements (`git commit -m 'Add AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
+
+---
+
+## 📄 Licence
+
+Ce projet est distribué sous licence libre. Voir LICENSE pour plus de détails.
+
+---
+
+## 🙏 Remerciements
+
+Développé avec ❤️ pour faciliter l'apprentissage de l'algorithmique en français.
+
+**Algo-Compiler** - Compilateur de Pseudo-code Français
+- 🌐 Site web : [https://oughzal.github.io/algo-compiler/](https://oughzal.github.io/algo-compiler/)
+- 🐙 GitHub : [https://github.com/oughzal/algo-compiler](https://github.com/oughzal/algo-compiler)
+- 📦 Releases : [https://github.com/oughzal/algo-compiler/releases](https://github.com/oughzal/algo-compiler/releases)
+
+---
+
+**Bon algorithme ! 🚀**
 
 ### Créer un nouveau programme
 

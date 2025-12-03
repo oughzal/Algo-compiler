@@ -1,23 +1,42 @@
 {
     "name": "algo-compiler",
     "displayName": "Algo Compiler",
-    "description": "Extension VS Code pour le compilateur Algo - Édition, coloration syntaxique et exécution de programmes en pseudocode avec 40 fonctions intégrées",
-    "version": "1.3.0",
+    "description": "Compilateur de pseudo-code algorithmique en français avec 40 fonctions intégrées + instruction selon - Coloration syntaxique, snippets et exécution directe",
+    "version": "1.3.1",
     "icon": "images/icon.png",
-    "publisher": "algo-compiler",
+    "publisher": "omarcomputer",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/oughzal/algo-compiler.git"
+    },
+    "bugs": {
+        "url": "https://github.com/oughzal/algo-compiler/issues"
+    },
+    "homepage": "https://oughzal.github.io/algo-compiler/",
+    "galleryBanner": {
+        "color": "#2563eb",
+        "theme": "dark"
+    },
     "engines": {
         "vscode": "^1.75.0"
     },
     "categories": [
         "Programming Languages",
-        "Snippets"
+        "Snippets",
+        "Education"
     ],
     "keywords": [
         "algorithme",
         "pseudocode",
         "algo",
         "français",
-        "compiler"
+        "french",
+        "compiler",
+        "education",
+        "learning",
+        "programming",
+        "algorithm"
     ],
     "activationEvents": [
         "onLanguage:algo",
