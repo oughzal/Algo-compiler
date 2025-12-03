@@ -1,5 +1,3 @@
-node_modules/
-out/
-dist/
-*.vsix
-.vscode-test/
+﻿# Ignorer tout sauf les fichiers du site
+*.md
+!README.md
