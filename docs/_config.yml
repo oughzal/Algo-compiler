@@ -1,0 +1,67 @@
+# Configuration GitHub Pages pour Algo-Compiler
+
+# Métadonnées du site
+title: Algo-Compiler
+description: Compilateur et interpréteur de pseudo-code algorithmique en français avec 40 fonctions intégrées
+author: Algo-Compiler Team
+email: contact@algo-compiler.dev
+
+# Configuration GitHub Pages
+theme: jekyll-theme-minimal
+baseurl: ""
+url: "https://algo-compiler.github.io"
+
+# Répertoire source pour GitHub Pages
+source: docs
+
+# Plugins Jekyll
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclure certains fichiers
+exclude:
+  - README.md
+  - build/
+  - gradle/
+  - src/
+  - .gradle/
+  - .idea/
+  - node_modules/
+
+# Inclure certains fichiers
+include:
+  - _pages
+  - assets
+
+# Configuration SEO
+lang: fr
+logo: /images/icon.png
+
+# Social
+github_username: algo-compiler
+repository: algo-compiler/algo-compiler
+
+# Google Analytics (optionnel - remplacer par votre ID)
+# google_analytics: UA-XXXXXXXXX-X
+
+# Markdown
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Collections (optionnel)
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      author: Algo-Compiler Team
+
