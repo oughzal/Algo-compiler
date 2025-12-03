@@ -276,45 +276,79 @@ fin</code></pre>
             <div class="install-grid">
                 <div class="install-step">
                     <div class="step-number">1</div>
-                    <h3>Prérequis</h3>
-                    <p>Installer <strong>Java 21+</strong></p>
+                    <h3>Installer Java 21+</h3>
+                    <p>Vérifiez que Java 21 ou supérieur est installé</p>
                     <pre><code>java -version</code></pre>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Si non installé, téléchargez depuis <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" style="color: var(--primary-color);">Oracle</a> ou <a href="https://adoptium.net/" target="_blank" style="color: var(--primary-color);">Adoptium</a></p>
                 </div>
 
                 <div class="install-step">
                     <div class="step-number">2</div>
-                    <h3>Télécharger</h3>
-                    <p>Cloner le dépôt GitHub</p>
-                    <pre><code>git clone https://github.com/algo-compiler/algo-compiler.git
-cd algo-compiler</code></pre>
+                    <h3>Télécharger le Compilateur</h3>
+                    <p>Téléchargez le JAR depuis GitHub Release</p>
+                    <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" class="btn-primary" style="display: inline-block; margin: 10px 0;">📦 Télécharger algo-compiler-1.0.0.jar</a>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Placez le JAR dans un dossier de votre choix (ex: C:\Program Files\algo-compiler\)</p>
                 </div>
 
                 <div class="install-step">
                     <div class="step-number">3</div>
-                    <h3>Compiler</h3>
-                    <p>Construire le projet</p>
-                    <pre><code>./gradlew build</code></pre>
+                    <h3>Installer l'Extension VS Code</h3>
+                    <p><strong>Depuis le Marketplace (Recommandé)</strong></p>
+                    <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank" class="btn-primary" style="display: inline-block; margin: 10px 0;">🛒 Installer depuis VS Marketplace</a>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Ou dans VS Code : Extensions (Ctrl+Shift+X) → Rechercher "Algo Compiler"</p>
                 </div>
 
                 <div class="install-step">
                     <div class="step-number">4</div>
-                    <h3>Exécuter</h3>
-                    <p>Lancer votre premier algorithme</p>
-                    <pre><code>java -jar build/libs/algo-compiler-1.0.0.jar examples/hello.algo</code></pre>
+                    <h3>Configurer l'Extension</h3>
+                    <p>Dans VS Code, configurez le chemin du compilateur</p>
+                    <pre><code>1. File > Preferences > Settings
+2. Rechercher "Algo Compiler"
+3. Définir Compiler Path:
+   Windows: C:\Program Files\algo-compiler\algo-compiler-1.0.0.jar
+   Linux/Mac: /usr/local/bin/algo-compiler-1.0.0.jar</code></pre>
                 </div>
             </div>
 
-            <div class="install-vscode">
-                <h3>📦 Extension VS Code</h3>
-                <p>Installez l'extension pour une expérience complète :</p>
+            <div class="install-vscode" style="margin-top: 3rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px;">
+                <h3 style="color: white; margin-bottom: 1rem;">🎯 Démarrage Rapide</h3>
 
-                <h4>Option 1 : Depuis VS Marketplace (Recommandé)</h4>
-                <p>Dans VS Code : Extensions (Ctrl+Shift+X) → Rechercher "Algo Compiler" → Install</p>
-                <pre><code>code --install-extension omarcomputer.algo-compiler</code></pre>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
+                    <div>
+                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">📥 Téléchargements</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 0.5rem 0;">
+                                <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">
+                                    ➤ Compilateur JAR (algo-compiler-1.0.0.jar)
+                                </a>
+                            </li>
+                            <li style="margin: 0.5rem 0;">
+                                <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank" style="color: white; text-decoration: underline;">
+                                    ➤ Extension VS Code (VS Marketplace)
+                                </a>
+                            </li>
+                            <li style="margin: 0.5rem 0;">
+                                <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">
+                                    ➤ Extension VSIX (algo-compiler-1.3.0-omarcomputer.vsix)
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-                <h4>Option 2 : Depuis VSIX</h4>
-                <p>Téléchargez <code>algo-compiler-1.3.0-omarcomputer.vsix</code> depuis <a href="https://github.com/oughzal/algo-compiler/releases/latest" target="_blank">GitHub Releases</a></p>
-                <pre><code>code --install-extension algo-compiler-1.3.0-omarcomputer.vsix</code></pre>
+                    <div>
+                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">⚡ Utilisation</h4>
+                        <ol style="padding-left: 1.5rem;">
+                            <li style="margin: 0.5rem 0;">Créer un fichier <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">.algo</code></li>
+                            <li style="margin: 0.5rem 0;">Taper <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">algo</code> + Tab pour le template</li>
+                            <li style="margin: 0.5rem 0;">Écrire votre algorithme</li>
+                            <li style="margin: 0.5rem 0;">Appuyer sur <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">Ctrl+Shift+R</code> pour exécuter</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 4px solid #ffd700;">
+                    <strong>💡 Astuce :</strong> Une fois l'extension installée, redémarrez VS Code pour vous assurer que tous les paramètres sont chargés.
+                </div>
             </div>
         </div>
     </section>
