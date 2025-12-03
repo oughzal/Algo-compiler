@@ -51,6 +51,14 @@ data class WhileLoop(val condition: Expression, val body: List<Statement>) : Sta
 
 data class RepeatUntilLoop(val body: List<Statement>, val condition: Expression) : Statement()
 
+data class WhenStatement(
+        val expression: Expression,
+        val cases: List<WhenCase>,
+        val defaultCase: List<Statement>?
+) : Statement()
+
+data class WhenCase(val value: Expression, val statements: List<Statement>) : ASTNode()
+
 data class WriteStatement(val expressions: List<Expression>, val newline: Boolean = true) :
         Statement()
 

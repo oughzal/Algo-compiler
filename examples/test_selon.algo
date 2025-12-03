@@ -1,0 +1,59 @@
+algorithme TestSelon
+
+variables
+    jour : entier
+    mois : chaine
+    note : entier
+
+debut
+    // Test 1 : Jour de la semaine
+    ecrire("Entrez un jour (1-7): ")
+    lire(jour)
+
+    selon(jour)
+        cas 1: ecrireln("Lundi")
+        cas 2: ecrireln("Mardi")
+        cas 3: ecrireln("Mercredi")
+        cas 4: ecrireln("Jeudi")
+        cas 5: ecrireln("Vendredi")
+        cas 6: ecrireln("Samedi")
+        cas 7: ecrireln("Dimanche")
+        defaut: ecrireln("Jour invalide")
+    finselon
+
+    // Test 2 : Mois
+    ecrire("Entrez votre mois préféré: ")
+    lire(mois)
+
+    selon(mois)
+        cas "janvier": ecrireln("Premier mois de l'année")
+        cas "février": ecrireln("Le mois le plus court")
+        cas "mars": ecrireln("Début du printemps")
+        cas "décembre": ecrireln("Dernier mois de l'année")
+        defaut: ecrireln("Un autre mois")
+    finselon
+
+    // Test 3 : Note avec instructions multiples
+    ecrire("Entrez une note (0-20): ")
+    lire(note)
+
+    selon(note)
+        cas 20:
+            ecrireln("Excellent !")
+            ecrireln("Note maximale atteinte")
+        cas 19:
+            ecrireln("Très bien !")
+        cas 18:
+            ecrireln("Très bien !")
+        cas 10:
+            ecrireln("Moyen")
+        cas 0:
+            ecrireln("Insuffisant")
+        defaut:
+            ecrireln("Note: ", note)
+            ecrireln("Continue tes efforts")
+    finselon
+
+    ecrireln("Test terminé !")
+fin
+

@@ -1,0 +1,19 @@
+algorithme TestSelonSimple
+
+variables
+    choix : entier
+
+debut
+    ecrire("Choisissez une option (1-3): ")
+    lire(choix)
+
+    selon(choix)
+        cas 1: ecrireln("Vous avez choisi l'option 1")
+        cas 2: ecrireln("Vous avez choisi l'option 2")
+        cas 3: ecrireln("Vous avez choisi l'option 3")
+        defaut: ecrireln("Option invalide")
+    finselon
+
+    ecrireln("Terminé !")
+fin
+

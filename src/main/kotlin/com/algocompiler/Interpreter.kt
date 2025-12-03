@@ -89,6 +89,7 @@ class Interpreter {
             is ForLoop -> executeForLoop(statement)
             is WhileLoop -> executeWhileLoop(statement)
             is RepeatUntilLoop -> executeRepeatUntilLoop(statement)
+            is WhenStatement -> executeWhenStatement(statement)
             is WriteStatement -> executeWriteStatement(statement)
             is ReadStatement -> executeReadStatement(statement)
             is ReturnStatement ->
@@ -172,6 +173,43 @@ class Interpreter {
                 executeStatement(statement)
             }
         } while (!toBoolean(evaluateExpression(repeatLoop.condition)))
+    }
+
+    private fun executeWhenStatement(whenStatement: WhenStatement) {
+        val expressionValue = evaluateExpression(whenStatement.expression)
+
+        // Parcourir tous les cas
+        for (case in whenStatement.cases) {
+            val caseValue = evaluateExpression(case.value)
+
+            // Comparer les valeurs
+            if (valuesEqual(expressionValue, caseValue)) {
+                // Exécuter les instructions de ce cas
+                for (statement in case.statements) {
+                    executeStatement(statement)
+                }
+                return // Sortir après le premier cas correspondant (comme un break automatique)
+            }
+        }
+
+        // Si aucun cas ne correspond, exécuter le cas par défaut s'il existe
+        if (whenStatement.defaultCase != null) {
+            for (statement in whenStatement.defaultCase) {
+                executeStatement(statement)
+            }
+        }
+    }
+
+    private fun valuesEqual(a: Any?, b: Any?): Boolean {
+        return when {
+            a == null && b == null -> true
+            a == null || b == null -> false
+            a is Number && b is Number -> a.toDouble() == b.toDouble()
+            a is String && b is String -> a == b
+            a is Char && b is Char -> a == b
+            a is Boolean && b is Boolean -> a == b
+            else -> a == b
+        }
     }
 
     private fun executeWriteStatement(writeStatement: WriteStatement): Unit {

@@ -273,6 +273,7 @@ class Parser(private val tokens: List<Token>) {
             TokenType.POUR -> parseForLoop()
             TokenType.TANTQUE -> parseWhileLoop()
             TokenType.REPETER -> parseRepeatUntilLoop()
+            TokenType.SELON -> parseWhenStatement()
             TokenType.ECRIRE -> parseWriteStatement()
             TokenType.ECRIRELN -> parseWriteLnStatement()
             TokenType.LIRE -> parseReadStatement()
@@ -436,6 +437,72 @@ class Parser(private val tokens: List<Token>) {
         val condition = parseExpression()
 
         return RepeatUntilLoop(body, condition)
+    }
+
+    private fun parseWhenStatement(): WhenStatement {
+        expect(TokenType.SELON)
+        expect(TokenType.PAREN_GAUCHE)
+        val expression = parseExpression()
+        expect(TokenType.PAREN_DROITE)
+        skipNewlines()
+
+        val cases = mutableListOf<WhenCase>()
+        var defaultCase: List<Statement>? = null
+
+        while (current().type != TokenType.FINSELON && current().type != TokenType.EOF) {
+            skipNewlines()
+
+            when (current().type) {
+                TokenType.CAS -> {
+                    advance() // consommer 'cas'
+                    val value = parseExpression()
+                    expect(TokenType.DEUX_POINTS) // :
+                    skipNewlines()
+
+                    val statements = mutableListOf<Statement>()
+                    // Lire une seule instruction ou plusieurs jusqu'au prochain cas/defaut/finselon
+                    while (current().type != TokenType.CAS &&
+                           current().type != TokenType.DEFAUT &&
+                           current().type != TokenType.FINSELON &&
+                           current().type != TokenType.EOF) {
+                        skipNewlines()
+                        if (current().type == TokenType.CAS ||
+                            current().type == TokenType.DEFAUT ||
+                            current().type == TokenType.FINSELON) break
+                        statements.add(parseStatement())
+                        skipNewlines()
+                    }
+
+                    cases.add(WhenCase(value, statements))
+                }
+                TokenType.DEFAUT -> {
+                    advance() // consommer 'defaut'
+                    expect(TokenType.DEUX_POINTS) // :
+                    skipNewlines()
+
+                    val statements = mutableListOf<Statement>()
+                    while (current().type != TokenType.FINSELON && current().type != TokenType.EOF) {
+                        skipNewlines()
+                        if (current().type == TokenType.FINSELON) break
+                        statements.add(parseStatement())
+                        skipNewlines()
+                    }
+
+                    defaultCase = statements
+                }
+                TokenType.FINSELON -> break
+                else -> {
+                    skipNewlines()
+                    if (current().type != TokenType.FINSELON) {
+                        advance() // ignorer les tokens non reconnus
+                    }
+                }
+            }
+        }
+
+        expect(TokenType.FINSELON)
+
+        return WhenStatement(expression, cases, defaultCase)
     }
 
     private fun parseWriteStatement(): WriteStatement {
