@@ -1,0 +1,7 @@
+algorithme TestSimple
+
+debut
+    ecrire("Hello")
+    ecrireln()
+fin
+

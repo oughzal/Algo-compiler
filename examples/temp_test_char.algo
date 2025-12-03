@@ -1,0 +1,11 @@
+algorithme TestChar
+
+variables
+    c : caractere
+
+debut
+    c := 'a'
+    ecrire("Valeur de c:", c)
+    ecrireln("")
+fin
+

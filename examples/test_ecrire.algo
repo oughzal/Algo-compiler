@@ -1,0 +1,38 @@
+algorithme TestEcrire
+
+variables
+    x, y : entier
+
+début
+    x := 5
+    y := 10
+
+    // Test 1: écrire sans retour à la ligne
+    écrire("Test sans retour: ")
+    écrire("x = ")
+    écrire(x)
+    écrire(", y = ")
+    écrire(y)
+    écrireln("")
+
+    // Test 2: écrireln avec retour à la ligne
+    écrireln("Ligne 1 avec retour automatique")
+    écrireln("Ligne 2 avec retour automatique")
+
+    // Test 3: \n dans une chaîne
+    écrire("Ligne A\nLigne B\nLigne C")
+    écrireln("")
+
+    // Test 4: \t pour tabulation
+    écrire("Colonne1\tColonne2\tColonne3")
+    écrireln("")
+
+    // Test 5: Tableau avec formatage
+    écrire("Nom\tAge\tVille\n")
+    écrire("Alice\t25\tParis\n")
+    écrire("Bob\t30\tLyon\n")
+
+    écrireln()
+    écrireln("=== Tests terminés ===")
+fin
+

@@ -8,7 +8,7 @@ Début
 	    
 	    //Traitement
 	    H = T div 3600
-	    T = T mod 3600
+	    T = T % 3600
 	    //T  = T - H*3600
 	    M = T div 60
 	    S = T mod 60

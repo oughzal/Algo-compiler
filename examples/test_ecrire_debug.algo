@@ -1,0 +1,12 @@
+algorithme TestEcrireDebug
+
+variables
+    x : entier
+
+debut
+    x = 5
+    ecrire("Test: ")
+    ecrire(x)
+    ecrireln()
+fin
+

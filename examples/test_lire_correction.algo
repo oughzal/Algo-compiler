@@ -1,0 +1,28 @@
+algorithme TestLireSansPrompt
+
+variables
+    nom : chaine
+    age : entier
+    reponse : caractere
+
+debut
+    // L'utilisateur doit maintenant utiliser ecrire() pour créer son propre prompt
+    ecrire("Entrez votre nom: ")
+    lire(nom)
+
+    ecrire("Entrez votre âge: ")
+    lire(age)
+
+    ecrire("Voulez-vous continuer? (o/n): ")
+    lire(reponse)
+
+    ecrireln()
+    ecrireln("=== Récapitulatif ===")
+    ecrire("Nom: ", nom)
+    ecrireln()
+    ecrire("Âge: ", age)
+    ecrireln()
+    ecrire("Réponse: ", reponse)
+    ecrireln()
+fin
+

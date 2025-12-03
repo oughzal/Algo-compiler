@@ -61,11 +61,19 @@
             "patterns": [
                 {
                     "name": "support.function.builtin.math.algo",
-                    "match": "(?i)\\b(abs|racine|puissance|arrondi|plancher|plafond|sin|cos|tan|log|exp)\\b"
+                    "match": "(?i)\\b(abs|racine|puissance|arrondi|plancher|plafond|min|max|reste|quotient|sin|cos|tan|log|exp)\\b"
                 },
                 {
                     "name": "support.function.builtin.string.algo",
-                    "match": "(?i)\\b(longueur|majuscule|minuscule|sousChaine|souschaine)\\b"
+                    "match": "(?i)\\b(longueur|majuscule|minuscule|sousChaine|souschaine|estVide|estvide|contient|commence|termine|position)\\b"
+                },
+                {
+                    "name": "support.function.builtin.char.algo",
+                    "match": "(?i)\\b(ord|chr|estLettre|estlettre|estChiffre|estchiffre|estMajuscule|estmajuscule|estMinuscule|estminuscule|versMajuscule|versmajuscule|versMinuscule|versminuscule)\\b"
+                },
+                {
+                    "name": "support.function.builtin.conversion.algo",
+                    "match": "(?i)\\b(versEntier|versentier|versReel|versreel|versChaine|verschaine)\\b"
                 },
                 {
                     "name": "support.function.builtin.random.algo",
@@ -131,7 +139,7 @@
             "patterns": [
                 {
                     "name": "storage.type.algo",
-                    "match": "(?i)\\b(entier|reel|réel|chaine|chaîne|booleen|booléen|tableau)\\b"
+                    "match": "(?i)\\b(entier|reel|réel|chaine|chaîne|caractere|caractère|booleen|booléen|tableau)\\b"
                 }
             ]
         },

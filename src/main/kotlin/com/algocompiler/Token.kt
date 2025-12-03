@@ -32,6 +32,7 @@ enum class TokenType {
     ENTIER,
     REEL,
     CHAINE,
+    CARACTERE,
     BOOLEEN,
 
     // Opérateurs
@@ -64,6 +65,7 @@ enum class TokenType {
     // Littéraux
     NOMBRE,
     TEXTE,
+    CARACTERE_LITERAL,
     VRAI,
     FAUX,
     IDENTIFICATEUR,

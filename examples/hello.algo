@@ -2,9 +2,15 @@ algorithme Bonjour
 
 variables
     nom : chaine
+    b : entier
 
 début
     écrire("Entrez votre nom:")
     lire(nom)
-    écrire("Bonjour", nom, "!")
+    écrire("Bonjour ", nom, "!")
+
+
+    écrire("entrez b : ")
+    lire(b)
+    écrire("Le carré de ", b, " est ", b * b)
 fin

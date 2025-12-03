@@ -1,0 +1,97 @@
+algorithme TestOrdChr
+
+variables
+    c : caractere
+    code : entier
+    lettre : caractere
+
+debut
+    // Test 1: ord() - convertir caractère en code ASCII
+    ecrireln("=== Test 1: Fonction ord() ===")
+    c = 'A'
+    code = ord(c)
+    ecrire("ord('A') = ", code)
+    ecrireln()
+
+    c = 'Z'
+    ecrire("ord('Z') = ", ord(c))
+    ecrireln()
+
+    c = 'a'
+    ecrire("ord('a') = ", ord(c))
+    ecrireln()
+
+    c = '0'
+    ecrire("ord('0') = ", ord(c))
+    ecrireln()
+
+    ecrireln()
+
+    // Test 2: chr() - convertir code ASCII en caractère
+    ecrireln("=== Test 2: Fonction chr() ===")
+    lettre = chr(65)
+    ecrire("chr(65) = '", lettre, "'")
+    ecrireln()
+
+    lettre = chr(90)
+    ecrire("chr(90) = '", lettre, "'")
+    ecrireln()
+
+    lettre = chr(97)
+    ecrire("chr(97) = '", lettre, "'")
+    ecrireln()
+
+    lettre = chr(48)
+    ecrire("chr(48) = '", lettre, "'")
+    ecrireln()
+
+    ecrireln()
+
+    // Test 3: Conversion aller-retour
+    ecrireln("=== Test 3: Conversion aller-retour ===")
+    c = 'M'
+    code = ord(c)
+    lettre = chr(code)
+    ecrire("Original: '", c, "' -> Code: ", code, " -> Retour: '", lettre, "'")
+    ecrireln()
+
+    si c == lettre alors
+        ecrireln("✓ Conversion aller-retour réussie!")
+    finsi
+
+    ecrireln()
+
+    // Test 4: Décalage de caractères (exemple: chiffrement César)
+    ecrireln("=== Test 4: Décalage de 3 positions ===")
+    c = 'A'
+    code = ord(c)
+    lettre = chr(code + 3)
+    ecrire("'", c, "' + 3 = '", lettre, "'")
+    ecrireln()
+
+    c = 'X'
+    code = ord(c)
+    lettre = chr(code + 3)
+    ecrire("'", c, "' + 3 = '", lettre, "' (attention: dépasse Z)")
+    ecrireln()
+
+    ecrireln()
+
+    // Test 5: Vérifier si un caractère est une majuscule
+    ecrireln("=== Test 5: Vérifier majuscule ===")
+    c = 'B'
+    si ord(c) >= ord('A') et ord(c) <= ord('Z') alors
+        ecrire("'", c, "' est une majuscule")
+        ecrireln()
+    finsi
+
+    c = 'b'
+    si ord(c) >= ord('a') et ord(c) <= ord('z') alors
+        ecrire("'", c, "' est une minuscule")
+        ecrireln()
+    finsi
+
+    ecrireln()
+    ecrireln("=== Tests terminés ===")
+fin
+

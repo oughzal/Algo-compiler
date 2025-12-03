@@ -1,0 +1,199 @@
+algorithme TestFonctionsIntegrees
+
+variables
+    a, b, resultat : entier
+    x, y : reel
+    s1, s2 : chaine
+    c : caractere
+    test : booleen
+
+debut
+    ecrireln("========================================")
+    ecrireln("=== TESTS FONCTIONS MATHÉMATIQUES ===")
+    ecrireln("========================================")
+    ecrireln()
+
+    // min et max
+    a = 5
+    b = 10
+    ecrire("min(5, 10) = ", min(a, b))
+    ecrireln()
+    ecrire("max(5, 10) = ", max(a, b))
+    ecrireln()
+    ecrireln()
+
+    // reste et quotient
+    a = 17
+    b = 5
+    ecrire("reste(17, 5) = ", reste(a, b))
+    ecrireln()
+    ecrire("quotient(17, 5) = ", quotient(a, b))
+    ecrireln()
+    ecrireln()
+
+    ecrireln("========================================")
+    ecrireln("=== TESTS FONCTIONS DE CHAÎNES ===")
+    ecrireln("========================================")
+    ecrireln()
+
+    // estVide
+    s1 = ""
+    s2 = "Bonjour"
+    ecrire("estVide('') = ", estVide(s1))
+    ecrireln()
+    ecrire("estVide('Bonjour') = ", estVide(s2))
+    ecrireln()
+    ecrireln()
+
+    // contient
+    s1 = "Bonjour le monde"
+    s2 = "monde"
+    ecrire("contient('Bonjour le monde', 'monde') = ", contient(s1, s2))
+    ecrireln()
+    s2 = "xyz"
+    ecrire("contient('Bonjour le monde', 'xyz') = ", contient(s1, s2))
+    ecrireln()
+    ecrireln()
+
+    // commence
+    s1 = "Bonjour"
+    s2 = "Bon"
+    ecrire("commence('Bonjour', 'Bon') = ", commence(s1, s2))
+    ecrireln()
+    s2 = "jour"
+    ecrire("commence('Bonjour', 'jour') = ", commence(s1, s2))
+    ecrireln()
+    ecrireln()
+
+    // termine
+    s1 = "Bonjour"
+    s2 = "jour"
+    ecrire("termine('Bonjour', 'jour') = ", termine(s1, s2))
+    ecrireln()
+    s2 = "Bon"
+    ecrire("termine('Bonjour', 'Bon') = ", termine(s1, s2))
+    ecrireln()
+    ecrireln()
+
+    // position
+    s1 = "Bonjour le monde"
+    s2 = "monde"
+    ecrire("position('Bonjour le monde', 'monde') = ", position(s1, s2))
+    ecrireln()
+    s2 = "xyz"
+    ecrire("position('Bonjour le monde', 'xyz') = ", position(s1, s2))
+    ecrireln()
+    ecrireln()
+
+    ecrireln("========================================")
+    ecrireln("=== TESTS FONCTIONS DE CARACTÈRES ===")
+    ecrireln("========================================")
+    ecrireln()
+
+    // estLettre
+    c = 'A'
+    ecrire("estLettre('A') = ", estLettre(c))
+    ecrireln()
+    c = '5'
+    ecrire("estLettre('5') = ", estLettre(c))
+    ecrireln()
+    ecrireln()
+
+    // estChiffre
+    c = '7'
+    ecrire("estChiffre('7') = ", estChiffre(c))
+    ecrireln()
+    c = 'A'
+    ecrire("estChiffre('A') = ", estChiffre(c))
+    ecrireln()
+    ecrireln()
+
+    // estMajuscule
+    c = 'A'
+    ecrire("estMajuscule('A') = ", estMajuscule(c))
+    ecrireln()
+    c = 'a'
+    ecrire("estMajuscule('a') = ", estMajuscule(c))
+    ecrireln()
+    ecrireln()
+
+    // estMinuscule
+    c = 'z'
+    ecrire("estMinuscule('z') = ", estMinuscule(c))
+    ecrireln()
+    c = 'Z'
+    ecrire("estMinuscule('Z') = ", estMinuscule(c))
+    ecrireln()
+    ecrireln()
+
+    // versMajuscule
+    c = 'a'
+    ecrire("versMajuscule('a') = '", versMajuscule(c), "'")
+    ecrireln()
+    ecrireln()
+
+    // versMinuscule
+    c = 'Z'
+    ecrire("versMinuscule('Z') = '", versMinuscule(c), "'")
+    ecrireln()
+    ecrireln()
+
+    ecrireln("========================================")
+    ecrireln("=== TESTS FONCTIONS DE CONVERSION ===")
+    ecrireln("========================================")
+    ecrireln()
+
+    // versEntier
+    x = 3.7
+    ecrire("versEntier(3.7) = ", versEntier(x))
+    ecrireln()
+    ecrireln()
+
+    // versReel
+    a = 42
+    ecrire("versReel(42) = ", versReel(a))
+    ecrireln()
+    ecrireln()
+
+    // versChaine
+    a = 123
+    ecrire("versChaine(123) = '", versChaine(a), "'")
+    ecrireln()
+    ecrireln()
+
+    ecrireln("========================================")
+    ecrireln("=== TESTS D'UTILISATION PRATIQUE ===")
+    ecrireln("========================================")
+    ecrireln()
+
+    // Validation d'un mot de passe (exemple)
+    s1 = "MonMotDePasse123"
+    test = longueur(s1) >= 8
+    ecrire("Longueur >= 8: ", test)
+    ecrireln()
+    test = contient(s1, "123")
+    ecrire("Contient des chiffres: ", test)
+    ecrireln()
+    ecrireln()
+
+    // Vérifier si un caractère est alphanumérique
+    c = 'A'
+    test = estLettre(c) ou estChiffre(c)
+    ecrire("'A' est alphanumérique: ", test)
+    ecrireln()
+    ecrireln()
+
+    // Calculer le maximum de 3 nombres
+    a = 5
+    b = 12
+    resultat = 8
+    resultat = max(a, max(b, resultat))
+    ecrire("max(5, 12, 8) = ", resultat)
+    ecrireln()
+    ecrireln()
+
+    ecrireln("========================================")
+    ecrireln("=== TOUS LES TESTS SONT TERMINÉS ===")
+    ecrireln("========================================")
+fin
+

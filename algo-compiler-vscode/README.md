@@ -7,8 +7,12 @@ Extension Visual Studio Code pour le **Compilateur Algo** - Permet d'écrire, é
 ### 📝 Coloration syntaxique complète
 - Mots-clés: `algorithme`, `début`, `fin`, `si`, `pour`, `tantque`, etc.
 - Déclarations: `variables`, `var`, `constantes`, `const`, `fonction`, `procedure`
-- Types de données: `entier`, `reel`, `chaine`, `booleen`, `tableau`
-- Fonctions intégrées: `abs`, `racine`, `puissance`, `longueur`, `majuscule`, etc.
+- Types de données: `entier`, `reel`, `chaine`, `caractere`, `booleen`, `tableau`
+- **40 fonctions intégrées**:
+  - Mathématiques: `abs`, `min`, `max`, `racine`, `puissance`, `sin`, `cos`, etc.
+  - Chaînes: `longueur`, `majuscule`, `contient`, `position`, `estVide`, etc.
+  - Caractères: `ord`, `chr`, `estLettre`, `estChiffre`, `versMajuscule`, etc.
+  - Conversions: `versEntier`, `versReel`, `versChaine`
 - Opérateurs arithmétiques: `+`, `-`, `*`, `/`, `div`, `mod`, `%`
 - Opérateurs logiques: `et`, `ou`, `non`
 - Commentaires: `//` (ligne), `#` (ligne Python), `/* */` (bloc)

@@ -23,9 +23,27 @@ fun main(args: Array<String>) {
     }
 
     try {
-        val code = file.readText()
+        // Lire le code et normaliser les quotes typographiques
+        var code = file.readText()
+
+        // Remplacer les guillemets typographiques par des guillemets ASCII
+        code = code.replace('\u2018', '\'')  // ' → '
+                   .replace('\u2019', '\'')  // ' → '
+                   .replace('\u201C', '"')   // " → "
+                   .replace('\u201D', '"')   // " → "
+
         val lexer = Lexer(code)
         val tokens = lexer.tokenize()
+
+        // Mode debug : afficher les tokens si demandé
+        if (System.getProperty("debug.tokens") != null) {
+            println("--- TOKENS ---")
+            for (t in tokens) {
+                println("${t.line}:${t.column} ${t.type} -> '${t.value}'")
+            }
+            return
+        }
+
         val parser = Parser(tokens)
         val ast = parser.parse()
         val interpreter = Interpreter()

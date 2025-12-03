@@ -2,6 +2,7 @@ algorithme NombresPairs
 
 variables
     i : entier
+    c : CARACTERE
 
 début
     écrire("Les 10 premiers nombres pairs:")

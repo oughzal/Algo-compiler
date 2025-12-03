@@ -5,8 +5,6 @@ class Parser(private val tokens: List<Token>) {
 
     private fun current(): Token = tokens.getOrNull(pos) ?: tokens.last()
 
-    private fun peek(offset: Int = 1): Token = tokens.getOrNull(pos + offset) ?: tokens.last()
-
     private fun advance() {
         if (pos < tokens.size - 1) pos++
     }
@@ -112,6 +110,7 @@ class Parser(private val tokens: List<Token>) {
                         TokenType.ENTIER -> "entier"
                         TokenType.REEL -> "reel"
                         TokenType.CHAINE -> "chaine"
+                        TokenType.CARACTERE -> "caractere"
                         TokenType.BOOLEEN -> "booleen"
                         else ->
                                 throw Exception(
@@ -144,6 +143,7 @@ class Parser(private val tokens: List<Token>) {
                         TokenType.ENTIER -> "entier"
                         TokenType.REEL -> "reel"
                         TokenType.CHAINE -> "chaine"
+                        TokenType.CARACTERE -> "caractere"
                         TokenType.BOOLEEN -> "booleen"
                         else ->
                                 throw Exception(
@@ -190,6 +190,7 @@ class Parser(private val tokens: List<Token>) {
                         TokenType.ENTIER -> "entier"
                         TokenType.REEL -> "reel"
                         TokenType.CHAINE -> "chaine"
+                        TokenType.CARACTERE -> "caractere"
                         TokenType.BOOLEEN -> "booleen"
                         else ->
                                 throw Exception(
@@ -251,6 +252,7 @@ class Parser(private val tokens: List<Token>) {
                     TokenType.ENTIER -> "entier"
                     TokenType.REEL -> "reel"
                     TokenType.CHAINE -> "chaine"
+                    TokenType.CARACTERE -> "caractere"
                     TokenType.BOOLEEN -> "booleen"
                     else ->
                             throw Exception(
@@ -454,7 +456,7 @@ class Parser(private val tokens: List<Token>) {
             advance()
         }
 
-        return WriteStatement(expressions, newline = true)
+        return WriteStatement(expressions, newline = false)
     }
 
     private fun parseWriteLnStatement(): WriteStatement {
@@ -464,11 +466,17 @@ class Parser(private val tokens: List<Token>) {
         }
 
         val expressions = mutableListOf<Expression>()
-        expressions.add(parseExpression())
 
-        while (current().type == TokenType.VIRGULE) {
-            advance()
+        // Vérifier s'il y a des expressions
+        if (current().type != TokenType.PAREN_DROITE &&
+            current().type != TokenType.NEWLINE &&
+            current().type != TokenType.EOF) {
             expressions.add(parseExpression())
+
+            while (current().type == TokenType.VIRGULE) {
+                advance()
+                expressions.add(parseExpression())
+            }
         }
 
         if (current().type == TokenType.PAREN_DROITE) {
@@ -625,6 +633,11 @@ class Parser(private val tokens: List<Token>) {
                 val value = current().value
                 advance()
                 StringLiteral(value)
+            }
+            TokenType.CARACTERE_LITERAL -> {
+                val value = current().value[0]
+                advance()
+                CharLiteral(value)
             }
             TokenType.VRAI -> {
                 advance()

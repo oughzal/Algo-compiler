@@ -72,6 +72,8 @@ data class NumberLiteral(val value: Double) : Expression()
 
 data class StringLiteral(val value: String) : Expression()
 
+data class CharLiteral(val value: Char) : Expression()
+
 data class BooleanLiteral(val value: Boolean) : Expression()
 
 data class Variable(val name: String) : Expression()

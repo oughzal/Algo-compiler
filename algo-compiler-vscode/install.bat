@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo  Installation Extension Algo Compiler
+echo  Installation Extension Algo Compiler v1.3.0
 echo ========================================
 echo.
 

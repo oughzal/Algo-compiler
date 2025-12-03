@@ -2,6 +2,39 @@
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
 
+## [1.3.0] - 2025-12-03
+
+### ✨ Ajouté
+- 🔤 **Support complet du type `caractere`**
+  - Nouveau type de données pour les caractères
+  - Littéraux avec échappements: `'a'`, `'\n'`, `'\t'`, `'\''`, `'\\'`
+  - Tableaux de caractères supportés
+  - Support des apostrophes typographiques (' ' ')
+
+- 🎯 **40 Fonctions intégrées** (vs 21 auparavant)
+  - **Mathématiques (15)**: `min`, `max`, `reste`, `quotient` (nouveaux) + existantes
+  - **Chaînes (9)**: `estVide`, `contient`, `commence`, `termine`, `position` (nouveaux)
+  - **Caractères (8)**: `ord`, `chr`, `estLettre`, `estChiffre`, `estMajuscule`, `estMinuscule`, `versMajuscule`, `versMinuscule` (nouveaux)
+  - **Conversions (3)**: `versEntier`, `versReel`, `versChaine` (nouveaux)
+  - **Aléatoires (3)**: `aleatoire()` et variantes
+
+- 📝 **Fonctions ecrire/ecrireln clarifiées**
+  - `ecrire()` : n'ajoute PAS de saut de ligne
+  - `ecrireln()` : ajoute un saut de ligne automatique
+  - Support des échappements `\n` et `\t` dans les chaînes
+
+### 🎨 Amélioré
+- Coloration syntaxique mise à jour pour toutes les nouvelles fonctions
+- 15+ nouveaux snippets pour les fonctions intégrées
+- Type `caractere` ajouté à la coloration syntaxique
+- Messages d'erreur améliorés avec codes Unicode
+
+### 📚 Documentation
+- Guide complet des 40 fonctions intégrées
+- Documentation du type `caractere` avec exemples
+- Guide des fonctions `ord()` et `chr()`
+- Exemples d'utilisation pratiques
+
 ## [1.2.0] - 2025-12-02
 
 ### 🐛 Corrigé

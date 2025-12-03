@@ -33,6 +33,7 @@ class Lexer(private val input: String) {
                     "entier" to TokenType.ENTIER,
                     "reel" to TokenType.REEL,
                     "chaine" to TokenType.CHAINE,
+                    "caractere" to TokenType.CARACTERE,
                     "booleen" to TokenType.BOOLEEN,
                     "vrai" to TokenType.VRAI,
                     "faux" to TokenType.FAUX,
@@ -61,12 +62,18 @@ class Lexer(private val input: String) {
                 .replace("û", "u")
                 .replace("ç", "c")
                 .replace("'", "")
+                .replace("’", "")
+                .replace("‘", "")
     }
 
     private fun current(): Char? = if (pos < input.length) input[pos] else null
 
     private fun peek(offset: Int = 1): Char? =
             if (pos + offset < input.length) input[pos + offset] else null
+
+    private fun isSingleQuote(ch: Char?): Boolean {
+        return ch == '\'' || ch == '’' || ch == '‘'
+    }
 
     private fun advance() {
         if (current() == '\n') {
@@ -135,9 +142,19 @@ class Lexer(private val input: String) {
         val sb = StringBuilder()
 
         while (current() != '"' && current() != null) {
-            if (current() == '\\' && peek() == '"') {
+            if (current() == '\\' && peek() != null) {
                 advance()
-                sb.append('"')
+                when (current()) {
+                    'n' -> sb.append('\n')
+                    't' -> sb.append('\t')
+                    'r' -> sb.append('\r')
+                    '\\' -> sb.append('\\')
+                    '"' -> sb.append('"')
+                    else -> {
+                        sb.append('\\')
+                        sb.append(current())
+                    }
+                }
                 advance()
             } else {
                 sb.append(current())
@@ -150,6 +167,40 @@ class Lexer(private val input: String) {
         }
 
         return Token(TokenType.TEXTE, sb.toString(), line, startCol)
+    }
+
+    private fun readChar(): Token {
+        val startCol = column
+        advance() // Skip opening single quote (could be typographic)
+
+        if (current() == null) {
+            throw Exception("Caractère non terminé à la ligne $line")
+        }
+
+        val charValue = if (current() == '\\' && peek() != null) {
+            // Gestion des caractères d'échappement
+            advance()
+            when (current()) {
+                'n' -> '\n'
+                't' -> '\t'
+                'r' -> '\r'
+                '\\' -> '\\'
+                '\'' -> '\''
+                else -> current()!!
+            }.also { advance() }
+        } else {
+            current()!!.also { advance() }
+        }
+
+        if (!isSingleQuote(current())) {
+            val found = current()
+            val code = found?.code ?: -1
+            throw Exception("Caractère non terminé ou trop long à la ligne $line (attendu '). Caractère trouvé: '$found' (U+${code.toString(16).uppercase()})")
+        }
+
+        advance() // Skip closing single quote
+
+        return Token(TokenType.CARACTERE_LITERAL, charValue.toString(), line, startCol)
     }
 
     private fun readIdentifier(): Token {
@@ -207,6 +258,12 @@ class Lexer(private val input: String) {
             // Strings
             if (current() == '"') {
                 tokens.add(readString())
+                continue
+            }
+
+            // Characters
+            if (isSingleQuote(current())) {
+                tokens.add(readChar())
                 continue
             }
 

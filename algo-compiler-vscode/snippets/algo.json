@@ -175,5 +175,110 @@
             "${1:a} mod ${2:b}"
         ],
         "description": "Opérateur modulo"
+    },
+    "Variable caractere": {
+        "prefix": "car",
+        "body": [
+            "${1:c} : caractere"
+        ],
+        "description": "Déclarer une variable caractère"
+    },
+    "Fonction ord": {
+        "prefix": "ord",
+        "body": [
+            "ord(${1:caractere})"
+        ],
+        "description": "Convertir caractère en code ASCII"
+    },
+    "Fonction chr": {
+        "prefix": "chr",
+        "body": [
+            "chr(${1:code})"
+        ],
+        "description": "Convertir code ASCII en caractère"
+    },
+    "Fonction min": {
+        "prefix": "min",
+        "body": [
+            "min(${1:a}, ${2:b})"
+        ],
+        "description": "Minimum de deux valeurs"
+    },
+    "Fonction max": {
+        "prefix": "max",
+        "body": [
+            "max(${1:a}, ${2:b})"
+        ],
+        "description": "Maximum de deux valeurs"
+    },
+    "Fonction contient": {
+        "prefix": "contient",
+        "body": [
+            "contient(${1:texte}, ${2:sous_chaine})"
+        ],
+        "description": "Vérifie si texte contient sous_chaine"
+    },
+    "Fonction estVide": {
+        "prefix": "estvide",
+        "body": [
+            "estVide(${1:chaine})"
+        ],
+        "description": "Vérifie si chaîne est vide"
+    },
+    "Fonction estLettre": {
+        "prefix": "estlettre",
+        "body": [
+            "estLettre(${1:caractere})"
+        ],
+        "description": "Vérifie si c'est une lettre"
+    },
+    "Fonction estChiffre": {
+        "prefix": "estchiffre",
+        "body": [
+            "estChiffre(${1:caractere})"
+        ],
+        "description": "Vérifie si c'est un chiffre"
+    },
+    "Fonction versMajuscule": {
+        "prefix": "versmajuscule",
+        "body": [
+            "versMajuscule(${1:caractere})"
+        ],
+        "description": "Convertir en majuscule"
+    },
+    "Fonction versMinuscule": {
+        "prefix": "versminuscule",
+        "body": [
+            "versMinuscule(${1:caractere})"
+        ],
+        "description": "Convertir en minuscule"
+    },
+    "Fonction versEntier": {
+        "prefix": "versentier",
+        "body": [
+            "versEntier(${1:valeur})"
+        ],
+        "description": "Convertir en entier"
+    },
+    "Fonction versReel": {
+        "prefix": "versreel",
+        "body": [
+            "versReel(${1:valeur})"
+        ],
+        "description": "Convertir en réel"
+    },
+    "Fonction versChaine": {
+        "prefix": "verschaine",
+        "body": [
+            "versChaine(${1:valeur})"
+        ],
+        "description": "Convertir en chaîne"
+    },
+    "Fonction position": {
+        "prefix": "position",
+        "body": [
+            "position(${1:texte}, ${2:sous_chaine})"
+        ],
+        "description": "Trouver position d'une sous-chaîne"
     }
 }
