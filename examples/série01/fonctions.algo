@@ -1,0 +1,19 @@
+algorithme NomAlgorithme
+
+fonction myfn(n : entier) : entier
+var
+    resultat : entier
+début
+    // Code
+    resultat = n * n
+    retourner resultat
+fin
+
+variables
+    n : entier
+
+début
+    écrire("Donner n : ")
+    lire(n)
+    écrire("Le carré de ", n, " est ", myfn(n))
+fin
