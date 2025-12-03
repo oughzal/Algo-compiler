@@ -1,1 +1,0 @@
-- supprimer la fonction "pointer": *.json et readme.md
