@@ -28,6 +28,32 @@ exclude:
   - .gradle/
   - .idea/
   - node_modules/
+  - bin/
+  - examples/
+  - "*.bat"
+  - "*.jar"
+  - "*.tar"
+  - "*.zip"
+  - "*.log"
+  - gradlew
+  - build.gradle.kts
+  - settings.gradle.kts
+  - gradle.properties
+  - algo-compiler-vscode/
+  - ETAT_FINAL_PROJET.md
+  - FONCTIONS_INTEGREES_COURANTES.md
+  - FONCTIONS_ORD_CHR.md
+  - FONCTIONS_TABLEAUX.md
+  - GIT_PUSH_EFFECTUE.md
+  - GITHUB_PAGES_FIXED.md
+  - GUIDE_RELEASE_GITHUB.md
+  - INSTRUCTION_SELON.md
+  - MODIFICATIONS_TYPE_CARACTERE.md
+  - NETTOYAGE_EFFECTUE.md
+  - PROGUARD_DESACTIVE_PROJET_RESTAURE.md
+  - QUICKSTART.md
+  - RECAPITULATIF_FINAL_COMPLET.md
+  - RELEASE_NOTES.md
 
 # Inclure certains fichiers
 include:
@@ -49,19 +75,4 @@ repository: algo-compiler/algo-compiler
 markdown: kramdown
 kramdown:
   input: GFM
-  syntax_highlighter: rouge
-
-# Collections (optionnel)
-collections:
-  docs:
-    output: true
-    permalink: /docs/:path/
-
-# Defaults
-defaults:
-  - scope:
-      path: ""
-    values:
-      layout: default
-      author: Algo-Compiler Team
 
