@@ -17,11 +17,38 @@ Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu p
 
 ## Installation
 
-### Prérequis
-- Java 17 ou supérieur
+### 🚀 Installation Automatique (Recommandée)
+
+**Prérequis** : Java 21 ou supérieur
+
+#### Méthode 1 : Installateur Batch (Simple)
+1. Compiler le projet : `gradlew build`
+2. Clic droit sur `install-algo-compiler.bat`
+3. Sélectionner "Exécuter en tant qu'administrateur"
+4. Suivre les instructions
+
+#### Méthode 2 : Installateur PowerShell (Avancé)
+1. Compiler le projet : `.\gradlew build`
+2. Ouvrir PowerShell en administrateur
+3. Exécuter : `.\install-algo-compiler.ps1`
+4. Suivre les instructions
+
+**Après installation**, utilisez simplement :
+```bash
+algoc fichier.algo
+```
+
+📖 **Guide complet** : Voir [GUIDE_INSTALLATION.md](GUIDE_INSTALLATION.md)
+
+---
+
+### 🔧 Installation Manuelle
+
+#### Prérequis
+- Java 21 ou supérieur
 - Gradle (optionnel, le wrapper est inclus)
 
-### Construction du projet
+#### Construction du projet
 
 ```bash
 # Sur Windows
@@ -33,7 +60,7 @@ Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu p
 
 Le fichier JAR sera généré dans `build/libs/algo-compiler-1.0.0.jar`
 
-## Utilisation
+#### Utilisation manuelle
 
 ```bash
 java -jar build/libs/algo-compiler-1.0.0.jar fichier.algo

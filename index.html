@@ -12,7 +12,7 @@
     <meta property="og:url" content="https://oughzal.github.io/Algo-compiler/">
     <meta property="og:title" content="Algo-Compiler - Compilateur de Pseudo-code Français">
     <meta property="og:description" content="Compilateur de pseudo-code algorithmique en français avec 40 fonctions intégrées, type caractère, instruction selon et extension VS Code">
-    <meta property="og:image" content="https://oughzal.github.io/Algo-compiler/icon.png">
+    <meta property="og:image" content="https://oughzal.github.io/Algo-compiler/Algo-compiler.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
     <meta property="og:site_name" content="Algo-Compiler">
@@ -299,8 +299,47 @@ fin</code></pre>
         <div class="container">
             <h2 class="section-title">Installation</h2>
 
+            <!-- Installation Automatique -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 3rem;">
+                <h3 style="color: white; margin-bottom: 1rem;">🚀 Installation Automatique (Recommandée)</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">Installez le compilateur en une seule commande avec ajout automatique au PATH !</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">📋 Méthode 1 : Batch (Simple)</h4>
+                        <ol style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                            <li style="margin: 0.3rem 0;">Télécharger le release</li>
+                            <li style="margin: 0.3rem 0;">Compiler : <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">gradlew build</code></li>
+                            <li style="margin: 0.3rem 0;">Clic droit sur <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">install-algo-compiler.bat</code></li>
+                            <li style="margin: 0.3rem 0;">"Exécuter en tant qu'administrateur"</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">💻 Méthode 2 : PowerShell (Avancé)</h4>
+                        <ol style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                            <li style="margin: 0.3rem 0;">Télécharger le release</li>
+                            <li style="margin: 0.3rem 0;">Compiler : <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">.\gradlew build</code></li>
+                            <li style="margin: 0.3rem 0;">PowerShell en admin</li>
+                            <li style="margin: 0.3rem 0;"><code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">.\install-algo-compiler.ps1</code></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.15); padding: 1rem; border-radius: 8px; border-left: 4px solid #ffd700;">
+                    <strong>✨ Avantages :</strong> Installation en 2 clics, ajout automatique au PATH, commande <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">algoc</code> disponible partout, désinstallateur inclus
+                </div>
+
+                <div style="margin-top: 1rem; text-align: center;">
+                    <a href="https://github.com/oughzal/Algo-compiler/releases/latest" target="_blank" style="display: inline-block; background: white; color: #667eea; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; margin: 0.5rem;">
+                        📥 Télécharger le Release Complet
+                    </a>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; margin: 2rem 0; color: var(--text-color); opacity: 0.7;">— OU Installation Manuelle —</h3>
+
             <div class="install-grid">
-                <div class="install-step">
                     <div class="step-number">1</div>
                     <h3>Installer Java 21+</h3>
                     <p>Vérifiez que Java 21 ou supérieur est installé</p>
