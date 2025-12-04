@@ -34,6 +34,21 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icon.png">
+
+    <!-- Définitions des variables CSS globales pour éviter les erreurs lors du build GitHub Pages -->
+    <style>
+        :root {
+            --primary-color: #667eea; /* utilisé pour liens et accents */
+            --text-color: #1f2937;   /* couleur de texte par défaut */
+            --muted-opacity: 0.7;
+            --background-gradient-start: #667eea;
+            --background-gradient-end: #764ba2;
+        }
+
+        /* Fallbacks minimaux pour éléments critiques si style.css absent */
+        body { color: var(--text-color, #1f2937); }
+        a { color: var(--primary-color, #667eea); }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -300,7 +315,7 @@ fin</code></pre>
             <h2 class="section-title">Installation</h2>
 
             <!-- Installation Automatique -->
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 3rem;">
+            <div class="install-automatic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 3rem;">
                 <h3 style="color: white; margin-bottom: 1rem;">🚀 Installation Automatique (Recommandée)</h3>
                 <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">Installez le compilateur en une seule commande avec ajout automatique au PATH !</p>
 
@@ -337,9 +352,10 @@ fin</code></pre>
                 </div>
             </div>
 
-            <h3 style="text-align: center; margin: 2rem 0; color: var(--text-color); opacity: 0.7;">— OU Installation Manuelle —</h3>
+            <h3 style="text-align: center; margin: 2rem 0; color: var(--text-color, #1f2937); opacity: 0.7;">— OU Installation Manuelle —</h3>
 
-            <div class="install-grid">
+            <div class="install-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="install-step">
                     <div class="step-number">1</div>
                     <h3>Installer Java 21+</h3>
                     <p>Vérifiez que Java 21 ou supérieur est installé</p>
@@ -610,4 +626,3 @@ fin</code></pre>
     <script src="script.js"></script>
 </body>
 </html>
-

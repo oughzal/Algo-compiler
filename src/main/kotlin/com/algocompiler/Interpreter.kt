@@ -521,8 +521,9 @@ class Interpreter {
             "chr" -> {
                 if (args.isEmpty()) throw Exception("chr() nécessite 1 argument (un code ASCII)")
                 val code = toInt(args[0])
-                if (code < 0 || code > 127) {
-                    throw Exception("chr() : le code ASCII doit être entre 0 et 127")
+                // Accepter la plage complète des code points représentables par un Char Kotlin
+                if (code < 0 || code > Char.MAX_VALUE.code) {
+                    throw Exception("chr() : le code doit être entre 0 et ${Char.MAX_VALUE.code}")
                 }
                 code.toChar()
             }
@@ -592,7 +593,17 @@ class Interpreter {
             }
             "verschaine", "versChaine" -> {
                 if (args.isEmpty()) throw Exception("versChaine() nécessite 1 argument")
-                args[0].toString()
+                val value = args[0]
+                when (value) {
+                    is Double -> {
+                        if (value % 1.0 == 0.0) {
+                            value.toInt().toString()
+                        } else {
+                            value.toString()
+                        }
+                    }
+                    else -> value.toString()
+                }
             }
             else -> null
         }
@@ -648,6 +659,7 @@ class Interpreter {
             "-" -> toDouble(left) - toDouble(right)
             "*" -> toDouble(left) * toDouble(right)
             "/" -> toDouble(left) / toDouble(right)
+            "**" -> toDouble(left).pow(toDouble(right))
             "div" -> toInt(left) / toInt(right)
             "mod", "%" -> toInt(left) % toInt(right)
             "==" -> left == right || toDouble(left) == toDouble(right)
@@ -715,7 +727,10 @@ class Interpreter {
                     value.toString()
                 }
             }
-            is Char -> value.toString()
+            is Char -> {
+                // Ne pas afficher le caractère nul par défaut (initialisation)
+                if (value == '\u0000') "" else value.toString()
+            }
             else -> value.toString()
         }
     }

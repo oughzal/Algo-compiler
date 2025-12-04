@@ -291,7 +291,12 @@ class Lexer(private val input: String) {
                         }
                         '*' -> {
                             advance()
-                            Token(TokenType.MULT, "*", line, startCol)
+                            if (current() == '*') {
+                                advance()
+                                Token(TokenType.PUISSANCE, "**", line, startCol)
+                            } else {
+                                Token(TokenType.MULT, "*", line, startCol)
+                            }
                         }
                         '/' -> {
                             advance()

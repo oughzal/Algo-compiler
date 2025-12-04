@@ -46,6 +46,7 @@ enum class TokenType {
     DIV,
     DIV_ENTIERE,
     MOD,
+    PUISSANCE,
     AFFECTATION,
     EGAL,
     DIFFERENT,

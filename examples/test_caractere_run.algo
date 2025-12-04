@@ -1,0 +1,14 @@
+algorithme TestCarRun
+
+variables
+    c : caractere
+    code : entier
+
+debut
+    c = 'a'
+    ecrire(c)
+    ecrireln(" ")
+    code = ord(c)
+    ecrireln(code)
+fin
+

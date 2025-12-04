@@ -2,6 +2,13 @@
 
 Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu pour faciliter l'apprentissage de la programmation avec une syntaxe française naturelle.
 
+## Nouveautés importantes
+
+- Support complet du type `caractere` (littéraux entre quotes simples, échappements `\n`, `\t`, `\'`, `\\`).
+- I/O : `ecrire()` n'ajoute pas de saut de ligne ; `ecrireln()` ajoute un saut de ligne. `lire()` ne montre pas de prompt automatique (utilisez `ecrire()` avant `lire()` pour afficher une invite).
+- Fonctions intégrées de caractères : `ord(c)` et `chr(code)` (prise en charge des code points Unicode valides pour Kotlin `Char`).
+- Instruction `selon` (switch) supportée avec syntaxe `cas valeur :` (style Kotlin-like `v : action` pris en charge dans le parser).
+
 ## Caractéristiques
 
 - **Syntaxe française naturelle** : Utilise des mots-clés français intuitifs
@@ -65,6 +72,14 @@ Le fichier JAR sera généré dans `build/libs/algo-compiler-1.0.0.jar`
 ```bash
 java -jar build/libs/algo-compiler-1.0.0.jar fichier.algo
 ```
+
+### Installation via Release + VS Code (recommandé)
+1. Téléchargez la release sur GitHub : https://github.com/oughzal/Algo-compiler/releases/latest
+2. Téléchargez le fichier JAR (algo-compiler-*.jar) et placez-le dans un dossier (ex: C:\Program Files\algo-compiler) ou installez via l'installateur fourni.
+3. Installez l'extension VS Code depuis le Marketplace : https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler
+4. Configurez le chemin du compilateur dans les paramètres de l'extension :
+   - Windows: C:\Program Files\algo-compiler\algo-compiler-1.0.0.jar
+   - Linux/Mac: /usr/local/bin/algo-compiler-1.0.0.jar
 
 ## Syntaxe
 
@@ -144,7 +159,7 @@ variables
     lettre : caractere
     tableau_lettres : tableau[5] de caractere
 
-début
+debut
     // Affectation simple
     lettre := 'A'
     
@@ -153,6 +168,10 @@ début
     lettre := '\t'  // Tabulation
     lettre := '\''  // Apostrophe
     lettre := '\\'  // Backslash
+    
+    // Caractère par code
+    lettre = chr(65) // 'A'
+    code = ord(lettre) // 65
     
     // Tableau de caractères
     tableau_lettres[0] := 'H'
@@ -163,7 +182,7 @@ début
     
     // Comparaison de caractères
     si 'A' < 'B' alors
-        écrire("A vient avant B")
+        ecrire("A vient avant B")
     finsi
 fin
 ```
@@ -201,7 +220,7 @@ fin
 #### Affichage
 La fonction `ecrire` n'ajoute PAS de saut de ligne automatiquement — elle écrit exactement les valeurs passées. Pour ajouter un saut de ligne automatique utilisez `ecrireln`. Vous pouvez aussi insérer des retours à la ligne ou des tabulations à l'intérieur des chaînes avec les séquences d'échappement `\n` et `\t`.
 
-```
+```algocode
 // Affichage sans saut de ligne
 ecrire("Bonjour ")
 ecrire("monde")  // Affiche: Bonjour monde
@@ -218,7 +237,7 @@ ecrire("Col1\tCol2")         // Tabulation
 #### Lecture
 La fonction `lire` lit l'entrée utilisateur **sans afficher de prompt automatique**. Vous devez utiliser `ecrire()` avant `lire()` pour créer votre propre message d'invite :
 
-```
+```algocode
 // ✅ CORRECT - Créer son propre prompt
 ecrire("Entrez votre nom: ")
 lire(nom)

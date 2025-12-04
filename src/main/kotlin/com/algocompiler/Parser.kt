@@ -3,10 +3,10 @@ package com.algocompiler
 class Parser(private val tokens: List<Token>) {
     private var pos = 0
 
-    private fun current(): Token = tokens.getOrNull(pos) ?: tokens.last()
+    private fun current(): Token = tokens.getOrNull(pos) ?: Token(TokenType.EOF, "", -1, -1)
 
     private fun advance() {
-        if (pos < tokens.size - 1) pos++
+        if (pos < tokens.size) pos++
     }
 
     private fun expect(type: TokenType): Token {
@@ -657,7 +657,7 @@ class Parser(private val tokens: List<Token>) {
     }
 
     private fun parseMultiplicative(): Expression {
-        var left = parseUnary()
+        var left = parsePower()
 
         while (current().type in
                 listOf(TokenType.MULT, TokenType.DIV, TokenType.DIV_ENTIERE, TokenType.MOD)) {
@@ -668,8 +668,21 @@ class Parser(private val tokens: List<Token>) {
                         else -> current().value
                     }
             advance()
-            val right = parseUnary()
+            val right = parsePower()
             left = BinaryOp(left, op, right)
+        }
+
+        return left
+    }
+
+    private fun parsePower(): Expression {
+        var left = parseUnary()
+
+        while (current().type == TokenType.PUISSANCE) {
+            advance()
+            // L'opérateur ** est associatif à droite, donc on appelle récursivement parsePower
+            val right = parsePower()
+            left = BinaryOp(left, "**", right)
         }
 
         return left
