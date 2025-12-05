@@ -1,8 +1,8 @@
 {
     "name": "algo-compiler",
     "displayName": "Algo Compiler",
-    "description": "Compilateur de pseudo-code algorithmique en français avec 40 fonctions intégrées + instruction selon - Coloration syntaxique, snippets et exécution directe",
-    "version": "1.3.1",
+    "description": "Compilateur de pseudo-code français: Matrices 2D, 40+ fonctions, opérateur ^, sinonSi, expression conditionnelle - Coloration, snippets, exécution directe",
+    "version": "1.6.0",
     "icon": "images/icon.png",
     "publisher": "omarcomputer",
     "license": "MIT",

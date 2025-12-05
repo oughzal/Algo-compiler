@@ -965,3 +965,10 @@ Le dossier `examples/` contient de nombreux exemples pour vous aider à démarre
 ## Licence
 
 Ce projet est sous licence MIT.
+
+## Copyright
+
+**© 2024 Omar OUGHZAL** - Tous droits réservés
+
+Développé avec ❤️ pour faciliter l'apprentissage de l'algorithmique en français.
+

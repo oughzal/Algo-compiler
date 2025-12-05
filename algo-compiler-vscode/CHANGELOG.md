@@ -2,6 +2,117 @@
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
 
+## [1.6.0] - 2024-12-05
+
+### ✨ Nouvelles Fonctionnalités Majeures
+
+#### 📊 Matrices (Tableaux 2D)
+- **Support complet des tableaux à deux dimensions** : `M : tableau[3][3] de entier`
+- Syntaxe intuitive : `M[i][j] = valeur`
+- Initialisation automatique avec valeurs par défaut
+- Vérification automatique des limites (lignes et colonnes)
+- **3 nouveaux snippets** :
+  - `matrice` : Déclarer une matrice
+  - `parcmat` : Parcourir une matrice avec boucles imbriquées
+  - `affmat` : Afficher une matrice formatée
+
+#### ⚡ Opérateur Puissance ^
+- **Nouvel alias pour l'opérateur puissance** : `2 ^ 3` équivalent à `2 ** 3`
+- Syntaxe plus concise et familière
+- Les deux opérateurs (`^` et `**`) fonctionnent de manière identique
+- **1 nouveau snippet** : `puis` pour l'opérateur puissance
+
+### 🔧 Améliorations
+
+#### Snippets Optimisés
+- **Code plus propre** : Suppression des commentaires dans le code généré
+- **Fonctions simplifiées** : Les snippets de fonctions génèrent `nom()` sans paramètres
+- Navigation plus intuitive avec `$0` pour le curseur final
+- Meilleure ergonomie générale
+
+### 📚 Documentation
+- Mise à jour du README avec exemples de matrices
+- Guide complet des matrices disponible
+- Exemples d'utilisation de l'opérateur ^
+
+## [1.4.0] - 2025-12-05
+
+### ✨ Nouvelles Fonctionnalités Majeures
+
+#### 🔄 Clause `sinonSi`
+- **Structure conditionnelle améliorée** : Testez plusieurs conditions sans imbrication excessive
+- Syntaxe : `si condition1 alors ... sinonSi condition2 alors ... sinonSi condition3 alors ... sinon ... finsi`
+- Coloration syntaxique ajoutée pour `sinonSi` et `sinonsi`
+- **4 nouveaux snippets** :
+  - `sinonsi` : Structure complète si-sinonSi-sinon
+  - `sinsi` : Clause sinonSi seule
+  - Support dans tous les contextes (fonctions, boucles, etc.)
+
+#### 🎯 Expression Conditionnelle (Opérateur Ternaire)
+- **Syntaxe concise** : `variable = si condition alors valeur1 sinon valeur2`
+- Utilisable partout où une expression est attendue
+- Support de l'imbrication pour des conditions multiples
+- **4 nouveaux snippets** :
+  - `siexpr` : Expression conditionnelle simple
+  - `siexpri` : Expression conditionnelle imbriquée
+  - `maxsi` : Maximum avec expression conditionnelle
+  - `abssi` : Valeur absolue avec expression conditionnelle
+
+#### 📝 Initialisation de Variables
+- **Déclaration avec initialisation** : `var a : entier = 5`
+- Plus besoin d'initialiser séparément
+- Fonctionne avec tous les types : entier, réel, chaîne, caractère, booléen
+- Support des expressions et expressions conditionnelles
+- **2 nouveaux snippets** :
+  - `varinit` : Variable avec initialisation
+  - `varsinit` : Bloc de variables avec initialisation
+
+#### 📦 Tableaux Littéraux
+- **Syntaxe concise** : `T = [1, 2, 3, 4, 5]`
+- Initialisation rapide sans boucles
+- Support des expressions dans les éléments : `[5 * 2, 10 + 5, 8 ** 2]`
+- Fonctionne avec tous les types de tableaux
+- **4 nouveaux snippets** :
+  - `tablit` : Tableau littéral d'entiers
+  - `tablitstr` : Tableau littéral de chaînes
+  - `tablitreal` : Tableau littéral de réels
+  - `tablitexpr` : Tableau avec expressions
+
+### ⚠️ Changements Importants
+- **Suppression de l'alias 'a'** : Seul `à` est accepté dans les boucles `pour` (pour éviter confusion avec variables)
+  - ❌ `pour i de 1 a 10 faire` n'est plus accepté
+  - ✅ `pour i de 1 à 10 faire` requis
+
+### 📚 Documentation
+- Guide complet : INSTRUCTION_SINONSI.md
+- Guide complet : EXPRESSION_CONDITIONNELLE.md
+- Guide complet : INITIALISATION_VARIABLES_TABLEAUX.md
+- Référence rapide : REFERENCE_RAPIDE.md
+
+### 📊 Statistiques
+- **14 nouveaux snippets** ajoutés
+- Coloration syntaxique enrichie
+- Documentation : 2000+ lignes créées
+- 13 exemples de code ajoutés
+
+## [1.3.2] - 2025-12-05
+
+### 🐛 Corrections Critiques
+- **Parser corrigé** : Résolution du bug qui causait des boucles infinies lors du parsing
+  - Correction de la gestion du token EOF (End Of File)
+  - Meilleure gestion de la position du curseur dans le flux de tokens
+  - Les tests ne bloquent plus indéfiniment
+  
+- **Tests unitaires** : Tous les 77 tests passent maintenant avec succès (100%)
+  - Correction de la normalisation des retours à la ligne Windows (`\r\n` → `\n`)
+  - Correction du test `testOperators` (retrait de `:=` obsolète)
+  - Correction du test `testVariableDeclaration` (ajout du type caractère)
+  - Correction de la fonction `versChaine()` pour formater correctement les entiers (42 au lieu de 42.0)
+
+### ⚡ Optimisations
+- Configuration mémoire optimisée pour Gradle (`512m` au lieu de `1024m`)
+- Réduction de l'empreinte mémoire du daemon Kotlin
+
 ## [1.3.0] - 2025-12-03
 
 ### ✨ Ajouté
