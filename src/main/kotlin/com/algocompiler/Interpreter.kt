@@ -90,6 +90,7 @@ class Interpreter {
         when (statement) {
             is Assignment -> executeAssignment(statement)
             is ArrayAssignment -> executeArrayAssignment(statement)
+            is MatrixAssignment -> executeMatrixAssignment(statement)
             is IfStatement -> executeIfStatement(statement)
             is ForLoop -> executeForLoop(statement)
             is WhileLoop -> executeWhileLoop(statement)
@@ -133,6 +134,30 @@ class Interpreter {
         }
 
         array[index] = value
+    }
+
+    private fun executeMatrixAssignment(assignment: MatrixAssignment) {
+        val value = evaluateExpression(assignment.expression)
+        val index1 = toInt(evaluateExpression(assignment.index1))
+        val index2 = toInt(evaluateExpression(assignment.index2))
+        val normalizedName = normalize(assignment.matrixName)
+
+        @Suppress("UNCHECKED_CAST")
+        val matrix =
+                variables[normalizedName] as? MutableList<MutableList<Any>>
+                        ?: throw Exception(
+                                "Variable '${assignment.matrixName}' n'est pas une matrice"
+                        )
+
+        if (index1 < 0 || index1 >= matrix.size) {
+            throw Exception("Index ligne $index1 hors limites pour la matrice '${assignment.matrixName}'")
+        }
+
+        if (index2 < 0 || index2 >= matrix[index1].size) {
+            throw Exception("Index colonne $index2 hors limites pour la matrice '${assignment.matrixName}'")
+        }
+
+        matrix[index1][index2] = value
     }
 
     private fun executeIfStatement(ifStatement: IfStatement) {
@@ -655,6 +680,29 @@ class Interpreter {
                 }
                 array[index]
             }
+            is MatrixAccess -> {
+                val normalizedName = normalize(expression.name)
+                @Suppress("UNCHECKED_CAST")
+                val matrix =
+                        variables[normalizedName] as? List<List<Any>>
+                                ?: throw Exception(
+                                        "Variable '${expression.name}' n'est pas une matrice"
+                                )
+                val index1 = toInt(evaluateExpression(expression.index1))
+                val index2 = toInt(evaluateExpression(expression.index2))
+
+                if (index1 < 0 || index1 >= matrix.size) {
+                    throw Exception(
+                            "Index ligne $index1 hors limites pour la matrice '${expression.name}'"
+                    )
+                }
+                if (index2 < 0 || index2 >= matrix[index1].size) {
+                    throw Exception(
+                            "Index colonne $index2 hors limites pour la matrice '${expression.name}'"
+                    )
+                }
+                matrix[index1][index2]
+            }
             is FunctionCallExpression -> {
                 executeFunctionCall(expression.name, expression.arguments)
                         ?: throw Exception(
@@ -693,7 +741,7 @@ class Interpreter {
             "-" -> toDouble(left) - toDouble(right)
             "*" -> toDouble(left) * toDouble(right)
             "/" -> toDouble(left) / toDouble(right)
-            "**" -> toDouble(left).pow(toDouble(right))
+            "**", "^" -> toDouble(left).pow(toDouble(right))
             "div" -> toInt(left) / toInt(right)
             "mod", "%" -> toInt(left) % toInt(right)
             "==" -> left == right || toDouble(left) == toDouble(right)

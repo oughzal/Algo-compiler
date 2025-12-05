@@ -1,0 +1,99 @@
+algorithme TestOperateurPuissance
+
+variables
+    a, b, resultat1, resultat2 : entier
+    x, y, resultat3, resultat4 : reel
+
+debut
+    ecrireln("=================================")
+    ecrireln("  TEST OPÉRATEUR PUISSANCE")
+    ecrireln("=================================")
+    ecrireln()
+
+    // Test 1: Opérateur ** (existant)
+    ecrireln("Test 1: Opérateur ** (existant)")
+    a = 2
+    b = 3
+    resultat1 = a ** b
+    ecrire("2 ** 3 = ")
+    ecrireln(resultat1)
+    ecrireln()
+
+    // Test 2: Opérateur ^ (nouveau)
+    ecrireln("Test 2: Opérateur ^ (nouveau)")
+    resultat2 = 2 ^ 3
+    ecrire("2 ^ 3 = ")
+    ecrireln(resultat2)
+    ecrireln()
+
+    // Test 3: Comparaison ** vs ^
+    ecrireln("Test 3: Les deux opérateurs donnent le même résultat")
+    ecrire("2 ** 3 = ")
+    ecrireln(2 ** 3)
+    ecrire("2 ^ 3 = ")
+    ecrireln(2 ^ 3)
+    ecrire("Égalité: ")
+    ecrireln(2 ** 3 = 2 ^ 3)
+    ecrireln()
+
+    // Test 4: Avec réels
+    ecrireln("Test 4: Avec réels")
+    x = 2.5
+    y = 2.0
+    resultat3 = x ** y
+    resultat4 = x ^ y
+    ecrire("2.5 ** 2.0 = ")
+    ecrireln(resultat3)
+    ecrire("2.5 ^ 2.0 = ")
+    ecrireln(resultat4)
+    ecrireln()
+
+    // Test 5: Dans expressions
+    ecrireln("Test 5: Dans expressions complexes")
+    ecrire("3 + 2 ** 3 = ")
+    ecrireln(3 + 2 ** 3)
+    ecrire("3 + 2 ^ 3 = ")
+    ecrireln(3 + 2 ^ 3)
+    ecrire("(2 + 3) ** 2 = ")
+    ecrireln((2 + 3) ** 2)
+    ecrire("(2 + 3) ^ 2 = ")
+    ecrireln((2 + 3) ^ 2)
+    ecrireln()
+
+    // Test 6: Puissance de puissance
+    ecrireln("Test 6: Puissance de puissance")
+    ecrire("2 ** 2 ** 3 = ")
+    ecrireln(2 ** 2 ** 3)
+    ecrire("2 ^ 2 ^ 3 = ")
+    ecrireln(2 ^ 2 ^ 3)
+    ecrire("2 ** (2 ** 3) = ")
+    ecrireln(2 ** (2 ** 3))
+    ecrire("2 ^ (2 ^ 3) = ")
+    ecrireln(2 ^ (2 ^ 3))
+    ecrireln()
+
+    // Test 7: Cas particuliers
+    ecrireln("Test 7: Cas particuliers")
+    ecrire("2 ^ 0 = ")
+    ecrireln(2 ^ 0)
+    ecrire("2 ^ 1 = ")
+    ecrireln(2 ^ 1)
+    ecrire("0 ^ 2 = ")
+    ecrireln(0 ^ 2)
+    ecrire("10 ^ 2 = ")
+    ecrireln(10 ^ 2)
+    ecrireln()
+
+    // Test 8: Mix ** et ^
+    ecrireln("Test 8: Mix ** et ^ dans même expression")
+    ecrire("2 ** 3 + 3 ^ 2 = ")
+    ecrireln(2 ** 3 + 3 ^ 2)
+    ecrire("(devrait être 8 + 9 = 17)")
+    ecrireln()
+
+    ecrireln()
+    ecrireln("=================================")
+    ecrireln("✅ Tous les tests terminés!")
+    ecrireln("=================================")
+fin
+

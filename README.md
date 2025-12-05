@@ -4,6 +4,8 @@ Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu p
 
 ## Nouveautés importantes
 
+- **✨ NOUVEAU** : **Matrices (tableaux 2D)** : `M : tableau[3][3] de entier` - Support complet des tableaux à deux dimensions ([voir doc](SUPPORT_MATRICES.md))
+- **✨ NOUVEAU** : **Opérateur puissance ^** : Alias pour `**` - Utilisez `2 ^ 3` ou `2 ** 3` (équivalents) ([voir doc](OPERATEUR_PUISSANCE_ALIAS.md))
 - **✨ NOUVEAU** : **Initialisation de variables** : `var a : entier = 5` - Déclarez et initialisez en une seule ligne ([voir doc](INITIALISATION_VARIABLES_TABLEAUX.md))
 - **✨ NOUVEAU** : **Tableaux littéraux** : `T = [1, 2, 3, 4]` - Initialisez des tableaux avec une syntaxe concise ([voir doc](INITIALISATION_VARIABLES_TABLEAUX.md))
 - **✨ NOUVEAU** : **Expression conditionnelle (opérateur ternaire)** : `variable = si condition alors valeur1 sinon valeur2` ([voir doc](EXPRESSION_CONDITIONNELLE.md))
@@ -258,6 +260,39 @@ début
 fin
 ```
 
+### Matrices (Tableaux 2D)
+
+Support complet des tableaux à deux dimensions :
+
+```
+variables
+    matrice : tableau[3][3] de entier
+    notes : tableau[5][10] de reel
+    i, j : entier
+
+début
+    // Initialisation
+    pour i de 0 à 2 faire
+        pour j de 0 à 2 faire
+            matrice[i][j] := (i + 1) * 10 + (j + 1)
+        finpour
+    finpour
+    
+    // Accès
+    valeur := matrice[1][2]
+    
+    // Affichage
+    pour i de 0 à 2 faire
+        pour j de 0 à 2 faire
+            écrire(matrice[i][j], " ")
+        finpour
+        écrireln()
+    finpour
+fin
+```
+
+**Documentation complète** : [SUPPORT_MATRICES.md](SUPPORT_MATRICES.md)
+
 ### Entrée/Sortie
 
 #### Affichage
@@ -393,6 +428,7 @@ jusqu'à x > 10
 - `/` : Division réelle (retourne un nombre réel)
 - `div` : Division entière (retourne le quotient)
 - `mod` : Modulo (retourne le reste de la division)
+- `**` ou `^` : Puissance (2 syntaxes équivalentes)
 
 **Exemple :**
 ```
@@ -402,6 +438,11 @@ b := 5
 x := a / b      // x = 3.4 (division réelle)
 q := a div b    // q = 3 (quotient)
 r := a mod b    // r = 2 (reste)
+
+// Puissance (deux syntaxes)
+p1 := 2 ** 3    // p1 = 8
+p2 := 2 ^ 3     // p2 = 8 (identique)
+aire := rayon ^ 2  // Plus concis
 ```
 
 #### Comparaison

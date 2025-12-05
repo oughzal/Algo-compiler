@@ -1,0 +1,62 @@
+algorithme TestMatrices
+
+variables
+    matrice : tableau[3][3] de entier
+    i, j, somme : entier
+
+debut
+    ecrireln("=== TEST DES MATRICES ===")
+    ecrireln()
+
+    // Test 1 : Initialisation manuelle
+    ecrireln("Test 1 : Initialisation manuelle")
+    matrice[0][0] = 1
+    matrice[0][1] = 2
+    matrice[0][2] = 3
+    matrice[1][0] = 4
+    matrice[1][1] = 5
+    matrice[1][2] = 6
+    matrice[2][0] = 7
+    matrice[2][1] = 8
+    matrice[2][2] = 9
+
+    // Affichage
+    ecrireln("Matrice 3x3 :")
+    pour i de 0 à 2 faire
+        pour j de 0 à 2 faire
+            ecrire(matrice[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // Test 2 : Lecture d'un élément
+    ecrireln("Test 2 : Lecture d'un élément")
+    ecrire("Élément [1][1] = ")
+    ecrireln(matrice[1][1])
+    ecrireln()
+
+    // Test 3 : Calcul de la somme
+    ecrireln("Test 3 : Calcul de la somme")
+    somme = 0
+    pour i de 0 à 2 faire
+        pour j de 0 à 2 faire
+            somme = somme + matrice[i][j]
+        finpour
+    finpour
+    ecrire("Somme de tous les éléments : ")
+    ecrireln(somme)
+    ecrireln()
+
+    // Test 4 : Modification
+    ecrireln("Test 4 : Modification d'un élément")
+    ecrire("Avant : matrice[1][1] = ")
+    ecrireln(matrice[1][1])
+    matrice[1][1] = 99
+    ecrire("Après : matrice[1][1] = ")
+    ecrireln(matrice[1][1])
+    ecrireln()
+
+    ecrireln("=== TOUS LES TESTS TERMINÉS ===")
+fin
+

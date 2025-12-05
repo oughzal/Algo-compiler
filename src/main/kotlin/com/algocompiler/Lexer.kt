@@ -297,6 +297,10 @@ class Lexer(private val input: String) {
                                 Token(TokenType.MULT, "*", line, startCol)
                             }
                         }
+                        '^' -> {
+                            advance()
+                            Token(TokenType.PUISSANCE, "^", line, startCol)
+                        }
                         '/' -> {
                             advance()
                             Token(TokenType.DIV, "/", line, startCol)

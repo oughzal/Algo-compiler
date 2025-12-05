@@ -1,0 +1,17 @@
+algorithme TestSimplePuissance
+
+variables
+    resultat : entier
+
+debut
+    resultat = 2 ^ 3
+    ecrire("2 ^ 3 = ")
+    ecrireln(resultat)
+
+    ecrire("5 ^ 2 = ")
+    ecrireln(5 ^ 2)
+
+    ecrire("10 ** 2 = ")
+    ecrireln(10 ** 2)
+fin
+

@@ -1,0 +1,53 @@
+algorithme TableMultiplication
+
+variables
+    table : tableau[10][10] de entier
+    i, j : entier
+
+debut
+    ecrireln("=== TABLE DE MULTIPLICATION (1-10) ===")
+    ecrireln()
+
+    // Remplir la table
+    pour i de 0 à 9 faire
+        pour j de 0 à 9 faire
+            table[i][j] = (i + 1) * (j + 1)
+        finpour
+    finpour
+
+    // Afficher l'en-tête
+    ecrire("    ")
+    pour j de 1 à 10 faire
+        ecrire(j)
+        si j < 10 alors
+            ecrire("   ")
+        finsi
+    finpour
+    ecrireln()
+    ecrireln("   ----------------------------------------")
+
+    // Afficher la table
+    pour i de 0 à 9 faire
+        ecrire(i + 1)
+        si i + 1 < 10 alors
+            ecrire(" | ")
+        sinon
+            ecrire("| ")
+        finsi
+
+        pour j de 0 à 9 faire
+            si table[i][j] < 10 alors
+                ecrire(table[i][j], "   ")
+            sinonSi table[i][j] < 100 alors
+                ecrire(table[i][j], "  ")
+            sinon
+                ecrire(table[i][j], " ")
+            finsi
+        finpour
+        ecrireln()
+    finpour
+
+    ecrireln()
+    ecrireln("=== FIN ===")
+fin
+

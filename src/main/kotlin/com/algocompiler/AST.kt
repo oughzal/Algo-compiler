@@ -14,6 +14,7 @@ data class VariableDeclaration(
     val name: String,
     val type: String,
     val arraySize: Int? = null,
+    val arraySize2: Int? = null,
     val initialValue: Expression? = null
 ) : ASTNode()
 
@@ -35,6 +36,13 @@ data class Assignment(val variable: String, val expression: Expression) : Statem
 data class ArrayAssignment(
         val arrayName: String,
         val index: Expression,
+        val expression: Expression
+) : Statement()
+
+data class MatrixAssignment(
+        val matrixName: String,
+        val index1: Expression,
+        val index2: Expression,
         val expression: Expression
 ) : Statement()
 
@@ -97,6 +105,8 @@ data class BooleanLiteral(val value: Boolean) : Expression()
 data class Variable(val name: String) : Expression()
 
 data class ArrayAccess(val name: String, val index: Expression) : Expression()
+
+data class MatrixAccess(val name: String, val index1: Expression, val index2: Expression) : Expression()
 
 data class FunctionCallExpression(val name: String, val arguments: List<Expression>) : Expression()
 

@@ -95,6 +95,7 @@ class Parser(private val tokens: List<Token>) {
 
             var isArray = false
             var arraySize: Int? = null
+            var arraySize2: Int? = null  // Pour les matrices
 
             if (current().type == TokenType.TABLEAU) {
                 isArray = true
@@ -102,6 +103,14 @@ class Parser(private val tokens: List<Token>) {
                 expect(TokenType.CROCHET_GAUCHE)
                 arraySize = expect(TokenType.NOMBRE).value.toInt()
                 expect(TokenType.CROCHET_DROIT)
+
+                // Vérifier s'il y a une deuxième dimension (matrice)
+                if (current().type == TokenType.CROCHET_GAUCHE) {
+                    advance()
+                    arraySize2 = expect(TokenType.NOMBRE).value.toInt()
+                    expect(TokenType.CROCHET_DROIT)
+                }
+
                 expect(TokenType.DE)
             }
 
@@ -127,7 +136,7 @@ class Parser(private val tokens: List<Token>) {
             }
 
             for (name in names) {
-                declarations.add(VariableDeclaration(name, type, if (isArray) arraySize else null, initialValue))
+                declarations.add(VariableDeclaration(name, type, if (isArray) arraySize else null, arraySize2, initialValue))
             }
 
             skipNewlines()
@@ -268,7 +277,7 @@ class Parser(private val tokens: List<Token>) {
                 }
         advance()
 
-        return VariableDeclaration(name, type, if (isArray) arraySize else null)
+        return VariableDeclaration(name, type, if (isArray) arraySize else null, null, null)
     }
 
     private fun parseStatement(): Statement {
@@ -303,11 +312,22 @@ class Parser(private val tokens: List<Token>) {
             }
             TokenType.CROCHET_GAUCHE -> {
                 advance()
-                val index = parseExpression()
+                val index1 = parseExpression()
                 expect(TokenType.CROCHET_DROIT)
-                expect(TokenType.AFFECTATION)
-                val expression = parseExpression()
-                ArrayAssignment(name, index, expression)
+
+                // Vérifier s'il y a une deuxième dimension (matrice)
+                if (current().type == TokenType.CROCHET_GAUCHE) {
+                    advance()
+                    val index2 = parseExpression()
+                    expect(TokenType.CROCHET_DROIT)
+                    expect(TokenType.AFFECTATION)
+                    val expression = parseExpression()
+                    MatrixAssignment(name, index1, index2, expression)
+                } else {
+                    expect(TokenType.AFFECTATION)
+                    val expression = parseExpression()
+                    ArrayAssignment(name, index1, expression)
+                }
             }
             TokenType.PAREN_GAUCHE -> {
                 advance()
@@ -729,10 +749,11 @@ class Parser(private val tokens: List<Token>) {
         var left = parseUnary()
 
         while (current().type == TokenType.PUISSANCE) {
+            val operator = current().value  // Stocker l'opérateur tel qu'il est (** ou ^)
             advance()
-            // L'opérateur ** est associatif à droite, donc on appelle récursivement parsePower
+            // L'opérateur ** ou ^ est associatif à droite, donc on appelle récursivement parsePower
             val right = parsePower()
-            left = BinaryOp(left, "**", right)
+            left = BinaryOp(left, operator, right)
         }
 
         return left
@@ -784,9 +805,18 @@ class Parser(private val tokens: List<Token>) {
                 when (current().type) {
                     TokenType.CROCHET_GAUCHE -> {
                         advance()
-                        val index = parseExpression()
+                        val index1 = parseExpression()
                         expect(TokenType.CROCHET_DROIT)
-                        ArrayAccess(name, index)
+
+                        // Vérifier s'il y a une deuxième dimension (matrice)
+                        if (current().type == TokenType.CROCHET_GAUCHE) {
+                            advance()
+                            val index2 = parseExpression()
+                            expect(TokenType.CROCHET_DROIT)
+                            MatrixAccess(name, index1, index2)
+                        } else {
+                            ArrayAccess(name, index1)
+                        }
                     }
                     TokenType.PAREN_GAUCHE -> {
                         advance()

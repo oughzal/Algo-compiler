@@ -1,0 +1,70 @@
+algorithme OperationsMatricielles
+
+variables
+    A, B, C : tableau[2][2] de entier
+    i, j : entier
+
+debut
+    ecrireln("=== OPÉRATIONS MATRICIELLES ===")
+    ecrireln()
+
+    // Initialisation de la matrice A
+    ecrireln("Initialisation de la matrice A (2x2) :")
+    A[0][0] = 1
+    A[0][1] = 2
+    A[1][0] = 3
+    A[1][1] = 4
+
+    pour i de 0 à 1 faire
+        pour j de 0 à 1 faire
+            ecrire(A[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // Initialisation de la matrice B
+    ecrireln("Initialisation de la matrice B (2x2) :")
+    B[0][0] = 5
+    B[0][1] = 6
+    B[1][0] = 7
+    B[1][1] = 8
+
+    pour i de 0 à 1 faire
+        pour j de 0 à 1 faire
+            ecrire(B[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // Addition : C = A + B
+    ecrireln("Addition : C = A + B")
+    pour i de 0 à 1 faire
+        pour j de 0 à 1 faire
+            C[i][j] = A[i][j] + B[i][j]
+        finpour
+    finpour
+
+    ecrireln("Résultat C :")
+    pour i de 0 à 1 faire
+        pour j de 0 à 1 faire
+            ecrire(C[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // Multiplication par scalaire
+    ecrireln("Multiplication de A par 2 :")
+    pour i de 0 à 1 faire
+        pour j de 0 à 1 faire
+            ecrire(A[i][j] * 2, " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    ecrireln("=== FIN ===")
+fin
+
