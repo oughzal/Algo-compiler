@@ -34,6 +34,8 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icon.png">
+    <!-- canonical URL -->
+    <link rel="canonical" href="https://oughzal.github.io/Algo-compiler/">
 
     <!-- Définitions des variables CSS globales pour éviter les erreurs lors du build GitHub Pages -->
     <style>
@@ -57,7 +59,7 @@
             <div class="container">
                 <div class="logo">
                     <h1>🚀 Algo-Compiler</h1>
-                    <span class="version">v1.0.0</span>
+                    <span class="version">v1.3.3</span>
                 </div>
                 <ul class="nav-links">
                     <li><a href="#features">Fonctionnalités</a></li>
@@ -316,39 +318,18 @@ fin</code></pre>
 
             <!-- Installation Automatique -->
             <div class="install-automatic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 3rem;">
-                <h3 style="color: white; margin-bottom: 1rem;">🚀 Installation Automatique (Recommandée)</h3>
-                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">Installez le compilateur en une seule commande avec ajout automatique au PATH !</p>
+                <h3 style="color: white; margin-bottom: 1rem;">🚀 Installation Recommandée</h3>
+                <p style="font-size: 1.05rem; margin-bottom: 1rem;">Pour la plupart des utilisateurs : télécharger la release officielle et installer l'extension VS Code depuis le Marketplace (ou en installer la VSIX).</p>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem;">
-                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
-                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">📋 Méthode 1 : Batch (Simple)</h4>
-                        <ol style="padding-left: 1.5rem; margin: 0.5rem 0;">
-                            <li style="margin: 0.3rem 0;">Télécharger le release</li>
-                            <li style="margin: 0.3rem 0;">Compiler : <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">gradlew build</code></li>
-                            <li style="margin: 0.3rem 0;">Clic droit sur <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">install-algo-compiler.bat</code></li>
-                            <li style="margin: 0.3rem 0;">"Exécuter en tant qu'administrateur"</li>
-                        </ol>
-                    </div>
+                <ol style="padding-left: 1.2rem; margin: 0.5rem 0;">
+                    <li>Télécharger la release : <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">Page Release (tag: release)</a></li>
+                    <li>Installer l'extension VS Code depuis le Marketplace : <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank" style="color: white; text-decoration: underline;">Algo Compiler - VS Marketplace</a></li>
+                    <li>Ou télécharger et installer la VSIX depuis la page Release ou le dossier <code>algo-compiler-vscode/</code> inclus dans le dépôt.</li>
+                    <li>Configurer l'extension (chemin vers le JAR du compilateur) dans les paramètres VS Code.</li>
+                </ol>
 
-                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
-                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">💻 Méthode 2 : PowerShell (Avancé)</h4>
-                        <ol style="padding-left: 1.5rem; margin: 0.5rem 0;">
-                            <li style="margin: 0.3rem 0;">Télécharger le release</li>
-                            <li style="margin: 0.3rem 0;">Compiler : <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">.\gradlew build</code></li>
-                            <li style="margin: 0.3rem 0;">PowerShell en admin</li>
-                            <li style="margin: 0.3rem 0;"><code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">.\install-algo-compiler.ps1</code></li>
-                        </ol>
-                    </div>
-                </div>
-
-                <div style="background: rgba(255,255,255,0.15); padding: 1rem; border-radius: 8px; border-left: 4px solid #ffd700;">
-                    <strong>✨ Avantages :</strong> Installation en 2 clics, ajout automatique au PATH, commande <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">algoc</code> disponible partout, désinstallateur inclus
-                </div>
-
-                <div style="margin-top: 1rem; text-align: center;">
-                    <a href="https://github.com/oughzal/Algo-compiler/releases/latest" target="_blank" style="display: inline-block; background: white; color: #667eea; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; margin: 0.5rem;">
-                        📥 Télécharger le Release Complet
-                    </a>
+                <div style="background: rgba(255,255,255,0.15); padding: 1rem; border-radius: 8px; border-left: 4px solid #ffd700; margin-top: 1rem;">
+                    <strong>✨ Remarque :</strong> Les instructions de compilation (gradlew) restent disponibles pour les contributeurs. Les utilisateurs finaux peuvent simplement télécharger le bundle depuis la page Release.
                 </div>
             </div>
 
@@ -367,8 +348,8 @@ fin</code></pre>
                     <div class="step-number">2</div>
                     <h3>Télécharger le Compilateur</h3>
                     <p>Téléchargez le JAR depuis GitHub Release</p>
-                    <a href="https://github.com/oughzal/Algo-compiler/releases/latest/download/algo-compiler-1.0.0.jar" target="_blank" class="btn-primary" style="display: inline-block; margin: 10px 0;">📦 Télécharger algo-compiler-1.0.0.jar</a>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Placez le JAR dans un dossier de votre choix (ex: C:\Program Files\algo-compiler\)</p>
+                    <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" class="btn-primary" style="display: inline-block; margin: 10px 0;">📦 Télécharger depuis la page Release</a>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Placez le JAR dans un dossier de votre choix (ex: C:\\Program Files\\algo-compiler\\)</p>
                 </div>
 
                 <div class="install-step">
@@ -399,8 +380,8 @@ fin</code></pre>
                         <h4 style="color: #ffd700; margin-bottom: 0.5rem;">📥 Téléchargements</h4>
                         <ul style="list-style: none; padding: 0;">
                             <li style="margin: 0.5rem 0;">
-                                <a href="https://github.com/oughzal/Algo-compiler/releases/latest/download/algo-compiler-1.0.0.jar" target="_blank" style="color: white; text-decoration: underline;">
-                                    ➤ Compilateur JAR (algo-compiler-1.0.0.jar)
+                                <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">
+                                    ➤ Compilateur JAR (télécharger depuis la page Release)
                                 </a>
                             </li>
                             <li style="margin: 0.5rem 0;">
@@ -409,8 +390,8 @@ fin</code></pre>
                                 </a>
                             </li>
                             <li style="margin: 0.5rem 0;">
-                                <a href="https://github.com/oughzal/Algo-compiler/releases/latest/download/algo-compiler-1.3.1.vsix" target="_blank" style="color: white; text-decoration: underline;">
-                                    ➤ Extension VSIX (algo-compiler-1.3.1.vsix)
+                                <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">
+                                    ➤ Extension VSIX (télécharger depuis la page Release)
                                 </a>
                             </li>
                         </ul>
@@ -584,7 +565,7 @@ fin</code></pre>
                 <div class="footer-section">
                     <h3>Algo-Compiler</h3>
                     <p>Compilateur de pseudo-code algorithmique en français</p>
-                    <p class="footer-version">Version 1.0.0 - Décembre 2025</p>
+                    <p class="footer-version">Version 1.3.3 - Décembre 2025</p>
                 </div>
 
                 <div class="footer-section">
