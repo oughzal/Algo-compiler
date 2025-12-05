@@ -3,124 +3,551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Algo-Compiler - Compilateur et interpréteur de pseudo-code algorithmique en français avec 40 fonctions intégrées">
-    <meta name="keywords" content="algorithme, pseudo-code, compilateur, français, programmation, éducation">
+    <meta name="description" content="Algo-Compiler - Compilateur de pseudo-code algorithmique en français avec support des matrices, 40+ fonctions intégrées et extension VS Code">
+    <meta name="keywords" content="algorithme, pseudo-code, compilateur, français, programmation, éducation, matrices, VS Code">
+    <meta name="author" content="Omar OUGHZAL">
     <title>Algo-Compiler - Compilateur de Pseudo-code Français</title>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oughzal.github.io/Algo-compiler/">
     <meta property="og:title" content="Algo-Compiler - Compilateur de Pseudo-code Français">
-    <meta property="og:description" content="Compilateur de pseudo-code algorithmique en français avec 40 fonctions intégrées, type caractère, instruction selon et extension VS Code">
+    <meta property="og:description" content="Compilateur moderne de pseudo-code en français avec matrices 2D, 40+ fonctions intégrées et extension VS Code">
     <meta property="og:image" content="https://oughzal.github.io/Algo-compiler/Algo-compiler.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
-    <meta property="og:site_name" content="Algo-Compiler">
-    <meta property="og:locale" content="fr_FR">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://oughzal.github.io/Algo-compiler/">
     <meta name="twitter:title" content="Algo-Compiler - Compilateur de Pseudo-code Français">
-    <meta name="twitter:description" content="Compilateur de pseudo-code algorithmique en français avec 40 fonctions intégrées, type caractère, instruction selon et extension VS Code">
+    <meta name="twitter:description" content="Compilateur moderne de pseudo-code en français avec matrices 2D, 40+ fonctions intégrées">
     <meta name="twitter:image" content="https://oughzal.github.io/Algo-compiler/icon.png">
-    <meta name="twitter:creator" content="@algocompiler">
 
-    <!-- Additional Meta Tags -->
-    <meta name="author" content="Algo-Compiler Team">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="French">
-    <meta name="theme-color" content="#2563eb">
-
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icon.png">
-    <!-- canonical URL -->
     <link rel="canonical" href="https://oughzal.github.io/Algo-compiler/">
 
-    <!-- Définitions des variables CSS globales pour éviter les erreurs lors du build GitHub Pages -->
     <style>
-        :root {
-            --primary-color: #667eea; /* utilisé pour liens et accents */
-            --text-color: #1f2937;   /* couleur de texte par défaut */
-            --muted-opacity: 0.7;
-            --background-gradient-start: #667eea;
-            --background-gradient-end: #764ba2;
+        /* Reset & Base - Mobile First */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Fallbacks minimaux pour éléments critiques si style.css absent */
-        body { color: var(--text-color, #1f2937); }
-        a { color: var(--primary-color, #667eea); }
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: white;
+            font-size: 16px;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .version-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        nav {
+            display: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Mobile Menu Button */
+        .menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 0;
+            background: var(--light);
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* New Features Highlight */
+        .new-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        /* Code Example */
+        .code-section {
+            padding: 3rem 0;
+        }
+
+        .code-example {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .code-comment {
+            color: #6b7280;
+        }
+
+        .code-keyword {
+            color: #a78bfa;
+        }
+
+        .code-string {
+            color: #34d399;
+        }
+
+        .code-number {
+            color: #fbbf24;
+        }
+
+        /* Installation */
+        .installation {
+            padding: 3rem 0;
+            background: var(--light);
+        }
+
+        .install-steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .install-step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -1rem;
+            left: 1.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .install-step h3 {
+            margin-bottom: 0.75rem;
+            margin-top: 0.5rem;
+            color: var(--text);
+        }
+
+        .install-step code {
+            background: var(--light);
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: block;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Tablet & Desktop */
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+
+            .menu-btn {
+                display: none;
+            }
+
+            nav {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.25rem;
+            }
+
+            .hero-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .btn {
+                width: auto;
+            }
+
+            .stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .install-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Utilities */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-2 {
+            margin-top: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <h1>🚀 Algo-Compiler</h1>
-                    <span class="version">v1.3.3</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#features">Fonctionnalités</a></li>
-                    <li><a href="#install">Installation</a></li>
-                    <li><a href="#docs">Documentation</a></li>
-                    <li><a href="#examples">Exemples</a></li>
-                    <li><a href="https://github.com/oughzal/Algo-compiler" target="_blank" class="btn-primary">GitHub</a></li>
-                </ul>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <img src="icon.png" alt="Algo-Compiler Logo">
+                    <span>Algo-Compiler</span>
+                </a>
+                <span class="version-badge">v1.6.0</span>
+                <button class="menu-btn" aria-label="Menu">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Fonctionnalités</a></li>
+                        <li><a href="#code">Exemples</a></li>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="https://github.com/oughzal/Algo-compiler" target="_blank">GitHub</a></li>
+                    </ul>
+                </nav>
             </div>
-        </nav>
+        </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h2>Compilateur de Pseudo-code Algorithmique en Français</h2>
-                <p class="hero-subtitle">Écrivez, compilez et exécutez vos algorithmes en pseudo-code français avec 40 fonctions intégrées</p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">40</span>
-                        <span class="stat-label">Fonctions intégrées</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">5</span>
-                        <span class="stat-label">Types de données</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">30+</span>
-                        <span class="stat-label">Exemples fournis</span>
-                    </div>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#install" class="btn-large btn-primary">Commencer</a>
-                    <a href="#docs" class="btn-large btn-secondary">Documentation</a>
-                </div>
+            <h1>Compilateur de Pseudo-code Français</h1>
+            <p>Apprenez l'algorithmique avec un langage moderne et intuitif en français</p>
+
+            <div class="hero-buttons">
+                <a href="https://github.com/oughzal/Algo-compiler/releases/latest" class="btn btn-primary" target="_blank">
+                    ⬇️ Télécharger v1.6.0
+                </a>
+                <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="btn btn-secondary" target="_blank">
+                    📦 Extension VS Code
+                </a>
             </div>
-            <div class="hero-code">
-                <pre><code>algorithme DemoNouveautes
 
-variables
-    nom : chaine = "Alice"          // ✨ Initialisation
-    notes : tableau[3] de reel
-    moyenne : reel
-
-debut
-    notes = [15.5, 12.0, 18.0]      // ✨ Tableau littéral
-    moyenne = (notes[0] + notes[1] + notes[2]) / 3
-
-    // ✨ Expression conditionnelle (opérateur ternaire)
-    mention = si moyenne >= 14 alors "Bien" sinon "Passable"
-
-    // ✨ Clause sinonSi
-    si moyenne >= 16 alors
-        ecrireln("Excellent !")
-    sinonSi moyenne >= 14 alors
-        ecrireln("Très bien !")
-    sinon
-        ecrireln("Peut mieux faire")
-    finsi
-fin</code></pre>
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">40+</span>
+                    <span class="stat-label">Fonctions Intégrées</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Snippets VS Code</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Types de Données</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">Exemples</span>
+                </div>
             </div>
         </div>
     </section>
@@ -131,613 +558,138 @@ fin</code></pre>
             <h2 class="section-title">Fonctionnalités Principales</h2>
 
             <div class="features-grid">
-                <div class="feature-card highlight">
-                    <div class="feature-icon">✨</div>
-                    <h3>Clause sinonSi</h3>
-                    <p>Testez plusieurs conditions sans imbrication : <code>si... sinonSi... sinonSi... sinon</code>. Code plus lisible et maintenable.</p>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Matrices 2D <span class="new-badge">NOUVEAU</span></h3>
+                    <p>Support complet des tableaux à deux dimensions avec syntaxe intuitive <code>M[i][j]</code></p>
                 </div>
 
-                <div class="feature-card highlight">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Expression Conditionnelle</h3>
-                    <p>Opérateur ternaire : <code>max = si a > b alors a sinon b</code>. Syntaxe concise pour affectations conditionnelles.</p>
-                </div>
-
-                <div class="feature-card highlight">
-                    <div class="feature-icon">📝</div>
-                    <h3>Initialisation de Variables</h3>
-                    <p>Déclarez et initialisez en une ligne : <code>compteur : entier = 0</code>. Plus besoin d'affectations séparées.</p>
-                </div>
-
-                <div class="feature-card highlight">
-                    <div class="feature-icon">📦</div>
-                    <h3>Tableaux Littéraux</h3>
-                    <p>Syntaxe concise : <code>T = [1, 2, 3, 4, 5]</code>. Initialisez vos tableaux rapidement avec expressions supportées.</p>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Opérateur ^ <span class="new-badge">NOUVEAU</span></h3>
+                    <p>Opérateur de puissance simplifié : <code>2 ^ 3</code> au lieu de <code>2 ** 3</code></p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🧮</div>
                     <h3>40+ Fonctions Intégrées</h3>
-                    <p>Mathématiques, chaînes, caractères, conversions et aléatoires - tout ce dont vous avez besoin.</p>
+                    <p>Mathématiques, chaînes, caractères, conversions et aléatoires prêtes à l'emploi</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Extension VS Code</h3>
+                    <p>50+ snippets, coloration syntaxique et exécution directe avec Ctrl+Shift+R</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Expression Conditionnelle</h3>
+                    <p>Opérateur ternaire : <code>max = si a > b alors a sinon b</code></p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🔤</div>
                     <h3>Type Caractère</h3>
-                    <p>Support complet avec <code>ord()</code>, <code>chr()</code>, échappements (\n, \t) et fonctions dédiées.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Instruction Selon</h3>
-                    <p>Structure switch/case à la française : <code>selon(expr) cas 1: action1 cas 2: action2</code>.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🛠️</div>
-                    <h3>Extension VS Code v1.4.0</h3>
-                    <p>44+ snippets, coloration complète, exécution directe (Ctrl+Shift+R). Disponible sur VS Marketplace.</p>
+                    <p>Support des caractères avec fonctions <code>ord()</code> et <code>chr()</code></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- What's New Section -->
-    <section class="whats-new">
+    <!-- Code Examples -->
+    <section id="code" class="code-section">
         <div class="container">
-            <h2 class="section-title">🎉 Nouveautés v1.4.0</h2>
-            <p class="section-subtitle">Quatre fonctionnalités majeures pour simplifier votre code</p>
+            <h2 class="section-title">Exemples de Code</h2>
 
-            <div class="new-features-grid">
-                <div class="new-feature">
-                    <div class="new-feature-header">
-                        <span class="new-badge">NOUVEAU</span>
-                        <h3>Clause sinonSi</h3>
-                    </div>
-                    <div class="code-comparison">
-                        <div class="before">
-                            <span class="label">❌ Avant (imbriqué)</span>
-                            <pre><code>si x > 20 alors
-    ecrire("Grand")
-sinon
-    si x > 10 alors
-        ecrire("Moyen")
-    sinon
-        ecrire("Petit")
-    finsi
-finsi</code></pre>
-                        </div>
-                        <div class="after">
-                            <span class="label">✅ Maintenant (sinonSi)</span>
-                            <pre><code>si x > 20 alors
-    ecrire("Grand")
-sinonSi x > 10 alors
-    ecrire("Moyen")
-sinon
-    ecrire("Petit")
-finsi</code></pre>
-                        </div>
-                    </div>
-                </div>
+            <h3 class="text-center mb-2">Matrice 3x3</h3>
+            <div class="code-example">
+<pre><code><span class="code-keyword">algorithme</span> MatriceSimple
 
-                <div class="new-feature">
-                    <div class="new-feature-header">
-                        <span class="new-badge">NOUVEAU</span>
-                        <h3>Expression Conditionnelle</h3>
-                    </div>
-                    <div class="code-comparison">
-                        <div class="before">
-                            <span class="label">❌ Avant (verbeux)</span>
-                            <pre><code>si a > b alors
-    max = a
-sinon
-    max = b
-finsi</code></pre>
-                        </div>
-                        <div class="after">
-                            <span class="label">✅ Maintenant (concis)</span>
-                            <pre><code>max = si a > b alors a sinon b
+<span class="code-keyword">variables</span>
+    M : <span class="code-keyword">tableau</span>[<span class="code-number">3</span>][<span class="code-number">3</span>] <span class="code-keyword">de entier</span>
+    i, j : <span class="code-keyword">entier</span>
 
-statut = si age >= 18 alors "Majeur" sinon "Mineur"</code></pre>
-                        </div>
-                    </div>
-                </div>
+<span class="code-keyword">debut</span>
+    <span class="code-comment">// Initialisation</span>
+    <span class="code-keyword">pour</span> i <span class="code-keyword">de</span> <span class="code-number">0</span> <span class="code-keyword">à</span> <span class="code-number">2</span> <span class="code-keyword">faire</span>
+        <span class="code-keyword">pour</span> j <span class="code-keyword">de</span> <span class="code-number">0</span> <span class="code-keyword">à</span> <span class="code-number">2</span> <span class="code-keyword">faire</span>
+            M[i][j] = (i + <span class="code-number">1</span>) * <span class="code-number">10</span> + (j + <span class="code-number">1</span>)
+        <span class="code-keyword">finpour</span>
+    <span class="code-keyword">finpour</span>
 
-                <div class="new-feature">
-                    <div class="new-feature-header">
-                        <span class="new-badge">NOUVEAU</span>
-                        <h3>Initialisation de Variables</h3>
-                    </div>
-                    <div class="code-comparison">
-                        <div class="before">
-                            <span class="label">❌ Avant (deux étapes)</span>
-                            <pre><code>variables
-    compteur : entier
-
-debut
-    compteur = 0</code></pre>
-                        </div>
-                        <div class="after">
-                            <span class="label">✅ Maintenant (une étape)</span>
-                            <pre><code>variables
-    compteur : entier = 0
-    pi : reel = 3.14159
-    nom : chaine = "Alice"</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="new-feature">
-                    <div class="new-feature-header">
-                        <span class="new-badge">NOUVEAU</span>
-                        <h3>Tableaux Littéraux</h3>
-                    </div>
-                    <div class="code-comparison">
-                        <div class="before">
-                            <span class="label">❌ Avant (boucle)</span>
-                            <pre><code>T[0] = 1
-T[1] = 2
-T[2] = 3
-T[3] = 4
-T[4] = 5</code></pre>
-                        </div>
-                        <div class="after">
-                            <span class="label">✅ Maintenant (littéral)</span>
-                            <pre><code>T = [1, 2, 3, 4, 5]
-
-notes = [15.5, 12.0, 18.0]
-noms = ["Alice", "Bob"]</code></pre>
-                        </div>
-                    </div>
-                </div>
+    <span class="code-comment">// Affichage</span>
+    <span class="code-keyword">pour</span> i <span class="code-keyword">de</span> <span class="code-number">0</span> <span class="code-keyword">à</span> <span class="code-number">2</span> <span class="code-keyword">faire</span>
+        <span class="code-keyword">pour</span> j <span class="code-keyword">de</span> <span class="code-number">0</span> <span class="code-keyword">à</span> <span class="code-number">2</span> <span class="code-keyword">faire</span>
+            <span class="code-keyword">ecrire</span>(M[i][j], <span class="code-string">" "</span>)
+        <span class="code-keyword">finpour</span>
+        <span class="code-keyword">ecrireln</span>()
+    <span class="code-keyword">finpour</span>
+<span class="code-keyword">fin</span></code></pre>
             </div>
 
-            <div class="stats-banner">
-                <div class="stat-item">
-                    <strong>44% moins de code</strong> avec les tableaux littéraux
-                </div>
-                <div class="stat-item">
-                    <strong>14 nouveaux snippets</strong> dans l'extension VS Code
-                </div>
-                <div class="stat-item">
-                    <strong>100% compatible</strong> avec le code existant
-                </div>
+            <h3 class="text-center mb-2 mt-2">Opérateur Puissance</h3>
+            <div class="code-example">
+<pre><code><span class="code-keyword">algorithme</span> Puissance
+
+<span class="code-keyword">variables</span>
+    resultat : <span class="code-keyword">entier</span>
+    aire : <span class="code-keyword">reel</span>
+
+<span class="code-keyword">debut</span>
+    resultat = <span class="code-number">2</span> <span class="code-keyword">^</span> <span class="code-number">3</span>  <span class="code-comment">// 8</span>
+    <span class="code-keyword">ecrireln</span>(<span class="code-string">"2^3 = "</span>, resultat)
+
+    aire = <span class="code-number">3.14159</span> * rayon <span class="code-keyword">^</span> <span class="code-number">2</span>
+    <span class="code-keyword">ecrireln</span>(<span class="code-string">"Aire = "</span>, aire)
+<span class="code-keyword">fin</span></code></pre>
             </div>
         </div>
     </section>
 
-    <!-- Functions Section -->
-    <section class="functions">
+    <!-- Installation -->
+    <section id="installation" class="installation">
         <div class="container">
-            <h2 class="section-title">40 Fonctions Intégrées</h2>
+            <h2 class="section-title">Installation Rapide</h2>
 
-            <div class="functions-tabs">
-                <button class="tab-btn active" data-tab="math">Mathématiques (15)</button>
-                <button class="tab-btn" data-tab="string">Chaînes (9)</button>
-                <button class="tab-btn" data-tab="char">Caractères (8)</button>
-                <button class="tab-btn" data-tab="convert">Conversions (3)</button>
-                <button class="tab-btn" data-tab="random">Aléatoires (3)</button>
-            </div>
-
-            <div class="tab-content active" id="math">
-                <div class="function-list">
-                    <div class="function-item">
-                        <code>abs(x)</code> - Valeur absolue
-                    </div>
-                    <div class="function-item">
-                        <code>min(a, b)</code> - Minimum de deux valeurs
-                    </div>
-                    <div class="function-item">
-                        <code>max(a, b)</code> - Maximum de deux valeurs
-                    </div>
-                    <div class="function-item">
-                        <code>racine(x)</code> - Racine carrée
-                    </div>
-                    <div class="function-item">
-                        <code>puissance(x, y)</code> - x à la puissance y
-                    </div>
-                    <div class="function-item">
-                        <code>arrondi(x)</code> - Arrondi au plus proche
-                    </div>
-                    <div class="function-item">
-                        <code>plancher(x)</code> - Arrondi inférieur
-                    </div>
-                    <div class="function-item">
-                        <code>plafond(x)</code> - Arrondi supérieur
-                    </div>
-                    <div class="function-item">
-                        <code>reste(a, b)</code> - Reste de division
-                    </div>
-                    <div class="function-item">
-                        <code>quotient(a, b)</code> - Quotient division entière
-                    </div>
-                    <div class="function-item">
-                        <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code> - Trigonométrie
-                    </div>
-                    <div class="function-item">
-                        <code>log(x)</code> - Logarithme naturel
-                    </div>
-                    <div class="function-item">
-                        <code>exp(x)</code> - Exponentielle
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content" id="string">
-                <div class="function-list">
-                    <div class="function-item">
-                        <code>longueur(s)</code> - Longueur d'une chaîne
-                    </div>
-                    <div class="function-item">
-                        <code>majuscule(s)</code> - Convertir en majuscules
-                    </div>
-                    <div class="function-item">
-                        <code>minuscule(s)</code> - Convertir en minuscules
-                    </div>
-                    <div class="function-item">
-                        <code>sousChaine(s, debut, fin)</code> - Extraire sous-chaîne
-                    </div>
-                    <div class="function-item">
-                        <code>estVide(s)</code> - Vérifie si chaîne vide
-                    </div>
-                    <div class="function-item">
-                        <code>contient(s, sous_chaine)</code> - Recherche dans chaîne
-                    </div>
-                    <div class="function-item">
-                        <code>commence(s, prefixe)</code> - Vérifie le début
-                    </div>
-                    <div class="function-item">
-                        <code>termine(s, suffixe)</code> - Vérifie la fin
-                    </div>
-                    <div class="function-item">
-                        <code>position(s, sous_chaine)</code> - Trouve la position
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content" id="char">
-                <div class="function-list">
-                    <div class="function-item">
-                        <code>ord(c)</code> - Caractère → Code ASCII
-                    </div>
-                    <div class="function-item">
-                        <code>chr(code)</code> - Code ASCII → Caractère
-                    </div>
-                    <div class="function-item">
-                        <code>estLettre(c)</code> - Teste si c'est une lettre
-                    </div>
-                    <div class="function-item">
-                        <code>estChiffre(c)</code> - Teste si c'est un chiffre
-                    </div>
-                    <div class="function-item">
-                        <code>estMajuscule(c)</code> - Teste si majuscule
-                    </div>
-                    <div class="function-item">
-                        <code>estMinuscule(c)</code> - Teste si minuscule
-                    </div>
-                    <div class="function-item">
-                        <code>versMajuscule(c)</code> - Convertir en majuscule
-                    </div>
-                    <div class="function-item">
-                        <code>versMinuscule(c)</code> - Convertir en minuscule
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content" id="convert">
-                <div class="function-list">
-                    <div class="function-item">
-                        <code>versEntier(x)</code> - Convertit en entier
-                    </div>
-                    <div class="function-item">
-                        <code>versReel(x)</code> - Convertit en réel
-                    </div>
-                    <div class="function-item">
-                        <code>versChaine(x)</code> - Convertit en chaîne
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-content" id="random">
-                <div class="function-list">
-                    <div class="function-item">
-                        <code>aleatoire()</code> - Nombre entre 0.0 et 1.0
-                    </div>
-                    <div class="function-item">
-                        <code>aleatoire(max)</code> - Entier entre 0 et max-1
-                    </div>
-                    <div class="function-item">
-                        <code>aleatoire(min, max)</code> - Entier entre min et max-1
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Installation Section -->
-    <section id="install" class="installation">
-        <div class="container">
-            <h2 class="section-title">Installation</h2>
-
-            <!-- Installation Automatique -->
-            <div class="install-automatic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 3rem;">
-                <h3 style="color: white; margin-bottom: 1rem;">🚀 Installation Recommandée</h3>
-                <p style="font-size: 1.05rem; margin-bottom: 1rem;">Pour la plupart des utilisateurs : télécharger la release officielle et installer l'extension VS Code depuis le Marketplace (ou en installer la VSIX).</p>
-
-                <ol style="padding-left: 1.2rem; margin: 0.5rem 0;">
-                    <li>Télécharger la release : <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">Page Release (tag: release)</a></li>
-                    <li>Installer l'extension VS Code depuis le Marketplace : <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank" style="color: white; text-decoration: underline;">Algo Compiler - VS Marketplace</a></li>
-                    <li>Ou télécharger et installer la VSIX depuis la page Release ou le dossier <code>algo-compiler-vscode/</code> inclus dans le dépôt.</li>
-                    <li>Configurer l'extension (chemin vers le JAR du compilateur) dans les paramètres VS Code.</li>
-                </ol>
-
-                <div style="background: rgba(255,255,255,0.15); padding: 1rem; border-radius: 8px; border-left: 4px solid #ffd700; margin-top: 1rem;">
-                    <strong>✨ Remarque :</strong> Les instructions de compilation (gradlew) restent disponibles pour les contributeurs. Les utilisateurs finaux peuvent simplement télécharger le bundle depuis la page Release.
-                </div>
-            </div>
-
-            <h3 style="text-align: center; margin: 2rem 0; color: var(--text-color, #1f2937); opacity: 0.7;">— OU Installation Manuelle —</h3>
-
-            <div class="install-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="install-steps">
                 <div class="install-step">
                     <div class="step-number">1</div>
-                    <h3>Installer Java 21+</h3>
-                    <p>Vérifiez que Java 21 ou supérieur est installé</p>
-                    <pre><code>java -version</code></pre>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">Si non installé, téléchargez depuis <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" style="color: var(--primary-color);">Oracle</a> ou <a href="https://adoptium.net/" target="_blank" style="color: var(--primary-color);">Adoptium</a></p>
+                    <h3>Télécharger le Compilateur</h3>
+                    <p>Téléchargez le fichier JAR depuis GitHub Releases</p>
+                    <code>algo-compiler-1.0.0.jar</code>
+                    <a href="https://github.com/oughzal/Algo-compiler/releases/latest" class="btn btn-primary mt-2" target="_blank">
+                        Télécharger
+                    </a>
                 </div>
 
                 <div class="install-step">
                     <div class="step-number">2</div>
-                    <h3>Télécharger le Compilateur</h3>
-                    <p>Téléchargez le JAR depuis GitHub Release</p>
-                    <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" class="btn-primary" style="display: inline-block; margin: 10px 0;">📦 Télécharger depuis la page Release</a>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Placez le JAR dans un dossier de votre choix (ex: C:\\Program Files\\algo-compiler\\)</p>
+                    <h3>Installer Java 21+</h3>
+                    <p>Le compilateur nécessite Java 21 ou supérieur</p>
+                    <code>java -version</code>
+                    <a href="https://adoptium.net/" class="btn btn-secondary mt-2" target="_blank">
+                        Télécharger Java
+                    </a>
                 </div>
 
                 <div class="install-step">
                     <div class="step-number">3</div>
-                    <h3>Installer l'Extension VS Code v1.4.0</h3>
-                    <p><strong>Depuis le Marketplace (Recommandé)</strong></p>
-                    <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank" class="btn-primary" style="display: inline-block; margin: 10px 0;">🛒 Installer depuis VS Marketplace</a>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Ou dans VS Code : Extensions (Ctrl+Shift+X) → Rechercher "Algo Compiler"</p>
-                    <p style="font-size: 0.85rem; color: #10b981; margin-top: 5px;">✨ Nouveau : 44+ snippets incluant sinonSi, expression conditionnelle, tableaux littéraux</p>
-
-                    <!-- Image Marketplace (à ajouter) -->
-                    <div style="margin-top: 15px; text-align: center;">
-                        <img src="vscode_marketplace.png" alt="Extension Algo Compiler sur VS Marketplace" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;" onerror="this.style.display='none'">
-                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px; font-style: italic;">Extension sur le Visual Studio Marketplace</p>
-                    </div>
+                    <h3>Extension VS Code</h3>
+                    <p>Installez l'extension depuis le Marketplace</p>
+                    <code>Rechercher: Algo Compiler</code>
+                    <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="btn btn-primary mt-2" target="_blank">
+                        Installer l'Extension
+                    </a>
                 </div>
 
                 <div class="install-step">
                     <div class="step-number">4</div>
-                    <h3>Configurer l'Extension</h3>
-                    <p>Dans VS Code, configurez le chemin du compilateur</p>
-                    <pre><code>1. File > Preferences > Settings
-2. Rechercher "Algo Compiler"
-3. Définir Compiler Path:
-   Windows: C:\Program Files\algo-compiler\algo-compiler-1.0.0.jar
-   Linux/Mac: /usr/local/bin/algo-compiler-1.0.0.jar</code></pre>
-
-                    <!-- Image Settings -->
-                    <div style="margin-top: 15px; text-align: center;">
-                        <img src="vscode_settings.png" alt="Configuration de l'extension dans VS Code" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
-                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px; font-style: italic;">Paramètres de l'extension dans VS Code</p>
-                    </div>
+                    <h3>Configurer VS Code</h3>
+                    <p>Définissez le chemin du compilateur dans les paramètres</p>
+                    <code>Settings → Algo Compiler → Compiler Path</code>
+                    <p class="mt-2">Puis créez un fichier <code>.algo</code> et appuyez sur <strong>Ctrl+Shift+R</strong> pour exécuter !</p>
                 </div>
-            </div>
-
-            <div class="install-vscode" style="margin-top: 3rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 12px;">
-                <h3 style="color: white; margin-bottom: 1rem;">🎯 Démarrage Rapide</h3>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
-                    <div>
-                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">📥 Téléchargements</h4>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="margin: 0.5rem 0;">
-                                <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">
-                                    ➤ Compilateur JAR (télécharger depuis la page Release)
-                                </a>
-                            </li>
-                            <li style="margin: 0.5rem 0;">
-                                <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank" style="color: white; text-decoration: underline;">
-                                    ➤ Extension VS Code (VS Marketplace)
-                                </a>
-                            </li>
-                            <li style="margin: 0.5rem 0;">
-                                <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" target="_blank" style="color: white; text-decoration: underline;">
-                                    ➤ Extension VSIX (télécharger depuis la page Release)
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 style="color: #ffd700; margin-bottom: 0.5rem;">⚡ Utilisation</h4>
-                        <ol style="padding-left: 1.5rem;">
-                            <li style="margin: 0.5rem 0;">Créer un fichier <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">.algo</code></li>
-                            <li style="margin: 0.5rem 0;">Taper <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">algo</code> + Tab pour le template</li>
-                            <li style="margin: 0.5rem 0;">Écrire votre algorithme</li>
-                            <li style="margin: 0.5rem 0;">Appuyer sur <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">Ctrl+Shift+R</code> pour exécuter</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; border-left: 4px solid #ffd700;">
-                    <strong>💡 Astuce :</strong> Une fois l'extension installée, redémarrez VS Code pour vous assurer que tous les paramètres sont chargés.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Examples Section -->
-    <section id="examples" class="examples">
-        <div class="container">
-            <h2 class="section-title">Exemples de Code</h2>
-
-            <div class="examples-grid">
-                <div class="example-card">
-                    <h3>🎯 Factorielle</h3>
-                    <pre><code>algorithme Factorielle
-
-variables
-    n, i, resultat : entier
-
-debut
-    ecrire("Entrez un nombre: ")
-    lire(n)
-
-    resultat = 1
-    pour i de 1 à n faire
-        resultat = resultat * i
-    finpour
-
-    ecrireln("Factorielle: ", resultat)
-fin</code></pre>
-                </div>
-
-                <div class="example-card">
-                    <h3>🔤 Manipulation de Caractères</h3>
-                    <pre><code>algorithme TestCaracteres
-
-variables
-    c : caractere
-    code : entier
-
-debut
-    c = 'A'
-    code = ord(c)
-
-    ecrireln("Code ASCII: ", code)
-
-    si estMajuscule(c) alors
-        ecrireln("C'est une majuscule")
-    finsi
-
-    c = versMinuscule(c)
-    ecrireln("En minuscule: ", c)
-fin</code></pre>
-                </div>
-
-                <div class="example-card">
-                    <h3>📊 Recherche dans Chaîne</h3>
-                    <pre><code>algorithme RechercheTexte
-
-variables
-    texte, mot : chaine
-    pos : entier
-
-debut
-    texte = "Bonjour le monde"
-    mot = "monde"
-
-    si contient(texte, mot) alors
-        pos = position(texte, mot)
-        ecrireln("Trouvé à: ", pos)
-    sinon
-        ecrireln("Non trouvé")
-    finsi
-fin</code></pre>
-                </div>
-
-                <div class="example-card">
-                    <h3>✨ Nouveautés v1.4.0</h3>
-                    <pre><code>algorithme Nouveautes
-
-variables
-    compteur : entier = 0       // Init
-    notes : tableau[3] de reel
-    moyenne, max : reel
-
-debut
-    notes = [15.5, 12.0, 18.0]  // Littéral
-
-    moyenne = (notes[0] + notes[1] + notes[2]) / 3
-
-    // Expression conditionnelle
-    max = si notes[0] > notes[1] alors notes[0] sinon notes[1]
-
-    // SinonSi
-    si moyenne >= 16 alors
-        ecrireln("Excellent")
-    sinonSi moyenne >= 14 alors
-        ecrireln("Très bien")
-    sinon
-        ecrireln("Bien")
-    finsi
-fin</code></pre>
-                </div>
-
-                <div class="example-card">
-                    <h3>🎲 Jeu de Devinette</h3>
-                    <pre><code>algorithme DevineNombre
-
-variables
-    secret, essai : entier
-
-debut
-    secret = aleatoire(1, 101)
-
-    repeter
-        ecrire("Devinez (1-100): ")
-        lire(essai)
-
-        si essai < secret alors
-            ecrireln("Plus grand!")
-        sinonSi essai > secret alors
-            ecrireln("Plus petit!")
-        finsi
-    jusqua essai = secret
-
-    ecrireln("Bravo!")
-fin</code></pre>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Documentation Section -->
-    <section id="docs" class="documentation">
-        <div class="container">
-            <h2 class="section-title">Documentation</h2>
-
-            <div class="docs-grid">
-                <a href="https://github.com/oughzal/Algo-compiler/blob/main/README.md" class="doc-card" target="_blank">
-                    <div class="doc-icon">📖</div>
-                    <h3>Guide Utilisateur</h3>
-                    <p>Documentation complète du langage et des fonctionnalités</p>
-                </a>
-
-                <a href="https://github.com/oughzal/Algo-compiler/blob/main/QUICKSTART.md" class="doc-card" target="_blank">
-                    <div class="doc-icon">🚀</div>
-                    <h3>Démarrage Rapide</h3>
-                    <p>Commencez en 5 minutes avec les bases</p>
-                </a>
-
-                <a href="https://github.com/oughzal/Algo-compiler/blob/main/FONCTIONS_INTEGREES_COURANTES.md" class="doc-card" target="_blank">
-                    <div class="doc-icon">🧮</div>
-                    <h3>40 Fonctions Intégrées</h3>
-                    <p>Guide complet de toutes les fonctions disponibles</p>
-                </a>
-
-                <a href="https://github.com/oughzal/Algo-compiler/blob/main/MODIFICATIONS_TYPE_CARACTERE.md" class="doc-card" target="_blank">
-                    <div class="doc-icon">🔤</div>
-                    <h3>Type Caractère</h3>
-                    <p>Documentation du type caractere avec exemples</p>
-                </a>
-
-                <a href="https://github.com/oughzal/Algo-compiler/blob/main/FONCTIONS_ORD_CHR.md" class="doc-card" target="_blank">
-                    <div class="doc-icon">🔄</div>
-                    <h3>Fonctions ord() et chr()</h3>
-                    <p>Guide des conversions caractère ↔ ASCII</p>
-                </a>
-
-                <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="doc-card" target="_blank">
-                    <div class="doc-icon">💻</div>
-                    <h3>Extension VS Code</h3>
-                    <p>Installation et utilisation de l'extension</p>
-                </a>
             </div>
         </div>
     </section>
@@ -745,51 +697,74 @@ fin</code></pre>
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
+            <div class="footer-grid">
                 <div class="footer-section">
                     <h3>Algo-Compiler</h3>
                     <p>Compilateur moderne de pseudo-code français</p>
-                    <p class="footer-version">Version 1.4.0 - Décembre 2024</p>
-                    <p style="font-size: 0.85rem; color: #10b981;">✨ sinonSi • Expression conditionnelle • Tableaux littéraux • Init variables</p>
+                    <p style="margin-top: 1rem; font-size: 0.875rem; opacity: 0.8;">Version 1.6.0 - Décembre 2024</p>
+                    <p style="font-size: 0.875rem; color: var(--accent);">✨ Matrices 2D • Opérateur ^ • 50+ Snippets</p>
                 </div>
 
                 <div class="footer-section">
                     <h3>Liens</h3>
                     <ul>
                         <li><a href="https://github.com/oughzal/Algo-compiler">GitHub</a></li>
-                        <li><a href="https://github.com/oughzal/Algo-compiler/issues">Signaler un Bug</a></li>
+                        <li><a href="https://github.com/oughzal/Algo-compiler/releases">Releases</a></li>
+                        <li><a href="https://github.com/oughzal/Algo-compiler/issues">Support</a></li>
                         <li><a href="https://github.com/oughzal/Algo-compiler/blob/main/README.md">Documentation</a></li>
-                        <li><a href="https://github.com/oughzal/Algo-compiler/tree/main/examples">Exemples</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-section">
                     <h3>Ressources</h3>
                     <ul>
-                        <li><a href="https://github.com/oughzal/Algo-compiler/releases">Téléchargements</a></li>
-                        <li><a href="https://github.com/oughzal/Algo-compiler/blob/main/QUICKSTART.md">Guide Rapide</a></li>
-                        <li><a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler">Extension VS Code</a></li>
+                        <li><a href="https://github.com/oughzal/Algo-compiler/blob/main/HELP.md">Guide Complet</a></li>
+                        <li><a href="https://github.com/oughzal/Algo-compiler/blob/main/SUPPORT_MATRICES.md">Doc Matrices</a></li>
+                        <li><a href="https://github.com/oughzal/Algo-compiler/tree/main/examples">Exemples</a></li>
+                        <li><a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler">VS Marketplace</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-section">
-                    <h3>Statistiques</h3>
+                    <h3>Fonctionnalités</h3>
                     <ul>
-                        <li>40 Fonctions intégrées</li>
-                        <li>5 Types de données</li>
-                        <li>30+ Exemples</li>
-                        <li>Documentation complète</li>
+                        <li>📊 Matrices 2D</li>
+                        <li>⚡ Opérateur ^</li>
+                        <li>🧮 40+ Fonctions</li>
+                        <li>💻 Extension VS Code</li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
                 <p>&copy; 2024 Omar OUGHZAL - Tous droits réservés</p>
-                <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">Développé avec ❤️ en Kotlin 1.9.20 et Java 21</p>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem;">Développé avec ❤️ en Kotlin 1.9.20 et Java 21</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('nav');
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
