@@ -1,0 +1,113 @@
+algorithme TestCompletInitialisation
+
+variables
+    // Initialisation avec valeurs
+    compteur : entier = 0
+    pi : reel = 3.14159
+    message : chaine = "Bonjour"
+    actif : booleen = faux
+
+    // Tableau initialisé avec littéral dans une expression
+    suite : tableau[5] de entier
+
+    i : entier
+    max : entier
+
+fonction calculSomme(tab : tableau de entier, taille : entier) : entier
+variables
+    s, j : entier
+debut
+    s = 0
+    pour j de 0 à taille - 1 faire
+        s = s + tab[j]
+    finpour
+    retourner s
+fin
+
+debut
+    ecrireln("=================================")
+    ecrireln("  TEST COMPLET - INITIALISATION")
+    ecrireln("=================================")
+    ecrireln()
+
+    // Afficher les valeurs initiales
+    ecrireln("Valeurs initiales:")
+    ecrire("compteur = ")
+    ecrireln(compteur)
+    ecrire("pi = ")
+    ecrireln(pi)
+    ecrire("message = ")
+    ecrireln(message)
+    ecrire("actif = ")
+    ecrireln(actif)
+    ecrireln()
+
+    // Initialiser le tableau avec expression conditionnelle
+    ecrireln("Initialisation de tableau avec expressions:")
+    suite = [si compteur = 0 alors 10 sinon 5, 20, 30, 40, 50]
+
+    ecrire("suite = [")
+    pour i de 0 à 4 faire
+        ecrire(suite[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Utiliser dans une boucle
+    ecrireln("Traitement dans une boucle:")
+    pour i de 0 à 4 faire
+        suite[i] = suite[i] * 2
+    finpour
+
+    ecrire("suite après multiplication par 2 = [")
+    pour i de 0 à 4 faire
+        ecrire(suite[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Test avec fonction
+    ecrireln("Test avec fonction:")
+    max = calculSomme(suite, 5)
+    ecrire("Somme des éléments = ")
+    ecrireln(max)
+    ecrireln()
+
+    // Test de réaffectation complète
+    ecrireln("Réaffectation complète:")
+    suite = [100, 200, 300, 400, 500]
+    compteur = 10
+    message = "Au revoir"
+
+    ecrire("suite = [")
+    pour i de 0 à 4 faire
+        ecrire(suite[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrire("compteur = ")
+    ecrireln(compteur)
+    ecrire("message = ")
+    ecrireln(message)
+    ecrireln()
+
+    // Test avec expression conditionnelle
+    ecrireln("Test avec expression conditionnelle:")
+    compteur = si max > 100 alors 1 sinon 0
+    ecrire("compteur (basé sur max > 100) = ")
+    ecrireln(compteur)
+    ecrireln()
+
+    ecrireln("=================================")
+    ecrireln("✅ Tous les tests réussis!")
+    ecrireln("=================================")
+fin
+

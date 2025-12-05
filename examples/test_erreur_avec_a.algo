@@ -1,0 +1,14 @@
+algorithme TestErreurAvecA
+
+variables
+    i : entier
+
+debut
+    // Ce code devrait ÉCHOUER car 'a' n'est plus accepté
+    // Erreur attendue: "Attendu 'à' après 'de' dans la boucle 'pour'"
+
+    pour i de 1 a 10 faire
+        ecrire(i)
+    finpour
+fin
+

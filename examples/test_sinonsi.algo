@@ -1,0 +1,54 @@
+algorithme TestSinonSi
+
+variables
+    note : entier
+    a, b : entier
+
+debut
+    ecrire("Entrez une note (0-100): ")
+    lire(note)
+
+    // Test de la clause sinonSi avec plusieurs conditions
+    si note >= 90 alors
+        ecrireln("Excellent ! Grade A")
+    sinonSi note >= 80 alors
+        ecrireln("Très bien ! Grade B")
+    sinonSi note >= 70 alors
+        ecrireln("Bien ! Grade C")
+    sinonSi note >= 60 alors
+        ecrireln("Satisfaisant. Grade D")
+    sinon
+        ecrireln("Insuffisant. Échec.")
+    finsi
+
+    // Test que la variable 'a' fonctionne maintenant sans conflit
+    a = 10
+    b = 20
+
+    ecrireln()
+    ecrire("Valeur de a: ")
+    ecrireln(a)
+    ecrire("Valeur de b: ")
+    ecrireln(b)
+
+    // Test de la boucle 'pour' avec 'à' uniquement
+    ecrireln()
+    ecrireln("Compte de 1 à 5:")
+    pour i de 1 à 5 faire
+        ecrire(i)
+        ecrire(" ")
+    finpour
+    ecrireln()
+
+    // Test combiné avec plusieurs sinonSi
+    ecrireln()
+    ecrire("Comparaison de a et b: ")
+    si a > b alors
+        ecrireln("a est plus grand que b")
+    sinonSi a = b alors
+        ecrireln("a est égal à b")
+    sinon
+        ecrireln("a est plus petit que b")
+    finsi
+fin
+

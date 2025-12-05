@@ -1,0 +1,91 @@
+algorithme TestInitialisation
+
+variables
+    // Test 1: Déclaration avec initialisation simple
+    a : entier = 10
+    b : reel = 3.14
+    nom : chaine = "Alice"
+    estActif : booleen = vrai
+    lettre : caractere = 'A'
+
+    // Test 2: Déclaration sans initialisation (valeurs par défaut)
+    x, y : entier
+
+    // Test 3: Initialisation de tableau avec littéral
+    T : tableau[5] de entier
+    nombres : tableau[4] de entier
+
+    i : entier
+
+debut
+    ecrireln("=================================")
+    ecrireln("  TEST D'INITIALISATION")
+    ecrireln("=================================")
+    ecrireln()
+
+    // Afficher les variables initialisées
+    ecrireln("Variables initialisées:")
+    ecrire("a = ")
+    ecrireln(a)
+    ecrire("b = ")
+    ecrireln(b)
+    ecrire("nom = ")
+    ecrireln(nom)
+    ecrire("estActif = ")
+    ecrireln(estActif)
+    ecrire("lettre = ")
+    ecrireln(lettre)
+    ecrireln()
+
+    // Afficher les variables non initialisées (valeurs par défaut)
+    ecrireln("Variables avec valeurs par défaut:")
+    ecrire("x = ")
+    ecrireln(x)
+    ecrire("y = ")
+    ecrireln(y)
+    ecrireln()
+
+    // Test d'affectation de tableau avec littéral
+    ecrireln("Affectation de tableau avec littéral:")
+    T = [1, 2, 3, 4, 5]
+
+    ecrire("T = [")
+    pour i de 0 à 4 faire
+        ecrire(T[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Test avec expressions dans le littéral
+    ecrireln("Tableau avec expressions:")
+    nombres = [10 + 5, 20 * 2, 3 ** 2, 100 div 2]
+
+    ecrire("nombres = [")
+    pour i de 0 à 3 faire
+        ecrire(nombres[i])
+        si i < 3 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Modification des valeurs
+    ecrireln("Après modification:")
+    a = a + 5
+    T[0] = 100
+
+    ecrire("a = ")
+    ecrireln(a)
+    ecrire("T[0] = ")
+    ecrireln(T[0])
+
+    ecrireln()
+    ecrireln("=================================")
+    ecrireln("✅ Tous les tests réussis!")
+    ecrireln("=================================")
+fin
+

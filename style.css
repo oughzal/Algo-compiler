@@ -359,6 +359,21 @@ section {
     color: var(--text-dark);
 }
 
+.install-step img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    margin-top: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.install-step img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
 .install-vscode {
     background: white;
     padding: 2rem;
@@ -453,6 +468,26 @@ section {
     color: var(--text-light);
 }
 
+.doc-card.highlight {
+    border: 2px solid var(--primary-color);
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    position: relative;
+}
+
+.doc-card.highlight::after {
+    content: "NOUVEAU";
+    position: absolute;
+    top: 10px;
+    right: -5px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
 /* Footer */
 footer {
     background: var(--dark-bg);
@@ -525,6 +560,146 @@ code {
     font-size: 0.9rem;
 }
 
+/* Feature Card Highlight */
+.feature-card.highlight {
+    border: 2px solid var(--primary-color);
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card.highlight::before {
+    content: "NOUVEAU";
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 40px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* What's New Section */
+.whats-new {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 5rem 0;
+    color: white;
+}
+
+.whats-new .section-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.whats-new .section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+}
+
+.new-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.new-feature {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.new-feature-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.new-badge {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.new-feature h3 {
+    color: var(--text-dark);
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.code-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.code-comparison .before,
+.code-comparison .after {
+    background: var(--code-bg);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.code-comparison .label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.code-comparison .before .label {
+    color: #dc2626;
+}
+
+.code-comparison .after .label {
+    color: #059669;
+}
+
+.code-comparison pre {
+    margin: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.code-comparison code {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+}
+
+.stats-banner {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+    color: white;
+}
+
+.stat-item strong {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero .container {
@@ -548,6 +723,19 @@ code {
     }
 
     .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .new-features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .code-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-banner {
         flex-direction: column;
         gap: 1rem;
     }

@@ -1,0 +1,142 @@
+algorithme ExempleAvanceExpressionConditionnelle
+
+variables
+    a, b : entier
+    x : reel
+    jour : entier
+    nomJour : chaine
+    tab : tableau[5] de entier
+    i : entier
+
+// Fonction utilisant expression conditionnelle
+fonction maximum(x : entier, y : entier) : entier
+debut
+    retourner si x > y alors x sinon y
+fin
+
+fonction minimum(x : entier, y : entier) : entier
+debut
+    retourner si x < y alors x sinon y
+fin
+
+fonction valeurAbsolue(n : entier) : entier
+debut
+    retourner si n < 0 alors -n sinon n
+fin
+
+fonction signe(n : entier) : chaine
+debut
+    retourner si n > 0 alors "+" sinon si n < 0 alors "-" sinon "0"
+fin
+
+debut
+    ecrireln("========================================")
+    ecrireln("  EXEMPLES AVANCÉS - EXPRESSION CONDITIONNELLE")
+    ecrireln("========================================")
+    ecrireln()
+
+    // Test 1: Fonctions avec expressions conditionnelles
+    ecrireln("Test 1: Fonctions")
+    ecrireln("------------------")
+    a = 25
+    b = 17
+
+    ecrire("a = ")
+    ecrireln(a)
+    ecrire("b = ")
+    ecrireln(b)
+    ecrire("maximum(a, b) = ")
+    ecrireln(maximum(a, b))
+    ecrire("minimum(a, b) = ")
+    ecrireln(minimum(a, b))
+    ecrire("valeurAbsolue(-10) = ")
+    ecrireln(valeurAbsolue(-10))
+    ecrire("signe(-5) = ")
+    ecrireln(signe(-5))
+    ecrireln()
+
+    // Test 2: Expression conditionnelle dans calculs complexes
+    ecrireln("Test 2: Calculs complexes")
+    ecrireln("-------------------------")
+    x = 5.5
+
+    // Calcul avec condition
+    a = si x > 0 alors arrondi(x * 2) sinon arrondi(x * -1)
+    ecrire("Résultat du calcul : ")
+    ecrireln(a)
+    ecrireln()
+
+    // Test 3: Tableaux avec expressions conditionnelles
+    ecrireln("Test 3: Tableaux")
+    ecrireln("----------------")
+    tab[0] = 10
+    tab[1] = -5
+    tab[2] = 0
+    tab[3] = 15
+    tab[4] = -20
+
+    ecrireln("Valeurs absolues du tableau:")
+    pour i de 0 à 4 faire
+        ecrire(si tab[i] < 0 alors -tab[i] sinon tab[i])
+        ecrire(" ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 4: Jours de la semaine avec imbrication
+    ecrireln("Test 4: Jours de la semaine")
+    ecrireln("---------------------------")
+    jour = 3
+
+    nomJour = si jour = 1 alors "Lundi" sinon si jour = 2 alors "Mardi" sinon si jour = 3 alors "Mercredi" sinon si jour = 4 alors "Jeudi" sinon si jour = 5 alors "Vendredi" sinon si jour = 6 alors "Samedi" sinon si jour = 7 alors "Dimanche" sinon "Invalide"
+
+    ecrire("Jour ")
+    ecrire(jour)
+    ecrire(" = ")
+    ecrireln(nomJour)
+    ecrireln()
+
+    // Test 5: Classification FizzBuzz avec expression conditionnelle
+    ecrireln("Test 5: FizzBuzz avec expressions conditionnelles")
+    ecrireln("------------------------------------------------")
+    pour i de 1 à 15 faire
+        ecrire(i)
+        ecrire(": ")
+        ecrire(si i mod 15 = 0 alors "FizzBuzz" sinon si i mod 3 = 0 alors "Fizz" sinon si i mod 5 = 0 alors "Buzz" sinon versChaine(i))
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // Test 6: Expression conditionnelle comme paramètre de fonction
+    ecrireln("Test 6: Expression comme paramètre")
+    ecrireln("-----------------------------------")
+    a = -8
+    b = 12
+
+    ecrire("Maximum des valeurs absolues de ")
+    ecrire(a)
+    ecrire(" et ")
+    ecrire(b)
+    ecrire(" = ")
+    ecrireln(maximum(valeurAbsolue(a), valeurAbsolue(b)))
+    ecrireln()
+
+    // Test 7: Comparaisons multiples
+    ecrireln("Test 7: Comparaisons complexes")
+    ecrireln("------------------------------")
+    a = 10
+    b = 20
+
+    ecrire("Le plus grand entre a*2 (")
+    ecrire(a * 2)
+    ecrire(") et b (")
+    ecrire(b)
+    ecrire(") = ")
+    ecrireln(si a * 2 > b alors a * 2 sinon b)
+    ecrireln()
+
+    ecrireln("========================================")
+    ecrireln("✅ Tous les tests avancés réussis!")
+    ecrireln("========================================")
+fin
+

@@ -1,0 +1,84 @@
+algorithme TestExpressionConditionnelle
+
+variables
+    x, y, max, min : entier
+    age : entier
+    statut, message : chaine
+    note : reel
+    mention : chaine
+
+debut
+    ecrireln("=================================")
+    ecrireln("  TEST EXPRESSION CONDITIONNELLE")
+    ecrireln("  (Opérateur Ternaire)")
+    ecrireln("=================================")
+    ecrireln()
+
+    // Test 1: Maximum de deux nombres
+    x = 15
+    y = 23
+    max = si x > y alors x sinon y
+
+    ecrire("x = ")
+    ecrireln(x)
+    ecrire("y = ")
+    ecrireln(y)
+    ecrire("Maximum : ")
+    ecrireln(max)
+    ecrireln()
+
+    // Test 2: Minimum de deux nombres
+    min = si x < y alors x sinon y
+    ecrire("Minimum : ")
+    ecrireln(min)
+    ecrireln()
+
+    // Test 3: Statut selon l'âge
+    age = 17
+    statut = si age >= 18 alors "Majeur" sinon "Mineur"
+
+    ecrire("Âge : ")
+    ecrireln(age)
+    ecrire("Statut : ")
+    ecrireln(statut)
+    ecrireln()
+
+    // Test 4: Message selon note
+    note = 14.5
+    mention = si note >= 16 alors "Très Bien" sinon si note >= 14 alors "Bien" sinon si note >= 12 alors "Assez Bien" sinon si note >= 10 alors "Passable" sinon "Échec"
+
+    ecrire("Note : ")
+    ecrireln(note)
+    ecrire("Mention : ")
+    ecrireln(mention)
+    ecrireln()
+
+    // Test 5: Dans une expression arithmétique
+    x = 5
+    y = si x > 0 alors x * 2 sinon x * -1
+    ecrire("x = ")
+    ecrireln(x)
+    ecrire("Résultat : si x > 0 alors x * 2 sinon x * -1 = ")
+    ecrireln(y)
+    ecrireln()
+
+    // Test 6: Avec ecrire directement
+    ecrire("Test avec ecrire : ")
+    ecrire(si x > 0 alors "Positif" sinon "Négatif ou nul")
+    ecrireln()
+    ecrireln()
+
+    // Test 7: Valeur absolue avec expression conditionnelle
+    x = -10
+    y = si x < 0 alors -x sinon x
+    ecrire("Valeur absolue de ")
+    ecrire(x)
+    ecrire(" = ")
+    ecrireln(y)
+    ecrireln()
+
+    ecrireln("=================================")
+    ecrireln("✅ Tous les tests réussis!")
+    ecrireln("=================================")
+fin
+

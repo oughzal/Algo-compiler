@@ -4,10 +4,15 @@ Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu p
 
 ## Nouveautés importantes
 
-- Support complet du type `caractere` (littéraux entre quotes simples, échappements `\n`, `\t`, `\'`, `\\`).
-- I/O : `ecrire()` n'ajoute pas de saut de ligne ; `ecrireln()` ajoute un saut de ligne. `lire()` ne montre pas de prompt automatique (utilisez `ecrire()` avant `lire()` pour afficher une invite).
-- Fonctions intégrées de caractères : `ord(c)` et `chr(code)` (prise en charge des code points Unicode valides pour Kotlin `Char`).
-- Instruction `selon` (switch) supportée avec syntaxe `cas valeur :` (style Kotlin-like `v : action` pris en charge dans le parser).
+- **✨ NOUVEAU** : **Initialisation de variables** : `var a : entier = 5` - Déclarez et initialisez en une seule ligne ([voir doc](INITIALISATION_VARIABLES_TABLEAUX.md))
+- **✨ NOUVEAU** : **Tableaux littéraux** : `T = [1, 2, 3, 4]` - Initialisez des tableaux avec une syntaxe concise ([voir doc](INITIALISATION_VARIABLES_TABLEAUX.md))
+- **✨ NOUVEAU** : **Expression conditionnelle (opérateur ternaire)** : `variable = si condition alors valeur1 sinon valeur2` ([voir doc](EXPRESSION_CONDITIONNELLE.md))
+- **✨ NOUVEAU** : Clause `sinonSi` pour l'instruction `si` - permet de tester plusieurs conditions sans imbrication excessive ([voir doc](INSTRUCTION_SINONSI.md))
+- **⚠️ CHANGEMENT** : L'alias 'a' a été supprimé pour éviter les conflits avec les variables. Utilisez uniquement **'à'** dans les boucles `pour`
+- Support complet du type `caractere` (littéraux entre quotes simples, échappements `\n`, `\t`, `\'`, `\\`)
+- I/O : `ecrire()` n'ajoute pas de saut de ligne ; `ecrireln()` ajoute un saut de ligne. `lire()` ne montre pas de prompt automatique (utilisez `ecrire()` avant `lire()` pour afficher une invite)
+- Fonctions intégrées de caractères : `ord(c)` et `chr(code)` (prise en charge des code points Unicode valides pour Kotlin `Char`)
+- Instruction `selon` (switch) supportée avec syntaxe `cas valeur :` (style Kotlin-like `v : action` pris en charge dans le parser)
 
 ## Caractéristiques
 
@@ -150,6 +155,44 @@ x := 10
 nom := "Alice"
 ```
 
+### Initialisation de Variables
+
+**Nouveau** : Vous pouvez maintenant déclarer et initialiser une variable en une seule ligne :
+
+```
+variables
+    compteur : entier = 0
+    pi : reel = 3.14159
+    nom : chaine = "Alice"
+    actif : booleen = vrai
+    lettre : caractere = 'A'
+```
+
+> 📖 **Documentation complète** : Voir [INITIALISATION_VARIABLES_TABLEAUX.md](INITIALISATION_VARIABLES_TABLEAUX.md)
+
+### Tableaux Littéraux
+
+**Nouveau** : Initialisez des tableaux avec une syntaxe concise :
+
+```
+variables
+    nombres : tableau[5] de entier
+    notes : tableau[3] de reel
+    noms : tableau[2] de chaine
+
+debut
+    // Initialisation avec littéral
+    nombres = [10, 20, 30, 40, 50]
+    notes = [15.5, 12.0, 18.0]
+    noms = ["Alice", "Bob"]
+    
+    // Avec expressions
+    nombres = [5 * 2, 10 + 5, 8 ** 2, 100 div 3, 50]
+fin
+```
+
+> 📖 **Documentation complète** : Voir [INITIALISATION_VARIABLES_TABLEAUX.md](INITIALISATION_VARIABLES_TABLEAUX.md)
+
 ### Caractères
 
 Les caractères sont délimités par des guillemets simples (`'`) :
@@ -268,6 +311,24 @@ ecrire("x = ", x, ", y = ", y)
 > Remarque : `ecrireln()` sans argument écrit simplement une ligne vide (saut de ligne).
 
 ### Conditions
+
+#### Expression Conditionnelle (Opérateur Ternaire)
+
+Permet d'utiliser une condition **comme expression** pour choisir entre deux valeurs :
+
+```
+// Syntaxe : variable = si condition alors valeur1 sinon valeur2
+max = si a > b alors a sinon b
+statut = si age >= 18 alors "Majeur" sinon "Mineur"
+parite = si x mod 2 = 0 alors "pair" sinon "impair"
+
+// Imbrication possible
+mention = si note >= 16 alors "Très Bien" sinon si note >= 14 alors "Bien" sinon "Passable"
+```
+
+> 📖 **Documentation complète** : Voir [EXPRESSION_CONDITIONNELLE.md](EXPRESSION_CONDITIONNELLE.md)
+
+#### Instruction Si avec SinonSi
 ```
 si x > 0 alors
     ecrire("Positif")
@@ -275,6 +336,30 @@ sinon
     ecrire("Négatif ou nul")
 finsi
 ```
+
+**Avec clauses SinonSi** (pour tester plusieurs conditions) :
+```
+si note >= 90 alors
+    ecrire("Excellent ! Grade A")
+sinonSi note >= 80 alors
+    ecrire("Très bien ! Grade B")
+sinonSi note >= 70 alors
+    ecrire("Bien ! Grade C")
+sinonSi note >= 60 alors
+    ecrire("Satisfaisant. Grade D")
+sinon
+    ecrire("Insuffisant. Échec.")
+finsi
+```
+
+> 📖 **Documentation complète** : Voir [INSTRUCTION_SINONSI.md](INSTRUCTION_SINONSI.md)
+
+> ⚠️ **Important** : L'alias 'a' a été supprimé pour éviter les conflits avec les variables. Utilisez uniquement **'à'** dans les boucles `pour` :
+> ```
+> pour i de 1 à 10 faire  // ✅ CORRECT (avec 'à')
+>     ecrire(i)
+> finpour
+> ```
 
 ### Boucles
 

@@ -18,6 +18,7 @@ class Lexer(private val input: String) {
                     "si" to TokenType.SI,
                     "alors" to TokenType.ALORS,
                     "sinon" to TokenType.SINON,
+                    "sinonsi" to TokenType.SINONSI,
                     "finsi" to TokenType.FINSI,
                     "pour" to TokenType.POUR,
                     "de" to TokenType.DE,

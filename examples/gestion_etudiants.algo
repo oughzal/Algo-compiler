@@ -1,0 +1,86 @@
+algorithme GestionEtudiants
+
+variables
+    choix : entier
+    nom : chaine
+    note : reel
+    age : entier
+    categorie : chaine
+
+debut
+    ecrireln("=================================")
+    ecrireln("   SYSTÈME DE GESTION ÉTUDIANTS")
+    ecrireln("=================================")
+    ecrireln()
+
+    ecrireln("MENU:")
+    ecrireln("1. Calculer la mention selon la note")
+    ecrireln("2. Déterminer la catégorie d'âge")
+    ecrireln("3. Quitter")
+    ecrireln()
+    ecrire("Votre choix: ")
+    lire(choix)
+    ecrireln()
+
+    // Exemple d'utilisation de sinonSi avec plusieurs conditions
+    si choix = 1 alors
+        ecrire("Entrez le nom de l'étudiant: ")
+        lire(nom)
+        ecrire("Entrez la note (0-20): ")
+        lire(note)
+        ecrireln()
+
+        ecrire(nom)
+        ecrire(" a obtenu: ")
+
+        // Classification des notes avec sinonSi
+        si note < 0 ou note > 20 alors
+            ecrireln("Note invalide!")
+        sinonSi note >= 16 alors
+            ecrireln("Mention Très Bien")
+        sinonSi note >= 14 alors
+            ecrireln("Mention Bien")
+        sinonSi note >= 12 alors
+            ecrireln("Mention Assez Bien")
+        sinonSi note >= 10 alors
+            ecrireln("Mention Passable")
+        sinon
+            ecrireln("Échec (redoublement)")
+        finsi
+
+    sinonSi choix = 2 alors
+        ecrire("Entrez l'âge de l'étudiant: ")
+        lire(age)
+        ecrireln()
+
+        // Classification par âge avec sinonSi
+        si age < 0 alors
+            categorie = "invalide"
+        sinonSi age < 6 alors
+            categorie = "Préscolaire"
+        sinonSi age < 12 alors
+            categorie = "Primaire"
+        sinonSi age < 15 alors
+            categorie = "Collège"
+        sinonSi age < 18 alors
+            categorie = "Lycée"
+        sinonSi age < 25 alors
+            categorie = "Université"
+        sinon
+            categorie = "Formation continue"
+        finsi
+
+        ecrire("Catégorie: ")
+        ecrireln(categorie)
+
+    sinonSi choix = 3 alors
+        ecrireln("Au revoir!")
+
+    sinon
+        ecrireln("Choix invalide!")
+    finsi
+
+    ecrireln()
+    ecrireln("=================================")
+fin
+

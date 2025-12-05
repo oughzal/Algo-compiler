@@ -1,0 +1,41 @@
+algorithme TestTernaireSimple
+
+variables
+    a, b, resultat : entier
+    message : chaine
+
+debut
+    ecrireln("Test simple de l'opérateur ternaire")
+    ecrireln()
+
+    // Test basique
+    a = 10
+    b = 20
+
+    // Utilisation comme expression
+    resultat = si a > b alors a sinon b
+
+    ecrire("a = ")
+    ecrireln(a)
+    ecrire("b = ")
+    ecrireln(b)
+    ecrire("Maximum = ")
+    ecrireln(resultat)
+    ecrireln()
+
+    // Avec chaînes
+    message = si a = b alors "égaux" sinon "différents"
+    ecrire("Les nombres sont : ")
+    ecrireln(message)
+    ecrireln()
+
+    // Dans une boucle
+    ecrireln("Parité des nombres de 1 à 10:")
+    pour i de 1 à 10 faire
+        ecrire(i)
+        ecrire(" est ")
+        ecrire(si i mod 2 = 0 alors "pair" sinon "impair")
+        ecrireln()
+    finpour
+fin
+

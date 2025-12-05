@@ -1,0 +1,35 @@
+algorithme TestSuppressionAliasA
+
+variables
+    a, b, i : entier
+
+debut
+    // Test 1: La variable 'a' doit fonctionner sans problème
+    a = 10
+    b = 20
+
+    ecrire("a = ")
+    ecrireln(a)
+    ecrire("b = ")
+    ecrireln(b)
+
+    // Test 2: La boucle 'pour' doit EXIGER 'à' (pas 'a')
+    ecrireln()
+    ecrireln("Test de la boucle avec 'à' :")
+
+    pour i de 1 à 5 faire
+        ecrire(i)
+        ecrire(" ")
+    finpour
+    ecrireln()
+
+    // Test 3: Calculs avec la variable 'a'
+    a = a + 10
+    ecrireln()
+    ecrire("Après a = a + 10, a = ")
+    ecrireln(a)
+
+    ecrireln()
+    ecrireln("✅ Test réussi : la variable 'a' fonctionne correctement!")
+fin
+

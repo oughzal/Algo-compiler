@@ -10,6 +10,7 @@ enum class TokenType {
     SI,
     ALORS,
     SINON,
+    SINONSI,
     FINSI,
     POUR,
     DE,

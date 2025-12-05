@@ -119,8 +119,15 @@ class Parser(private val tokens: List<Token>) {
                     }
             advance()
 
+            // Check for initialization (= value)
+            var initialValue: Expression? = null
+            if (current().type == TokenType.AFFECTATION) {
+                advance()
+                initialValue = parseExpression()
+            }
+
             for (name in names) {
-                declarations.add(VariableDeclaration(name, type, if (isArray) arraySize else null))
+                declarations.add(VariableDeclaration(name, type, if (isArray) arraySize else null, initialValue))
             }
 
             skipNewlines()
@@ -341,15 +348,43 @@ class Parser(private val tokens: List<Token>) {
         skipNewlines()
 
         val thenBranch = mutableListOf<Statement>()
-        while (current().type != TokenType.SINON &&
+        while (current().type != TokenType.SINONSI &&
+                current().type != TokenType.SINON &&
                 current().type != TokenType.FINSI &&
                 current().type != TokenType.EOF) {
             skipNewlines()
-            if (current().type == TokenType.SINON || current().type == TokenType.FINSI) break
+            if (current().type == TokenType.SINONSI ||
+                current().type == TokenType.SINON ||
+                current().type == TokenType.FINSI) break
             thenBranch.add(parseStatement())
             skipNewlines()
         }
 
+        // Parse elseIf clauses (sinonSi)
+        val elseIfClauses = mutableListOf<ElseIfClause>()
+        while (current().type == TokenType.SINONSI) {
+            advance() // consume SINONSI
+            val elseIfCondition = parseExpression()
+            expect(TokenType.ALORS)
+            skipNewlines()
+
+            val elseIfBranch = mutableListOf<Statement>()
+            while (current().type != TokenType.SINONSI &&
+                    current().type != TokenType.SINON &&
+                    current().type != TokenType.FINSI &&
+                    current().type != TokenType.EOF) {
+                skipNewlines()
+                if (current().type == TokenType.SINONSI ||
+                    current().type == TokenType.SINON ||
+                    current().type == TokenType.FINSI) break
+                elseIfBranch.add(parseStatement())
+                skipNewlines()
+            }
+
+            elseIfClauses.add(ElseIfClause(elseIfCondition, elseIfBranch))
+        }
+
+        // Parse else clause (sinon)
         val elseBranch =
                 if (current().type == TokenType.SINON) {
                     advance()
@@ -366,7 +401,7 @@ class Parser(private val tokens: List<Token>) {
 
         expect(TokenType.FINSI)
 
-        return IfStatement(condition, thenBranch, elseBranch)
+        return IfStatement(condition, thenBranch, elseIfClauses, elseBranch)
     }
 
     private fun parseForLoop(): ForLoop {
@@ -375,9 +410,9 @@ class Parser(private val tokens: List<Token>) {
         expect(TokenType.DE)
         val start = parseExpression()
 
-        // Accepter "à" ou "a" (normalisé)
+        // Accepter uniquement "à" (pas "a" pour éviter confusion avec les variables)
         if (current().type != TokenType.IDENTIFICATEUR ||
-                        (current().value.lowercase() != "à" && current().value.lowercase() != "a")
+                        current().value.lowercase() != "à"
         ) {
             throw Exception(
                     "Attendu 'à' après 'de' dans la boucle 'pour', trouvé ${current().value} à la ligne ${current().line}"
@@ -593,6 +628,21 @@ class Parser(private val tokens: List<Token>) {
     }
 
     private fun parseExpression(): Expression {
+        return parseConditional()
+    }
+
+    private fun parseConditional(): Expression {
+        // Check if it starts with 'si' (conditional expression)
+        if (current().type == TokenType.SI) {
+            advance() // consume 'si'
+            val condition = parseLogicalOr()
+            expect(TokenType.ALORS)
+            val thenValue = parseLogicalOr()
+            expect(TokenType.SINON)
+            val elseValue = parseLogicalOr()
+            return ConditionalExpression(condition, thenValue, elseValue)
+        }
+
         return parseLogicalOr()
     }
 
@@ -759,6 +809,22 @@ class Parser(private val tokens: List<Token>) {
                 val expr = parseExpression()
                 expect(TokenType.PAREN_DROITE)
                 expr
+            }
+            TokenType.CROCHET_GAUCHE -> {
+                // Array literal: [1, 2, 3, 4]
+                advance()
+                val elements = mutableListOf<Expression>()
+
+                if (current().type != TokenType.CROCHET_DROIT) {
+                    elements.add(parseExpression())
+                    while (current().type == TokenType.VIRGULE) {
+                        advance()
+                        elements.add(parseExpression())
+                    }
+                }
+
+                expect(TokenType.CROCHET_DROIT)
+                ArrayLiteral(elements)
             }
             else ->
                     throw Exception(

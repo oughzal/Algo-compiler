@@ -1,0 +1,19 @@
+algorithme TestSimpleSinonSi
+
+variables
+    x : entier
+
+debut
+    x = 15
+
+    si x > 20 alors
+        ecrireln("x est grand (> 20)")
+    sinonSi x > 10 alors
+        ecrireln("x est moyen (> 10)")
+    sinonSi x > 5 alors
+        ecrireln("x est petit (> 5)")
+    sinon
+        ecrireln("x est très petit (<= 5)")
+    finsi
+fin
+

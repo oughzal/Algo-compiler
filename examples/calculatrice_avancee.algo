@@ -1,0 +1,93 @@
+algorithme CalculatriceAvecSinonSi
+
+variables
+    a, b : reel
+    operation : caractere
+    resultat : reel
+    continuer : caractere
+
+debut
+    ecrireln("=================================")
+    ecrireln("   CALCULATRICE AVANCÉE")
+    ecrireln("=================================")
+    ecrireln()
+
+    continuer = 'o'
+
+    tantque continuer = 'o' ou continuer = 'O' faire
+        ecrire("Entrez le premier nombre: ")
+        lire(a)
+
+        ecrire("Entrez le deuxième nombre: ")
+        lire(b)
+
+        ecrireln()
+        ecrireln("Opérations disponibles:")
+        ecrireln("  + : Addition")
+        ecrireln("  - : Soustraction")
+        ecrireln("  * : Multiplication")
+        ecrireln("  / : Division")
+        ecrireln("  d : Division entière (div)")
+        ecrireln("  m : Modulo")
+        ecrireln("  p : Puissance")
+        ecrire("Choisissez une opération: ")
+        lire(operation)
+
+        ecrireln()
+        ecrire("Résultat: ")
+        ecrire(a)
+        ecrire(" ")
+        ecrire(operation)
+        ecrire(" ")
+        ecrire(b)
+        ecrire(" = ")
+
+        // Utilisation de sinonSi pour gérer les différentes opérations
+        si operation = '+' alors
+            resultat = a + b
+            ecrireln(resultat)
+        sinonSi operation = '-' alors
+            resultat = a - b
+            ecrireln(resultat)
+        sinonSi operation = '*' alors
+            resultat = a * b
+            ecrireln(resultat)
+        sinonSi operation = '/' alors
+            si b = 0 alors
+                ecrireln("ERREUR - Division par zéro impossible!")
+            sinon
+                resultat = a / b
+                ecrireln(resultat)
+            finsi
+        sinonSi operation = 'd' ou operation = 'D' alors
+            si b = 0 alors
+                ecrireln("ERREUR - Division par zéro impossible!")
+            sinon
+                resultat = a div b
+                ecrireln(resultat)
+            finsi
+        sinonSi operation = 'm' ou operation = 'M' alors
+            si b = 0 alors
+                ecrireln("ERREUR - Modulo par zéro impossible!")
+            sinon
+                resultat = a mod b
+                ecrireln(resultat)
+            finsi
+        sinonSi operation = 'p' ou operation = 'P' alors
+            resultat = puissance(a, b)
+            ecrireln(resultat)
+        sinon
+            ecrireln("ERREUR - Opération non reconnue!")
+        finsi
+
+        ecrireln()
+        ecrire("Voulez-vous continuer? (o/n): ")
+        lire(continuer)
+        ecrireln()
+        ecrireln("=================================")
+        ecrireln()
+    fintantque
+
+    ecrireln("Merci d'avoir utilisé la calculatrice!")
+fin
+

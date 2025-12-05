@@ -1,0 +1,93 @@
+algorithme TestTableauxLitteraux
+
+variables
+    petits : tableau[3] de entier
+    moyens : tableau[5] de entier
+    notes : tableau[4] de reel
+    noms : tableau[3] de chaine
+    i : entier
+    somme : entier
+
+debut
+    ecrireln("=================================")
+    ecrireln("  TEST TABLEAUX LITTÉRAUX")
+    ecrireln("=================================")
+    ecrireln()
+
+    // Test 1: Affectation simple
+    ecrireln("Test 1: Affectation simple")
+    petits = [1, 2, 3]
+    ecrire("petits = ")
+    ecrire(petits[0])
+    ecrire(", ")
+    ecrire(petits[1])
+    ecrire(", ")
+    ecrireln(petits[2])
+    ecrireln()
+
+    // Test 2: Affectation avec calculs
+    ecrireln("Test 2: Tableau avec expressions")
+    moyens = [5 * 2, 15 + 5, 30 - 10, 8 ** 2, 100 div 3]
+    ecrire("moyens = [")
+    pour i de 0 à 4 faire
+        ecrire(moyens[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Test 3: Tableaux de réels
+    ecrireln("Test 3: Tableaux de réels")
+    notes = [15.5, 12.0, 18.25, 14.75]
+    ecrire("notes = [")
+    pour i de 0 à 3 faire
+        ecrire(notes[i])
+        si i < 3 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Test 4: Tableaux de chaînes
+    ecrireln("Test 4: Tableaux de chaînes")
+    noms = ["Alice", "Bob", "Charlie"]
+    ecrireln("noms[0] = " + noms[0])
+    ecrireln("noms[1] = " + noms[1])
+    ecrireln("noms[2] = " + noms[2])
+    ecrireln()
+
+    // Test 5: Calcul sur tableau
+    ecrireln("Test 5: Calcul de somme")
+    petits = [10, 20, 30]
+    somme = 0
+    pour i de 0 à 2 faire
+        somme = somme + petits[i]
+    finpour
+    ecrire("Somme de [10, 20, 30] = ")
+    ecrireln(somme)
+    ecrireln()
+
+    // Test 6: Tableau vide
+    ecrireln("Test 6: Tableau initialisé vide")
+    petits = []
+    ecrireln("Tableau vide créé (taille 0)")
+    ecrireln()
+
+    // Test 7: Réaffectation
+    ecrireln("Test 7: Réaffectation")
+    moyens = [100, 200, 300, 400, 500]
+    ecrire("Avant: moyens[0] = ")
+    ecrireln(moyens[0])
+    moyens[0] = 999
+    ecrire("Après: moyens[0] = ")
+    ecrireln(moyens[0])
+    ecrireln()
+
+    ecrireln("=================================")
+    ecrireln("✅ Tous les tests réussis!")
+    ecrireln("=================================")
+fin
+

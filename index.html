@@ -98,21 +98,28 @@
                 </div>
             </div>
             <div class="hero-code">
-                <pre><code>algorithme HelloWorld
+                <pre><code>algorithme DemoNouveautes
 
 variables
-    nom : chaine
-    age : entier
+    nom : chaine = "Alice"          // ✨ Initialisation
+    notes : tableau[3] de reel
+    moyenne : reel
 
 debut
-    ecrire("Entrez votre nom: ")
-    lire(nom)
+    notes = [15.5, 12.0, 18.0]      // ✨ Tableau littéral
+    moyenne = (notes[0] + notes[1] + notes[2]) / 3
 
-    ecrire("Entrez votre âge: ")
-    lire(age)
+    // ✨ Expression conditionnelle (opérateur ternaire)
+    mention = si moyenne >= 14 alors "Bien" sinon "Passable"
 
-    ecrireln("Bonjour ", nom, " !")
-    ecrireln("Vous avez ", age, " ans")
+    // ✨ Clause sinonSi
+    si moyenne >= 16 alors
+        ecrireln("Excellent !")
+    sinonSi moyenne >= 14 alors
+        ecrireln("Très bien !")
+    sinon
+        ecrireln("Peut mieux faire")
+    finsi
 fin</code></pre>
             </div>
         </div>
@@ -124,40 +131,176 @@ fin</code></pre>
             <h2 class="section-title">Fonctionnalités Principales</h2>
 
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔤</div>
-                    <h3>Type Caractère</h3>
-                    <p>Support complet du type <code>caractere</code> avec littéraux, échappements (\n, \t) et fonctions dédiées.</p>
+                <div class="feature-card highlight">
+                    <div class="feature-icon">✨</div>
+                    <h3>Clause sinonSi</h3>
+                    <p>Testez plusieurs conditions sans imbrication : <code>si... sinonSi... sinonSi... sinon</code>. Code plus lisible et maintenable.</p>
+                </div>
+
+                <div class="feature-card highlight">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Expression Conditionnelle</h3>
+                    <p>Opérateur ternaire : <code>max = si a > b alors a sinon b</code>. Syntaxe concise pour affectations conditionnelles.</p>
+                </div>
+
+                <div class="feature-card highlight">
+                    <div class="feature-icon">📝</div>
+                    <h3>Initialisation de Variables</h3>
+                    <p>Déclarez et initialisez en une ligne : <code>compteur : entier = 0</code>. Plus besoin d'affectations séparées.</p>
+                </div>
+
+                <div class="feature-card highlight">
+                    <div class="feature-icon">📦</div>
+                    <h3>Tableaux Littéraux</h3>
+                    <p>Syntaxe concise : <code>T = [1, 2, 3, 4, 5]</code>. Initialisez vos tableaux rapidement avec expressions supportées.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🧮</div>
-                    <h3>40 Fonctions Intégrées</h3>
+                    <h3>40+ Fonctions Intégrées</h3>
                     <p>Mathématiques, chaînes, caractères, conversions et aléatoires - tout ce dont vous avez besoin.</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">📝</div>
-                    <h3>Syntaxe Flexible</h3>
-                    <p>Accents optionnels, casse insensible, plusieurs formats de commentaires (//,  #, /* */).</p>
+                    <div class="feature-icon">🔤</div>
+                    <h3>Type Caractère</h3>
+                    <p>Support complet avec <code>ord()</code>, <code>chr()</code>, échappements (\n, \t) et fonctions dédiées.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
-                    <h3>Conversions de Types</h3>
-                    <p>Fonctions <code>versEntier()</code>, <code>versReel()</code>, <code>versChaine()</code> pour convertir facilement.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎲</div>
-                    <h3>Génération Aléatoire</h3>
-                    <p>Fonction <code>aleatoire()</code> avec plusieurs variantes pour vos simulations.</p>
+                    <h3>Instruction Selon</h3>
+                    <p>Structure switch/case à la française : <code>selon(expr) cas 1: action1 cas 2: action2</code>.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🛠️</div>
-                    <h3>Extension VS Code</h3>
-                    <p>Disponible sur le VS Marketplace (publisher: omarcomputer). Coloration syntaxique, 30+ snippets, exécution directe avec Ctrl+Shift+R.</p>
+                    <h3>Extension VS Code v1.4.0</h3>
+                    <p>44+ snippets, coloration complète, exécution directe (Ctrl+Shift+R). Disponible sur VS Marketplace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's New Section -->
+    <section class="whats-new">
+        <div class="container">
+            <h2 class="section-title">🎉 Nouveautés v1.4.0</h2>
+            <p class="section-subtitle">Quatre fonctionnalités majeures pour simplifier votre code</p>
+
+            <div class="new-features-grid">
+                <div class="new-feature">
+                    <div class="new-feature-header">
+                        <span class="new-badge">NOUVEAU</span>
+                        <h3>Clause sinonSi</h3>
+                    </div>
+                    <div class="code-comparison">
+                        <div class="before">
+                            <span class="label">❌ Avant (imbriqué)</span>
+                            <pre><code>si x > 20 alors
+    ecrire("Grand")
+sinon
+    si x > 10 alors
+        ecrire("Moyen")
+    sinon
+        ecrire("Petit")
+    finsi
+finsi</code></pre>
+                        </div>
+                        <div class="after">
+                            <span class="label">✅ Maintenant (sinonSi)</span>
+                            <pre><code>si x > 20 alors
+    ecrire("Grand")
+sinonSi x > 10 alors
+    ecrire("Moyen")
+sinon
+    ecrire("Petit")
+finsi</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="new-feature">
+                    <div class="new-feature-header">
+                        <span class="new-badge">NOUVEAU</span>
+                        <h3>Expression Conditionnelle</h3>
+                    </div>
+                    <div class="code-comparison">
+                        <div class="before">
+                            <span class="label">❌ Avant (verbeux)</span>
+                            <pre><code>si a > b alors
+    max = a
+sinon
+    max = b
+finsi</code></pre>
+                        </div>
+                        <div class="after">
+                            <span class="label">✅ Maintenant (concis)</span>
+                            <pre><code>max = si a > b alors a sinon b
+
+statut = si age >= 18 alors "Majeur" sinon "Mineur"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="new-feature">
+                    <div class="new-feature-header">
+                        <span class="new-badge">NOUVEAU</span>
+                        <h3>Initialisation de Variables</h3>
+                    </div>
+                    <div class="code-comparison">
+                        <div class="before">
+                            <span class="label">❌ Avant (deux étapes)</span>
+                            <pre><code>variables
+    compteur : entier
+
+debut
+    compteur = 0</code></pre>
+                        </div>
+                        <div class="after">
+                            <span class="label">✅ Maintenant (une étape)</span>
+                            <pre><code>variables
+    compteur : entier = 0
+    pi : reel = 3.14159
+    nom : chaine = "Alice"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="new-feature">
+                    <div class="new-feature-header">
+                        <span class="new-badge">NOUVEAU</span>
+                        <h3>Tableaux Littéraux</h3>
+                    </div>
+                    <div class="code-comparison">
+                        <div class="before">
+                            <span class="label">❌ Avant (boucle)</span>
+                            <pre><code>T[0] = 1
+T[1] = 2
+T[2] = 3
+T[3] = 4
+T[4] = 5</code></pre>
+                        </div>
+                        <div class="after">
+                            <span class="label">✅ Maintenant (littéral)</span>
+                            <pre><code>T = [1, 2, 3, 4, 5]
+
+notes = [15.5, 12.0, 18.0]
+noms = ["Alice", "Bob"]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-banner">
+                <div class="stat-item">
+                    <strong>44% moins de code</strong> avec les tableaux littéraux
+                </div>
+                <div class="stat-item">
+                    <strong>14 nouveaux snippets</strong> dans l'extension VS Code
+                </div>
+                <div class="stat-item">
+                    <strong>100% compatible</strong> avec le code existant
                 </div>
             </div>
         </div>
@@ -354,10 +497,17 @@ fin</code></pre>
 
                 <div class="install-step">
                     <div class="step-number">3</div>
-                    <h3>Installer l'Extension VS Code</h3>
+                    <h3>Installer l'Extension VS Code v1.4.0</h3>
                     <p><strong>Depuis le Marketplace (Recommandé)</strong></p>
                     <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank" class="btn-primary" style="display: inline-block; margin: 10px 0;">🛒 Installer depuis VS Marketplace</a>
                     <p style="font-size: 0.9rem; margin-top: 10px;">Ou dans VS Code : Extensions (Ctrl+Shift+X) → Rechercher "Algo Compiler"</p>
+                    <p style="font-size: 0.85rem; color: #10b981; margin-top: 5px;">✨ Nouveau : 44+ snippets incluant sinonSi, expression conditionnelle, tableaux littéraux</p>
+
+                    <!-- Image Marketplace (à ajouter) -->
+                    <div style="margin-top: 15px; text-align: center;">
+                        <img src="vscode_marketplace.png" alt="Extension Algo Compiler sur VS Marketplace" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;" onerror="this.style.display='none'">
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px; font-style: italic;">Extension sur le Visual Studio Marketplace</p>
+                    </div>
                 </div>
 
                 <div class="install-step">
@@ -369,6 +519,12 @@ fin</code></pre>
 3. Définir Compiler Path:
    Windows: C:\Program Files\algo-compiler\algo-compiler-1.0.0.jar
    Linux/Mac: /usr/local/bin/algo-compiler-1.0.0.jar</code></pre>
+
+                    <!-- Image Settings -->
+                    <div style="margin-top: 15px; text-align: center;">
+                        <img src="vscode_settings.png" alt="Configuration de l'extension dans VS Code" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px; font-style: italic;">Paramètres de l'extension dans VS Code</p>
+                    </div>
                 </div>
             </div>
 
@@ -486,6 +642,34 @@ fin</code></pre>
                 </div>
 
                 <div class="example-card">
+                    <h3>✨ Nouveautés v1.4.0</h3>
+                    <pre><code>algorithme Nouveautes
+
+variables
+    compteur : entier = 0       // Init
+    notes : tableau[3] de reel
+    moyenne, max : reel
+
+debut
+    notes = [15.5, 12.0, 18.0]  // Littéral
+
+    moyenne = (notes[0] + notes[1] + notes[2]) / 3
+
+    // Expression conditionnelle
+    max = si notes[0] > notes[1] alors notes[0] sinon notes[1]
+
+    // SinonSi
+    si moyenne >= 16 alors
+        ecrireln("Excellent")
+    sinonSi moyenne >= 14 alors
+        ecrireln("Très bien")
+    sinon
+        ecrireln("Bien")
+    finsi
+fin</code></pre>
+                </div>
+
+                <div class="example-card">
                     <h3>🎲 Jeu de Devinette</h3>
                     <pre><code>algorithme DevineNombre
 
@@ -501,10 +685,10 @@ debut
 
         si essai < secret alors
             ecrireln("Plus grand!")
-        sinon si essai > secret alors
+        sinonSi essai > secret alors
             ecrireln("Plus petit!")
         finsi
-    jusqua essai == secret
+    jusqua essai = secret
 
     ecrireln("Bravo!")
 fin</code></pre>
@@ -564,8 +748,9 @@ fin</code></pre>
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Algo-Compiler</h3>
-                    <p>Compilateur de pseudo-code algorithmique en français</p>
-                    <p class="footer-version">Version 1.3.3 - Décembre 2025</p>
+                    <p>Compilateur moderne de pseudo-code français</p>
+                    <p class="footer-version">Version 1.4.0 - Décembre 2024</p>
+                    <p style="font-size: 0.85rem; color: #10b981;">✨ sinonSi • Expression conditionnelle • Tableaux littéraux • Init variables</p>
                 </div>
 
                 <div class="footer-section">

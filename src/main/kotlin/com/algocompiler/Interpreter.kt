@@ -48,8 +48,13 @@ class Interpreter {
 
     private fun initializeVariable(varDecl: VariableDeclaration) {
         val normalizedName = normalize(varDecl.name)
-        if (varDecl.arraySize != null) {
-            // Initialize array
+
+        // Check if there's an initial value
+        if (varDecl.initialValue != null) {
+            val value = evaluateExpression(varDecl.initialValue)
+            variables[normalizedName] = value
+        } else if (varDecl.arraySize != null) {
+            // Initialize array with default values
             val defaultValue =
                     when (normalize(varDecl.type)) {
                         "entier" -> 0
@@ -61,7 +66,7 @@ class Interpreter {
                     }
             variables[normalizedName] = MutableList(varDecl.arraySize) { defaultValue }
         } else {
-            // Initialize simple variable
+            // Initialize simple variable with default value
             variables[normalizedName] =
                     when (normalize(varDecl.type)) {
                         "entier" -> 0
@@ -134,12 +139,29 @@ class Interpreter {
         val condition = evaluateExpression(ifStatement.condition)
 
         if (toBoolean(condition)) {
+            // Execute the main "then" branch
             for (statement in ifStatement.thenBranch) {
                 executeStatement(statement)
             }
-        } else if (ifStatement.elseBranch != null) {
-            for (statement in ifStatement.elseBranch) {
-                executeStatement(statement)
+        } else {
+            // Check elseIf clauses (sinonSi)
+            var executed = false
+            for (elseIfClause in ifStatement.elseIfClauses) {
+                val elseIfCondition = evaluateExpression(elseIfClause.condition)
+                if (toBoolean(elseIfCondition)) {
+                    for (statement in elseIfClause.thenBranch) {
+                        executeStatement(statement)
+                    }
+                    executed = true
+                    break
+                }
+            }
+
+            // Execute else branch if no elseIf was executed
+            if (!executed && ifStatement.elseBranch != null) {
+                for (statement in ifStatement.elseBranch) {
+                    executeStatement(statement)
+                }
             }
         }
     }
@@ -641,6 +663,18 @@ class Interpreter {
             }
             is BinaryOp -> evaluateBinaryOp(expression)
             is UnaryOp -> evaluateUnaryOp(expression)
+            is ConditionalExpression -> {
+                val condition = evaluateExpression(expression.condition)
+                if (toBoolean(condition)) {
+                    evaluateExpression(expression.thenValue)
+                } else {
+                    evaluateExpression(expression.elseValue)
+                }
+            }
+            is ArrayLiteral -> {
+                // Evaluate all elements and return as MutableList
+                expression.elements.map { evaluateExpression(it) }.toMutableList()
+            }
         }
     }
 

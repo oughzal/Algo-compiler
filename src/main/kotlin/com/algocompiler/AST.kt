@@ -10,8 +10,12 @@ data class Program(
         val statements: List<Statement>
 ) : ASTNode()
 
-data class VariableDeclaration(val name: String, val type: String, val arraySize: Int? = null) :
-        ASTNode()
+data class VariableDeclaration(
+    val name: String,
+    val type: String,
+    val arraySize: Int? = null,
+    val initialValue: Expression? = null
+) : ASTNode()
 
 data class ConstantDeclaration(val name: String, val type: String, val value: Expression) :
         ASTNode()
@@ -34,9 +38,15 @@ data class ArrayAssignment(
         val expression: Expression
 ) : Statement()
 
+data class ElseIfClause(
+        val condition: Expression,
+        val thenBranch: List<Statement>
+) : ASTNode()
+
 data class IfStatement(
         val condition: Expression,
         val thenBranch: List<Statement>,
+        val elseIfClauses: List<ElseIfClause> = emptyList(),
         val elseBranch: List<Statement>?
 ) : Statement()
 
@@ -94,3 +104,11 @@ data class BinaryOp(val left: Expression, val operator: String, val right: Expre
         Expression()
 
 data class UnaryOp(val operator: String, val operand: Expression) : Expression()
+
+data class ConditionalExpression(
+        val condition: Expression,
+        val thenValue: Expression,
+        val elseValue: Expression
+) : Expression()
+
+data class ArrayLiteral(val elements: List<Expression>) : Expression()

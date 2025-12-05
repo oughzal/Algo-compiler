@@ -1,0 +1,51 @@
+algorithme FizzBuzzAvecSinonSi
+
+variables
+    i : entier
+    limite : entier
+
+debut
+    ecrireln("=================================")
+    ecrireln("       JEU FIZZBUZZ")
+    ecrireln("=================================")
+    ecrireln()
+
+    ecrire("Entrez la limite (par exemple 100): ")
+    lire(limite)
+    ecrireln()
+
+    ecrireln("Résultats:")
+    ecrireln("---------")
+
+    // Utilisation de sinonSi pour une logique claire
+    pour i de 1 à limite faire
+        si i mod 15 = 0 alors
+            // Divisible par 3 ET par 5
+            ecrire("FizzBuzz")
+        sinonSi i mod 3 = 0 alors
+            // Divisible par 3 seulement
+            ecrire("Fizz")
+        sinonSi i mod 5 = 0 alors
+            // Divisible par 5 seulement
+            ecrire("Buzz")
+        sinon
+            // Pas divisible par 3 ni par 5
+            ecrire(i)
+        finsi
+
+        // Ajouter un espace entre les valeurs
+        ecrire(" ")
+
+        // Retour à la ligne tous les 10 éléments
+        si i mod 10 = 0 alors
+            ecrireln()
+        finsi
+    finpour
+
+    ecrireln()
+    ecrireln()
+    ecrireln("=================================")
+    ecrireln("Fin du jeu FizzBuzz")
+    ecrireln("=================================")
+fin
+
