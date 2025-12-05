@@ -72,8 +72,6 @@ class Lexer(private val input: String) {
 
     private fun current(): Char? = if (pos < input.length) input[pos] else null
 
-    private fun peek(offset: Int = 1): Char? =
-            if (pos + offset < input.length) input[pos + offset] else null
 
     private fun isSingleQuote(ch: Char?): Boolean {
         return ch == '\'' || ch == '’' || ch == '‘'
@@ -97,7 +95,7 @@ class Lexer(private val input: String) {
 
     private fun skipComment() {
         // Commentaire ligne simple //
-        if (current() == '/' && peek() == '/') {
+        if (current() == '/' && pos + 1 < input.length && input[pos + 1] == '/') {
             while (current() != '\n' && current() != null) {
                 advance()
             }
@@ -109,11 +107,11 @@ class Lexer(private val input: String) {
             }
         }
         // Commentaire multi-lignes /* */
-        else if (current() == '/' && peek() == '*') {
+        else if (current() == '/' && pos + 1 < input.length && input[pos + 1] == '*') {
             advance() // Skip /
             advance() // Skip *
             while (current() != null) {
-                if (current() == '*' && peek() == '/') {
+                if (current() == '*' && pos + 1 < input.length && input[pos + 1] == '/') {
                     advance() // Skip *
                     advance() // Skip /
                     break
@@ -146,7 +144,7 @@ class Lexer(private val input: String) {
         val sb = StringBuilder()
 
         while (current() != '"' && current() != null) {
-            if (current() == '\\' && peek() != null) {
+            if (current() == '\\' && pos + 1 < input.length) {
                 advance()
                 when (current()) {
                     'n' -> sb.append('\n')
@@ -181,7 +179,7 @@ class Lexer(private val input: String) {
             throw Exception("Caractère non terminé à la ligne $line")
         }
 
-        val charValue = if (current() == '\\' && peek() != null) {
+        val charValue = if (current() == '\\' && pos + 1 < input.length) {
             // Gestion des caractères d'échappement
             advance()
             when (current()) {
@@ -238,8 +236,8 @@ class Lexer(private val input: String) {
             if (current() == null) break
 
             // Commentaires (// ou # ou /* */)
-            if ((current() == '/' && peek() == '/') ||
-                            (current() == '/' && peek() == '*') ||
+            if ((current() == '/' && pos + 1 < input.length && input[pos + 1] == '/') ||
+                            (current() == '/' && pos + 1 < input.length && input[pos + 1] == '*') ||
                             current() == '#'
             ) {
                 skipComment()
