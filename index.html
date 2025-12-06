@@ -109,12 +109,24 @@
         /* Navigation */
         nav {
             display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 1rem;
+        }
+
+        nav.active {
+            display: block;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         nav a {
@@ -122,10 +134,14 @@
             color: var(--text);
             font-weight: 500;
             transition: color 0.3s;
+            display: block;
+            padding: 0.5rem;
         }
 
         nav a:hover {
             color: var(--primary);
+            background: var(--light);
+            border-radius: 4px;
         }
 
         /* Mobile Menu Button */
@@ -427,7 +443,23 @@
             }
 
             nav {
-                display: block;
+                display: block !important;
+                position: static;
+                padding: 0;
+                box-shadow: none;
+            }
+
+            nav ul {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+
+            nav a {
+                padding: 0;
+            }
+
+            nav a:hover {
+                background: none;
             }
 
             .hero h1 {
@@ -525,6 +557,9 @@
             <div class="hero-buttons">
                 <a href="https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar" class="btn btn-primary">
                     ⬇️ Télécharger v1.6.0
+                </a>
+                <a href="https://www.oracle.com/java/technologies/downloads/#java21" class="btn btn-secondary" target="_blank">
+                    ☕ Java 21+
                 </a>
                 <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="btn btn-secondary" target="_blank">
                     📦 Extension VS Code
