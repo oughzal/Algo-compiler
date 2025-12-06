@@ -1,16 +1,8 @@
-algorithme Bonjour
-
+algorithme Hello
 variables
-    nom : chaine
-    b : entier
 
-début
-    écrire("Entrez votre nom:")
-    lire(nom)
-    écrire("Bonjour ", nom, "!")
-
-
-    écrire("entrez b : ")
-    lire(b)
-    écrire("Le carré de ", b, " est ", b * b)
+debut
+    ecrire("Hello")
+    ecrireln()
 fin
+

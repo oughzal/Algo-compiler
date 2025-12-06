@@ -66,7 +66,8 @@ class Lexer(private val input: String) {
                 .replace("ù", "u")
                 .replace("û", "u")
                 .replace("ç", "c")
-                .replace("'", "")
+                // Ne pas supprimer les apostrophes ici : elles sont gérées par le lexer au besoin
+                // .replace("'", "")
                 .replace("’", "")
                 .replace("‘", "")
     }
@@ -210,14 +211,8 @@ class Lexer(private val input: String) {
         val startCol = column
         val sb = StringBuilder()
 
-        while (current()?.let {
-            it.isLetterOrDigit() ||
-                    it == '_' ||
-                    it == 'é' ||
-                    it == 'è' ||
-                    it == 'à' ||
-                    it == 'ù' ||
-                    it == '\''
+        while (current()?.let { ch ->
+            ch.isLetterOrDigit() || ch == '_'
         } == true) {
             sb.append(current())
             advance()

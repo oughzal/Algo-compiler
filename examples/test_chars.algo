@@ -1,0 +1,14 @@
+algorithme TestChars
+variables
+    c : caractere
+    x : entier
+debut
+    c = 'a'
+    ecrire("Lettre:", c)
+    ecrireln()
+    x = ord(c)
+    ecrireln("ord(a)=", x)
+    ecrire("chr(65)=", chr(65))
+    ecrireln()
+fin
+
