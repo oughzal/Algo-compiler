@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.20"
-    id("org.jetbrains.intellij") version "1.16.1"
+    id("org.jetbrains.intellij") version "1.17.2"
 }
 
 group = "com.algocompiler"
@@ -34,7 +34,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-        untilBuild.set("241.*")
+        untilBuild.set("253.*")  // Compatible jusqu'à IntelliJ IDEA 2025.3
 
         pluginDescription.set("""
             Support pour le langage de pseudo-code Algo.
@@ -58,6 +58,7 @@ tasks {
                 <li>Coloration syntaxique complète</li>
                 <li>Exécution directe des fichiers .algo</li>
                 <li>Intégration avec algo-compiler-1.6.0.jar</li>
+                <li>Compatible IntelliJ IDEA 2023.2 à 2025.3</li>
             </ul>
         """)
     }
