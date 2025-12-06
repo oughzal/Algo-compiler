@@ -813,6 +813,15 @@ class Interpreter {
                 // Ne pas afficher le caractère nul par défaut (initialisation)
                 if (value == '\u0000') "" else value.toString()
             }
+            is MutableList<*> -> {
+                // Affichage des tableaux au format [elem1, elem2, ...]
+                "[" + value.joinToString(", ") { elem ->
+                    when (elem) {
+                        is MutableList<*> -> formatValue(elem) // Tableau 2D (matrice)
+                        else -> formatValue(elem ?: "null")
+                    }
+                } + "]"
+            }
             else -> value.toString()
         }
     }

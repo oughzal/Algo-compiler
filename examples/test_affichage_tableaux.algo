@@ -1,0 +1,30 @@
+algorithme TestAffichageTableaux
+variables
+    T : tableau[5] de entier
+    M : tableau[2][3] de entier
+    i, j : entier
+
+debut
+    // Initialiser le tableau 1D
+    pour i de 0 à 4 faire
+        T[i] = (i + 1) * 10
+    finpour
+
+    // Afficher le tableau 1D
+    ecrireln("Tableau T :", T)
+
+    // Initialiser la matrice 2D
+    pour i de 0 à 1 faire
+        pour j de 0 à 2 faire
+            M[i][j] = i * 10 + j
+        finpour
+    finpour
+
+    // Afficher la matrice 2D
+    ecrireln("Matrice M :", M)
+
+    // Test avec plusieurs éléments
+    ecrire("Valeurs : T=", T, " et M=", M)
+    ecrireln()
+fin
+
