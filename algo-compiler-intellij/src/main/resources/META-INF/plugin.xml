@@ -93,8 +93,7 @@
             id="Algo.Run"
             class="com.algocompiler.intellij.actions.RunAlgoAction"
             text="Exécuter Algo"
-            description="Exécute le fichier Algo courant"
-            icon="AllIcons.Actions.Execute">
+            description="Exécute le fichier Algo courant">
             <add-to-group group-id="RunMenu" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift F10"/>
         </action>

@@ -3,17 +3,13 @@ package com.algocompiler.intellij.actions
 import com.algocompiler.intellij.AlgoFileType
 import com.algocompiler.intellij.settings.AlgoSettings
 import com.intellij.execution.configurations.GeneralCommandLine
-import com.intellij.execution.process.ProcessHandlerFactory
+import com.intellij.execution.process.OSProcessHandler
 import com.intellij.execution.process.ProcessTerminatedListener
-import com.intellij.execution.ui.ConsoleView
-import com.intellij.execution.ui.ConsoleViewContentType
-import com.intellij.execution.ui.RunContentFactory
-import com.intellij.execution.ui.RunContentDescriptor
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.wm.ToolWindowId
-import com.intellij.openapi.wm.ToolWindowManager
+import com.intellij.openapi.ui.Messages
+import java.io.File
 
 class RunAlgoAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
@@ -26,7 +22,21 @@ class RunAlgoAction : AnAction() {
 
         val settings = AlgoSettings.getInstance()
         val compilerPath = settings.compilerPath.ifEmpty {
-            // Show error notification
+            Messages.showErrorDialog(
+                project,
+                "Veuillez configurer le chemin du compilateur dans Settings → Tools → Algo Compiler",
+                "Compilateur non configuré"
+            )
+            return
+        }
+
+        // Vérifier que le JAR existe
+        if (!File(compilerPath).exists()) {
+            Messages.showErrorDialog(
+                project,
+                "Le fichier compilateur n'existe pas : $compilerPath",
+                "Erreur de configuration"
+            )
             return
         }
 
@@ -34,34 +44,24 @@ class RunAlgoAction : AnAction() {
             val commandLine = GeneralCommandLine()
                 .withExePath(settings.javaPath)
                 .withParameters("-jar", compilerPath, file.path)
+                .withWorkDirectory(file.parent.path)
                 .withCharset(Charsets.UTF_8)
 
-            val processHandler = ProcessHandlerFactory.getInstance()
-                .createColoredProcessHandler(commandLine)
-
+            val processHandler = OSProcessHandler(commandLine)
             ProcessTerminatedListener.attach(processHandler)
-
-            // Create console view
-            val consoleView = com.intellij.execution.ui.ConsoleViewImpl(project, true)
-            consoleView.attachToProcess(processHandler)
-
-            val descriptor = RunContentDescriptor(
-                consoleView,
-                processHandler,
-                consoleView.component,
-                "Algo: ${file.name}"
-            )
-
-            // Show in Run tool window
-            val toolWindow = ToolWindowManager.getInstance(project).getToolWindow(ToolWindowId.RUN)
-            toolWindow?.let {
-                RunContentFactory.SERVICE.getInstance()
-                    .createRunContent(descriptor, project)
-            }
-
             processHandler.startNotify()
+
+            Messages.showInfoMessage(
+                project,
+                "Exécution de ${file.name} lancée.\nVoir la console du terminal.",
+                "Algo Compiler"
+            )
         } catch (ex: Exception) {
-            // Handle error
+            Messages.showErrorDialog(
+                project,
+                "Erreur lors de l'exécution : ${ex.message}",
+                "Erreur d'exécution"
+            )
         }
     }
 
