@@ -1,0 +1,103 @@
+<idea-plugin>
+    <id>com.algocompiler.intellij</id>
+    <name>Algo Compiler</name>
+    <vendor email="contact@algocompiler.com" url="https://oughzal.github.io/Algo-compiler/">Omar OUGHZAL</vendor>
+
+    <description><![CDATA[
+    <h1>Algo Compiler - Support IntelliJ IDEA</h1>
+    <p>Plugin pour le compilateur de pseudo-code français Algo.</p>
+
+    <h2>Fonctionnalités</h2>
+    <ul>
+        <li><b>Coloration syntaxique</b> : Support complet de la syntaxe Algo</li>
+        <li><b>Exécution directe</b> : Exécutez vos fichiers .algo avec Ctrl+Shift+F10</li>
+        <li><b>Complétion intelligente</b> : Suggestions pour mots-clés, types et fonctions</li>
+        <li><b>Snippets</b> : Templates prêts à l'emploi pour structures courantes</li>
+    </ul>
+
+    <h2>Types supportés</h2>
+    <p>entier, réel, chaîne, caractère, booléen, tableau, matrice</p>
+
+    <h2>Structures de contrôle</h2>
+    <p>si/alors/sinon/sinonSi, pour, tantque, répéter/jusqu'à, selon</p>
+
+    <h2>40+ fonctions intégrées</h2>
+    <ul>
+        <li>Mathématiques : abs, racine, puissance, arrondi, sin, cos, tan, etc.</li>
+        <li>Chaînes : longueur, majuscule, minuscule, sousChaine, contient, etc.</li>
+        <li>Caractères : ord, chr, estLettre, estChiffre, etc.</li>
+        <li>Conversions : versEntier, versReel, versChaine</li>
+        <li>Aléatoire : aleatoire(), aleatoire(max), aleatoire(min, max)</li>
+    </ul>
+
+    <h2>Configuration</h2>
+    <p>Définissez le chemin vers algo-compiler-1.6.0.jar dans Settings → Tools → Algo Compiler</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- File Type -->
+        <fileType
+            name="Algo File"
+            implementationClass="com.algocompiler.intellij.AlgoFileType"
+            fieldName="INSTANCE"
+            language="Algo"
+            extensions="algo;alg"/>
+
+        <!-- Language -->
+        <lang.parserDefinition
+            language="Algo"
+            implementationClass="com.algocompiler.intellij.AlgoParserDefinition"/>
+
+        <!-- Syntax Highlighter -->
+        <lang.syntaxHighlighterFactory
+            language="Algo"
+            implementationClass="com.algocompiler.intellij.AlgoSyntaxHighlighterFactory"/>
+
+        <!-- Commenter -->
+        <lang.commenter
+            language="Algo"
+            implementationClass="com.algocompiler.intellij.AlgoCommenter"/>
+
+        <!-- Bracket Matcher -->
+        <lang.braceMatcher
+            language="Algo"
+            implementationClass="com.algocompiler.intellij.AlgoBraceMatcher"/>
+
+        <!-- Code Completion -->
+        <completion.contributor
+            language="Algo"
+            implementationClass="com.algocompiler.intellij.AlgoCompletionContributor"/>
+
+        <!-- Run Configuration -->
+        <configurationType
+            implementation="com.algocompiler.intellij.run.AlgoRunConfigurationType"/>
+        <runConfigurationProducer
+            implementation="com.algocompiler.intellij.run.AlgoRunConfigurationProducer"/>
+
+        <!-- Settings -->
+        <applicationConfigurable
+            parentId="tools"
+            instance="com.algocompiler.intellij.settings.AlgoSettingsConfigurable"
+            id="com.algocompiler.intellij.settings.AlgoSettingsConfigurable"
+            displayName="Algo Compiler"/>
+        <applicationService
+            serviceImplementation="com.algocompiler.intellij.settings.AlgoSettings"/>
+    </extensions>
+
+    <actions>
+        <!-- Run Action -->
+        <action
+            id="Algo.Run"
+            class="com.algocompiler.intellij.actions.RunAlgoAction"
+            text="Exécuter Algo"
+            description="Exécute le fichier Algo courant"
+            icon="AllIcons.Actions.Execute">
+            <add-to-group group-id="RunMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift F10"/>
+        </action>
+    </actions>
+</idea-plugin>
+
