@@ -498,7 +498,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">
+                <a href="/" class="logo">
                     <img src="icon.png" alt="Algo-Compiler Logo">
                     <span>Algo-Compiler</span>
                 </a>
@@ -515,6 +515,15 @@
             </div>
         </div>
     </header>
+
+    <!-- Badge / Download -->
+    <div class="container mt-2">
+        <div style="display:flex;gap:1rem;align-items:center;justify-content:center;margin:1rem 0;flex-wrap:wrap;">
+            <a href="https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar" class="btn btn-primary" style="max-width:none;">⬇️ Télécharger JAR v1.6.0</a>
+            <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" class="btn btn-secondary" style="max-width:none;">Voir la release</a>
+            <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="btn btn-secondary" target="_blank" style="max-width:none;">Extension VS Code</a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -657,10 +666,11 @@
                     <div class="step-number">1</div>
                     <h3>Télécharger le Compilateur</h3>
                     <p>Téléchargez le fichier JAR depuis GitHub Releases</p>
-                    <code>algo-compiler-1.0.0.jar</code>
-                    <a href="https://github.com/oughzal/Algo-compiler/releases/latest" class="btn btn-primary mt-2" target="_blank">
-                        Télécharger
-                    </a>
+                    <code>algo-compiler-1.6.0.jar</code>
+                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;align-items:center;">
+                        <a href="https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar" class="btn btn-primary">Télécharger JAR</a>
+                        <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" class="btn btn-secondary">Voir la release</a>
+                    </div>
                 </div>
 
                 <div class="install-step">
@@ -668,19 +678,21 @@
                     <h3>Installer Java 21+</h3>
                     <p>Le compilateur nécessite Java 21 ou supérieur</p>
                     <code>java -version</code>
-                    <a href="https://adoptium.net/" class="btn btn-secondary mt-2" target="_blank">
-                        Télécharger Java
-                    </a>
+                    <a href="https://adoptium.net/" class="btn btn-secondary mt-2" target="_blank">Télécharger Java</a>
                 </div>
 
                 <div class="install-step">
                     <div class="step-number">3</div>
                     <h3>Extension VS Code</h3>
-                    <p>Installez l'extension depuis le Marketplace</p>
-                    <code>Rechercher: Algo Compiler</code>
-                    <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="btn btn-primary mt-2" target="_blank">
-                        Installer l'Extension
-                    </a>
+                    <p>Installez l'extension depuis le Marketplace ou en local (fichier .vsix généré)</p>
+                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;align-items:center;">
+                        <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="btn btn-primary" target="_blank">Installer depuis Marketplace</a>
+                        <a href="algo-compiler-vscode/algo-compiler-1.6.0.vsix" class="btn btn-secondary">Télécharger .vsix</a>
+                    </div>
+                    <div style="margin-top:1rem;display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
+                        <img src="vscode_settings.png" alt="Paramètres VS Code" style="max-width:320px;border-radius:8px;box-shadow:var(--shadow);" />
+                        <img src="vscode_marketplace.png" alt="Algo Compiler Marketplace" style="max-width:320px;border-radius:8px;box-shadow:var(--shadow);" />
+                    </div>
                 </div>
 
                 <div class="install-step">
@@ -688,7 +700,8 @@
                     <h3>Configurer VS Code</h3>
                     <p>Définissez le chemin du compilateur dans les paramètres</p>
                     <code>Settings → Algo Compiler → Compiler Path</code>
-                    <p class="mt-2">Puis créez un fichier <code>.algo</code> et appuyez sur <strong>Ctrl+Shift+R</strong> pour exécuter !</p>
+                    <p class="mt-2">Puis créez un fichier <code>.algo</code> et appuyez sur <strong>Ctrl+Shift+R</strong> pour exécuter.</p>
+                    <p class="mt-2">Si vous installez la .vsix localement :<br/>Ouvrez un terminal et exécutez : <code>code --install-extension path\to\algo-compiler-1.6.0.vsix</code></p>
                 </div>
             </div>
         </div>
@@ -767,4 +780,3 @@
     </script>
 </body>
 </html>
-

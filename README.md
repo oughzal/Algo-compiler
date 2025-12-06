@@ -1,3 +1,7 @@
+[![Télécharger JAR v1.6.0](https://img.shields.io/badge/Télécharger%20JAR-v1.6.0-blue?logo=download)](https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar)
+
+**Téléchargement direct :** [algo-compiler-1.6.0.jar](https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar) — cliquez pour télécharger le fichier JAR.
+
 # Compilateur de Pseudo-code Français (AlgoC)
 
 Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu pour faciliter l'apprentissage de la programmation avec une syntaxe française naturelle.
@@ -971,4 +975,3 @@ Ce projet est sous licence MIT.
 **© 2024 Omar OUGHZAL** - Tous droits réservés
 
 Développé avec ❤️ pour faciliter l'apprentissage de l'algorithmique en français.
-
