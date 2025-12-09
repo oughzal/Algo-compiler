@@ -1,0 +1,91 @@
+algorithme TestTypageTableaux
+
+variables
+    Ti : tableau[5] de entier
+    Tr : tableau[5] de reel
+    Ts : tableau[3] de chaine
+    Tc : tableau[3] de caractere
+    i : entier
+    r : reel
+    s : chaine
+    c : caractere
+
+debut
+    ecrireln("=== TEST TYPAGE DES TABLEAUX ===")
+    ecrireln()
+
+    // ===== TEST 1: Tableau d'entiers avec valeurs réelles =====
+    ecrireln("1. Tableau d'entiers avec affectation de reel:")
+    Ti[0] = 3.14  // Doit tronquer à 3
+    Ti[1] = 2.99  // Doit tronquer à 2
+    Ti[2] = 5.5   // Doit tronquer à 5
+    ecrireln("Ti[0] = 3.14 -> ", Ti[0], " (attendu: 3)")
+    ecrireln("Ti[1] = 2.99 -> ", Ti[1], " (attendu: 2)")
+    ecrireln("Ti[2] = 5.5 -> ", Ti[2], " (attendu: 5)")
+    ecrireln()
+
+    // ===== TEST 2: Tableau de réels avec valeurs entières =====
+    ecrireln("2. Tableau de reels avec affectation d'entier:")
+    Tr[0] = 10
+    Tr[1] = 20
+    Tr[2] = 30
+    ecrireln("Tr[0] = 10 -> ", Tr[0], " (attendu: 10.0 ou 10)")
+    ecrireln("Tr[1] = 20 -> ", Tr[1], " (attendu: 20.0 ou 20)")
+    ecrireln("Tr[2] = 30 -> ", Tr[2], " (attendu: 30.0 ou 30)")
+    ecrireln()
+
+    // ===== TEST 3: Tableau de chaînes avec caractères =====
+    ecrireln("3. Tableau de chaines avec affectation de caractere:")
+    c = 'A'
+    Ts[0] = c
+    c = 'B'
+    Ts[1] = c
+    Ts[2] = 'C'
+    ecrireln("Ts[0] = 'A' -> '", Ts[0], "' (attendu: 'A')")
+    ecrireln("Ts[1] = 'B' -> '", Ts[1], "' (attendu: 'B')")
+    ecrireln("Ts[2] = 'C' -> '", Ts[2], "' (attendu: 'C')")
+    ecrireln()
+
+    // ===== TEST 4: Tableau de caractères avec chaînes =====
+    ecrireln("4. Tableau de caracteres avec affectation de chaine:")
+    Tc[0] = "Hello"  // Doit prendre 'H'
+    Tc[1] = "X"      // Doit prendre 'X'
+    s = "World"
+    Tc[2] = s        // Doit prendre 'W'
+    ecrireln("Tc[0] = 'Hello' -> '", Tc[0], "' (attendu: 'H')")
+    ecrireln("Tc[1] = 'X' -> '", Tc[1], "' (attendu: 'X')")
+    ecrireln("Tc[2] = s ('World') -> '", Tc[2], "' (attendu: 'W')")
+    ecrireln()
+
+    // ===== TEST 5: Tableau d'entiers avec caractères (ord) =====
+    ecrireln("5. Tableau d'entiers avec affectation de caractere (ord):")
+    Ti[0] = 'A'  // Doit donner 65
+    Ti[1] = 'B'  // Doit donner 66
+    Ti[2] = 'Z'  // Doit donner 90
+    ecrireln("Ti[0] = 'A' -> ", Ti[0], " (attendu: 65)")
+    ecrireln("Ti[1] = 'B' -> ", Ti[1], " (attendu: 66)")
+    ecrireln("Ti[2] = 'Z' -> ", Ti[2], " (attendu: 90)")
+    ecrireln()
+
+    // ===== TEST 6: Tableau de caractères avec entiers (chr) =====
+    ecrireln("6. Tableau de caracteres avec affectation d'entier (chr):")
+    Tc[0] = 65   // Doit donner 'A'
+    Tc[1] = 66   // Doit donner 'B'
+    i = 67
+    Tc[2] = i    // Doit donner 'C'
+    ecrireln("Tc[0] = 65 -> '", Tc[0], "' (attendu: 'A')")
+    ecrireln("Tc[1] = 66 -> '", Tc[1], "' (attendu: 'B')")
+    ecrireln("Tc[2] = i (67) -> '", Tc[2], "' (attendu: 'C')")
+    ecrireln()
+
+    // ===== TEST 7: Affichage des tableaux =====
+    ecrireln("7. Affichage complet des tableaux:")
+    ecrireln("Ti = ", Ti)
+    ecrireln("Tr = ", Tr)
+    ecrireln("Ts = ", Ts)
+    ecrireln("Tc = ", Tc)
+    ecrireln()
+
+    ecrireln("=== TOUS LES TESTS TERMINES ===")
+fin
+

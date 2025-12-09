@@ -1,0 +1,118 @@
+algorithme TestTypageAffectation
+
+variables
+    i : entier
+    r : reel
+    s : chaine
+    c : caractere
+    b : booleen
+
+debut
+    ecrireln("=== TEST DE TYPAGE LORS DE L'AFFECTATION ===")
+    ecrireln()
+
+    // ===== TEST 1: Entier -> Réel (casting implicite) =====
+    ecrireln("1. Casting implicite entier -> reel:")
+    i = 42
+    r = i  // Doit convertir automatiquement
+    ecrireln("i (entier) = ", i)
+    ecrireln("r (reel) = i = ", r)
+    ecrireln("Type de r: reel (attendu: 42.0 ou 42)")
+    ecrireln()
+
+    // ===== TEST 2: Réel -> Entier (troncature) =====
+    ecrireln("2. Troncature reel -> entier:")
+    r = 3.14159
+    i = r  // Doit tronquer
+    ecrireln("r (reel) = ", r)
+    ecrireln("i (entier) = r = ", i)
+    ecrireln("Attendu: 3 (troncature)")
+    ecrireln()
+
+    // ===== TEST 3: Caractère -> Chaîne (casting implicite) =====
+    ecrireln("3. Casting implicite caractere -> chaine:")
+    c = 'A'
+    s = c  // Doit convertir automatiquement
+    ecrireln("c (caractere) = '", c, "'")
+    ecrireln("s (chaine) = c = '", s, "'")
+    ecrireln("Attendu: 'A'")
+    ecrireln()
+
+    // ===== TEST 4: Chaîne -> Caractère (premier caractère) =====
+    ecrireln("4. Conversion chaine -> caractere (premier car):")
+    s = "Hello"
+    c = s  // Doit prendre le premier caractère
+    ecrireln("s (chaine) = '", s, "'")
+    ecrireln("c (caractere) = s = '", c, "'")
+    ecrireln("Attendu: 'H'")
+    ecrireln()
+
+    // ===== TEST 5: Caractère -> Entier (ord) =====
+    ecrireln("5. Conversion caractere -> entier (ord):")
+    c = 'A'
+    i = c  // Doit retourner le code ASCII
+    ecrireln("c (caractere) = '", c, "'")
+    ecrireln("i (entier) = c = ", i)
+    ecrireln("Attendu: 65 (code ASCII de 'A')")
+    ecrireln()
+
+    // ===== TEST 6: Entier -> Caractère (chr) =====
+    ecrireln("6. Conversion entier -> caractere (chr):")
+    i = 66
+    c = i  // Doit convertir en caractère
+    ecrireln("i (entier) = ", i)
+    ecrireln("c (caractere) = i = '", c, "'")
+    ecrireln("Attendu: 'B' (chr(66))")
+    ecrireln()
+
+    // ===== TEST 7: Booléen -> Entier =====
+    ecrireln("7. Conversion booleen -> entier:")
+    b = vrai
+    i = b
+    ecrireln("b (booleen) = ", b)
+    ecrireln("i (entier) = b = ", i)
+    ecrireln("Attendu: 1")
+
+    b = faux
+    i = b
+    ecrireln("b (booleen) = ", b)
+    ecrireln("i (entier) = b = ", i)
+    ecrireln("Attendu: 0")
+    ecrireln()
+
+    // ===== TEST 8: Entier -> Booléen =====
+    ecrireln("8. Conversion entier -> booleen:")
+    i = 5
+    b = i
+    ecrireln("i (entier) = ", i)
+    ecrireln("b (booleen) = i = ", b)
+    ecrireln("Attendu: true (non-zero)")
+
+    i = 0
+    b = i
+    ecrireln("i (entier) = ", i)
+    ecrireln("b (booleen) = i = ", b)
+    ecrireln("Attendu: false (zero)")
+    ecrireln()
+
+    // ===== TEST 9: Expression avec casting =====
+    ecrireln("9. Expression avec casting automatique:")
+    i = 10
+    r = i + 5.5  // 10 converti en 10.0, puis 10.0 + 5.5
+    ecrireln("i = ", i)
+    ecrireln("r = i + 5.5 = ", r)
+    ecrireln("Attendu: 15.5")
+    ecrireln()
+
+    // ===== TEST 10: Chaîne numérique =====
+    ecrireln("10. Conversion chaine numerique -> entier:")
+    s = "123"
+    i = s
+    ecrireln("s (chaine) = '", s, "'")
+    ecrireln("i (entier) = s = ", i)
+    ecrireln("Attendu: 123")
+    ecrireln()
+
+    ecrireln("=== TOUS LES TESTS TERMINES ===")
+fin
+

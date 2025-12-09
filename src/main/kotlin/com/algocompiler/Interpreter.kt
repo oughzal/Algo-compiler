@@ -8,6 +8,7 @@ class Interpreter {
     private val variables = mutableMapOf<String, Any>()
     private val constants = mutableSetOf<String>()
     private val functions = mutableMapOf<String, FunctionDeclaration>()
+    private val variableTypes = mutableMapOf<String, String>() // Stocker les types déclarés
 
     // Normalisation des noms (case insensitive)
     private fun normalize(name: String): String {
@@ -48,15 +49,20 @@ class Interpreter {
 
     private fun initializeVariable(varDecl: VariableDeclaration) {
         val normalizedName = normalize(varDecl.name)
+        val normalizedType = normalize(varDecl.type)
+
+        // Stocker le type de la variable
+        variableTypes[normalizedName] = normalizedType
 
         // Check if there's an initial value
         if (varDecl.initialValue != null) {
             val value = evaluateExpression(varDecl.initialValue)
-            variables[normalizedName] = value
+            // Appliquer le casting selon le type déclaré
+            variables[normalizedName] = castToType(value, normalizedType)
         } else if (varDecl.arraySize != null) {
             // Initialize array with default values
             val defaultValue =
-                    when (normalize(varDecl.type)) {
+                    when (normalizedType) {
                         "entier" -> 0
                         "reel" -> 0.0
                         "chaine" -> ""
@@ -68,7 +74,7 @@ class Interpreter {
         } else {
             // Initialize simple variable with default value
             variables[normalizedName] =
-                    when (normalize(varDecl.type)) {
+                    when (normalizedType) {
                         "entier" -> 0
                         "reel" -> 0.0
                         "chaine" -> ""
@@ -114,7 +120,16 @@ class Interpreter {
             throw Exception("Impossible de modifier la constante '${assignment.variable}'")
         }
         val value = evaluateExpression(assignment.expression)
-        variables[normalizedName] = value
+
+        // Appliquer le casting selon le type déclaré de la variable
+        val targetType = variableTypes[normalizedName]
+        val castedValue = if (targetType != null) {
+            castToType(value, targetType)
+        } else {
+            value
+        }
+
+        variables[normalizedName] = castedValue
     }
 
     private fun executeArrayAssignment(assignment: ArrayAssignment) {
@@ -133,7 +148,23 @@ class Interpreter {
             throw Exception("Index $index hors limites pour le tableau '${assignment.arrayName}'")
         }
 
-        array[index] = value
+        // Déduire le type d'élément du tableau depuis le premier élément
+        val elementType = when (array.firstOrNull()) {
+            is Int -> "entier"
+            is Double -> "reel"
+            is String -> "chaine"
+            is Char -> "caractere"
+            is Boolean -> "booleen"
+            else -> null
+        }
+
+        val castedValue = if (elementType != null) {
+            castToType(value, elementType)
+        } else {
+            value
+        }
+
+        array[index] = castedValue
     }
 
     private fun executeMatrixAssignment(assignment: MatrixAssignment) {
@@ -157,7 +188,23 @@ class Interpreter {
             throw Exception("Index colonne $index2 hors limites pour la matrice '${assignment.matrixName}'")
         }
 
-        matrix[index1][index2] = value
+        // Déduire le type d'élément de la matrice depuis le premier élément
+        val elementType = when (matrix.firstOrNull()?.firstOrNull()) {
+            is Int -> "entier"
+            is Double -> "reel"
+            is String -> "chaine"
+            is Char -> "caractere"
+            is Boolean -> "booleen"
+            else -> null
+        }
+
+        val castedValue = if (elementType != null) {
+            castToType(value, elementType)
+        } else {
+            value
+        }
+
+        matrix[index1][index2] = castedValue
     }
 
     private fun executeIfStatement(ifStatement: IfStatement) {
@@ -830,6 +877,94 @@ class Interpreter {
 
     private fun isNumber(value: Any): Boolean {
         return value is Int || value is Double || value is Float || value is Long
+    }
+
+    /**
+     * Convertit une valeur vers le type cible avec casting implicite
+     * Règles de conversion :
+     * - entier -> reel : conversion automatique
+     * - caractere -> chaine : conversion automatique
+     * - caractere -> entier : ord(c) - code ASCII
+     * - entier -> caractere : chr(n) - si dans les limites
+     * - reel -> entier : troncature
+     * - chaine -> caractere : premier caractère si possible
+     * - booleen reste booleen
+     */
+    private fun castToType(value: Any, targetType: String): Any {
+        val normalizedTargetType = normalize(targetType)
+
+        return when (normalizedTargetType) {
+            "entier" -> {
+                when (value) {
+                    is Int -> value
+                    is Double -> value.toInt() // Troncature
+                    is Char -> value.code // ord(c)
+                    is String -> value.toIntOrNull() ?: 0
+                    is Boolean -> if (value) 1 else 0
+                    else -> toInt(value)
+                }
+            }
+            "reel" -> {
+                when (value) {
+                    is Double -> value
+                    is Int -> value.toDouble() // Casting implicite entier -> reel
+                    is Char -> value.code.toDouble()
+                    is String -> value.toDoubleOrNull() ?: 0.0
+                    is Boolean -> if (value) 1.0 else 0.0
+                    else -> toDouble(value)
+                }
+            }
+            "chaine" -> {
+                when (value) {
+                    is String -> value
+                    is Char -> value.toString() // Casting implicite caractere -> chaine
+                    is Int -> value.toString()
+                    is Double -> {
+                        if (value % 1.0 == 0.0) {
+                            value.toInt().toString()
+                        } else {
+                            value.toString()
+                        }
+                    }
+                    is Boolean -> if (value) "vrai" else "faux"
+                    else -> value.toString()
+                }
+            }
+            "caractere" -> {
+                when (value) {
+                    is Char -> value
+                    is String -> if (value.isNotEmpty()) value[0] else '\u0000'
+                    is Int -> {
+                        // chr(n) - vérifier les limites
+                        if (value in 0..Char.MAX_VALUE.code) {
+                            value.toChar()
+                        } else {
+                            throw Exception("Valeur $value hors limites pour un caractère (0-${Char.MAX_VALUE.code})")
+                        }
+                    }
+                    is Double -> {
+                        val intValue = value.toInt()
+                        if (intValue in 0..Char.MAX_VALUE.code) {
+                            intValue.toChar()
+                        } else {
+                            throw Exception("Valeur $intValue hors limites pour un caractère")
+                        }
+                    }
+                    else -> '\u0000'
+                }
+            }
+            "booleen" -> {
+                when (value) {
+                    is Boolean -> value
+                    is Int -> value != 0
+                    is Double -> value != 0.0
+                    is String -> value.isNotEmpty() && value.lowercase() != "faux" && value != "0"
+                    is Char -> value != '\u0000'
+                    else -> toBoolean(value)
+                }
+            }
+            else -> value // Type inconnu, garder la valeur telle quelle
+        }
     }
 
     private fun evaluateUnaryOp(unaryOp: UnaryOp): Any {
