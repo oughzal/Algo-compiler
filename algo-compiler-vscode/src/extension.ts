@@ -95,7 +95,6 @@ async function runAlgoFile(filePath: string) {
 
     // Afficher le terminal et exécuter la commande
     terminal.show();
-    terminal.sendText(`echo "▶ Exécution de: ${path.basename(filePath)}"`);
     terminal.sendText(command);
 }
 
@@ -126,25 +125,33 @@ async function findCompilerJar(): Promise<string | null> {
     const config = vscode.workspace.getConfiguration('algoCompiler');
     const configPath = config.get<string>('compilerPath');
 
-    // Si un chemin est configuré, l'utiliser
-    if (configPath && fs.existsSync(configPath)) {
+    // Si un chemin est configuré et existe, l'utiliser
+    if (configPath && configPath.trim() !== '' && fs.existsSync(configPath)) {
         return configPath;
     }
 
     // Chercher le JAR dans les emplacements standards
     const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (!workspaceFolders) {
-        return null;
-    }
 
     const possiblePaths = [
-        // Dans le projet actuel
-        path.join(workspaceFolders[0].uri.fsPath, 'build', 'libs', 'algo-compiler-1.0.0.jar'),
-        // Un niveau au-dessus
-        path.join(workspaceFolders[0].uri.fsPath, '..', 'build', 'libs', 'algo-compiler-1.0.0.jar'),
-        // Dans le projet parent
-        path.join(workspaceFolders[0].uri.fsPath, '..', 'Algo-compiler', 'build', 'libs', 'algo-compiler-1.0.0.jar'),
+        // Chemin par défaut
+        'c:\\algo-compiler-1.6.0.jar',
+        // Versions alternatives (support des futures versions)
+        'c:\\algo-compiler-1.7.0.jar',
+        'c:\\algo-compiler-1.8.0.jar',
     ];
+
+    // Ajouter les chemins du workspace si disponible
+    if (workspaceFolders) {
+        possiblePaths.push(
+            // Dans le projet actuel
+            path.join(workspaceFolders[0].uri.fsPath, 'build', 'libs', 'algo-compiler-1.6.0.jar'),
+            // Un niveau au-dessus
+            path.join(workspaceFolders[0].uri.fsPath, '..', 'build', 'libs', 'algo-compiler-1.6.0.jar'),
+            // Dans le projet parent
+            path.join(workspaceFolders[0].uri.fsPath, '..', 'Algo-compiler', 'build', 'libs', 'algo-compiler-1.6.0.jar'),
+        );
+    }
 
     for (const jarPath of possiblePaths) {
         if (fs.existsSync(jarPath)) {

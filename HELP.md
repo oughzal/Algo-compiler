@@ -114,7 +114,60 @@ Opérateurs
 
 - Puissance : `^` et `**` (alias). L'alias `^` et `**` sont supportés et `^` est recommandé pour la lisibilité.
 - Logiques : `et`, `ou`, `non`
-- Comparaison : `=`, `<>`, `!=`, `<`, `>`, `<=`, `>=`
+- Comparaison : `==`, `<>`, `!=`, `<`, `>`, `<=`, `>=`
+
+Typage Fort et Comparaisons
+
+Le compilateur implémente un système de typage fort pour les comparaisons :
+
+**Règles de comparaison** :
+
+1. **Nombres** (entier, reel) :
+   - Comparaison numérique : `10 < 20` → VRAI
+   - Nombres négatifs : `-5 < 10` → VRAI
+   - Entier vs réel : `5 == 5.0` → VRAI (conversion automatique)
+
+2. **Chaînes** :
+   - Ordre lexicographique (alphabétique) : `"abc" < "def"` → VRAI
+   - Longueur différente : `"abc" < "abcd"` → VRAI
+   - Chaîne numérique vs nombre : `"10" == 10` → VRAI (conversion intelligente)
+
+3. **Caractères** :
+   - Comparaison par code ASCII : `'a' < 'z'` → VRAI
+   - Caractère vs chaîne (1 car) : `'a' == "a"` → VRAI
+
+4. **Booléens** :
+   - `faux < vrai` → VRAI
+   - Comparaison stricte : `vrai == vrai` → VRAI
+
+**Exemples** :
+```algo
+// Comparaison de nombres
+a = 10
+b = 20
+si a < b alors
+    ecrireln("10 est inférieur à 20")  // ✅ Correct
+finsi
+
+// Comparaison de chaînes (ordre alphabétique)
+s1 = "Alice"
+s2 = "Bob"
+si s1 < s2 alors
+    ecrireln("Alice vient avant Bob")  // ✅ Correct
+finsi
+
+// Comparaison de caractères
+c1 = 'a'
+c2 = 'z'
+si c1 < c2 alors
+    ecrireln("a vient avant z")  // ✅ Correct
+finsi
+
+// Comparaison intelligente chaîne/nombre
+si "10" == 10 alors
+    ecrireln("Égaux")  // ✅ Conversion automatique
+finsi
+```
 
 Exemples rapides
 

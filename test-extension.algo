@@ -1,0 +1,17 @@
+algorithme TestExtension
+
+variables
+    nom : chaine
+    age : entier
+
+debut
+    ecrire("Entrez votre nom: ")
+    lire(nom)
+
+    ecrire("Entrez votre age: ")
+    lire(age)
+
+    ecrireln("Bonjour ", nom, " !")
+    ecrireln("Vous avez ", age, " ans.")
+fin
+

@@ -744,17 +744,92 @@ class Interpreter {
             "**", "^" -> toDouble(left).pow(toDouble(right))
             "div" -> toInt(left) / toInt(right)
             "mod", "%" -> toInt(left) % toInt(right)
-            "==" -> left == right || toDouble(left) == toDouble(right)
-            "<>" -> left != right && toDouble(left) != toDouble(right)
-            "!=" -> left != right && toDouble(left) != toDouble(right)
-            "<" -> toDouble(left) < toDouble(right)
-            ">" -> toDouble(left) > toDouble(right)
-            "<=" -> toDouble(left) <= toDouble(right)
-            ">=" -> toDouble(left) >= toDouble(right)
+            "==" -> compareEquals(left, right)
+            "<>" -> !compareEquals(left, right)
+            "!=" -> !compareEquals(left, right)
+            "<" -> compareLess(left, right)
+            ">" -> compareLess(right, left)
+            "<=" -> !compareLess(right, left)
+            ">=" -> !compareLess(left, right)
             "et" -> toBoolean(left) && toBoolean(right)
             "ou" -> toBoolean(left) || toBoolean(right)
             else -> throw Exception("Opérateur invalide: ${binaryOp.operator}")
         }
+    }
+
+    private fun compareEquals(left: Any, right: Any): Boolean {
+        return when {
+            // Même type : comparaison directe
+            left::class == right::class -> left == right
+
+            // Nombres : comparer en tant que nombres
+            isNumber(left) && isNumber(right) -> {
+                toDouble(left) == toDouble(right)
+            }
+
+            // Nombre vs chaîne numérique : essayer comparaison numérique
+            isNumber(left) && right is String -> {
+                val numRight = right.toDoubleOrNull()
+                if (numRight != null) {
+                    toDouble(left) == numRight
+                } else {
+                    false
+                }
+            }
+            left is String && isNumber(right) -> {
+                val numLeft = left.toDoubleOrNull()
+                if (numLeft != null) {
+                    numLeft == toDouble(right)
+                } else {
+                    false
+                }
+            }
+
+            // Caractères et chaînes
+            left is Char && right is String -> {
+                if (right.length == 1) left == right[0]
+                else left.toString() == right
+            }
+            left is String && right is Char -> {
+                if (left.length == 1) left[0] == right
+                else left == right.toString()
+            }
+
+            // Booléens : comparaison stricte
+            left is Boolean && right is Boolean -> left == right
+
+            // Autres cas : pas égaux (typage strict)
+            else -> false
+        }
+    }
+
+    private fun compareLess(left: Any, right: Any): Boolean {
+        return when {
+            // Nombres : comparaison numérique
+            isNumber(left) && isNumber(right) -> {
+                toDouble(left) < toDouble(right)
+            }
+
+            // Chaînes : comparaison lexicographique
+            left is String && right is String -> left < right
+
+            // Caractères : comparaison par code
+            left is Char && right is Char -> left < right
+
+            // Caractère et chaîne
+            left is Char && right is String -> left.toString() < right
+            left is String && right is Char -> left < right.toString()
+
+            // Booléens : false < true
+            left is Boolean && right is Boolean -> !left && right
+
+            // Autres cas : convertir en nombre
+            else -> toDouble(left) < toDouble(right)
+        }
+    }
+
+    private fun isNumber(value: Any): Boolean {
+        return value is Int || value is Double || value is Float || value is Long
     }
 
     private fun evaluateUnaryOp(unaryOp: UnaryOp): Any {

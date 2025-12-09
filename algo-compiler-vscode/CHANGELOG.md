@@ -2,6 +2,36 @@
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
 
+## [1.7.4] - 2025-12-09
+
+### 🎯 Améliorations de Configuration
+
+#### Installation Simplifiée
+- **Chemin par défaut configuré** : `c:\algo-compiler-1.6.0.jar`
+- **Aucune configuration manuelle nécessaire** après installation
+- L'extension détecte automatiquement le compilateur à l'emplacement standard
+- Installation réduite à 3 étapes simples
+
+#### Détection Automatique Améliorée
+- **Support multi-versions** : Détection automatique des versions 1.6.0, 1.7.0, 1.8.0
+- **Ordre de recherche intelligent** :
+  1. Chemin configuré par l'utilisateur
+  2. Chemin par défaut `c:\algo-compiler-1.6.0.jar`
+  3. Versions futures
+  4. Emplacements du workspace
+- **Compatibilité ascendante** garantie
+
+#### Interface Améliorée
+- **Nouveau logo professionnel** dans l'extension
+- **README optimisé** avec lien direct vers le JAR
+- **Instructions d'installation** plus claires et concises
+- Branding cohérent avec le projet
+
+### 📚 Documentation
+- Guide d'installation visuel complet
+- Configuration détaillée pour tous les scénarios
+- Exemples d'utilisation enrichis
+
 ## [1.6.0] - 2024-12-05
 
 ### ✨ Nouvelles Fonctionnalités Majeures

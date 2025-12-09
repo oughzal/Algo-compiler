@@ -1,0 +1,127 @@
+algorithme TestTypageFort
+
+variables
+    a, b : entier
+    x, y : reel
+    s1, s2 : chaine
+    c1, c2 : caractere
+    b1, b2 : booleen
+
+debut
+    ecrireln("=== TEST DE TYPAGE FORT ===")
+    ecrireln()
+
+    // ===== TEST 1: Comparaison d'entiers =====
+    ecrireln("1. Comparaison d'entiers:")
+    a = 10
+    b = 20
+
+    ecrireln("a = ", a, ", b = ", b)
+    ecrireln("a < b : ", si a < b alors "VRAI" sinon "FAUX")
+    ecrireln("a > b : ", si a > b alors "VRAI" sinon "FAUX")
+    ecrireln("a == 10 : ", si a == 10 alors "VRAI" sinon "FAUX")
+    ecrireln("a <= 10 : ", si a <= 10 alors "VRAI" sinon "FAUX")
+    ecrireln("a >= 10 : ", si a >= 10 alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 2: Comparaison de réels =====
+    ecrireln("2. Comparaison de réels:")
+    x = 5.5
+    y = 3.2
+
+    ecrireln("x = ", x, ", y = ", y)
+    ecrireln("x > y : ", si x > y alors "VRAI" sinon "FAUX")
+    ecrireln("x < y : ", si x < y alors "VRAI" sinon "FAUX")
+    ecrireln("x == 5.5 : ", si x == 5.5 alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 3: Comparaison entier/réel =====
+    ecrireln("3. Comparaison entier/réel:")
+    a = 5
+    x = 5.0
+
+    ecrireln("a = ", a, " (entier), x = ", x, " (réel)")
+    ecrireln("a == x : ", si a == x alors "VRAI" sinon "FAUX")
+    ecrireln("a < 10.5 : ", si a < 10.5 alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 4: Comparaison de chaînes =====
+    ecrireln("4. Comparaison de chaînes:")
+    s1 = "abc"
+    s2 = "def"
+
+    ecrireln("s1 = '", s1, "', s2 = '", s2, "'")
+    ecrireln("s1 < s2 : ", si s1 < s2 alors "VRAI (ordre alphabétique)" sinon "FAUX")
+    ecrireln("s1 > s2 : ", si s1 > s2 alors "VRAI" sinon "FAUX")
+    ecrireln("s1 == 'abc' : ", si s1 == "abc" alors "VRAI" sinon "FAUX")
+    ecrireln("s1 <> s2 : ", si s1 <> s2 alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 5: Comparaison de caractères =====
+    ecrireln("5. Comparaison de caractères:")
+    c1 = 'a'
+    c2 = 'z'
+
+    ecrireln("c1 = '", c1, "', c2 = '", c2, "'")
+    ecrireln("c1 < c2 : ", si c1 < c2 alors "VRAI" sinon "FAUX")
+    ecrireln("c1 > c2 : ", si c1 > c2 alors "VRAI" sinon "FAUX")
+    ecrireln("c1 == 'a' : ", si c1 == 'a' alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 6: Comparaison de booléens =====
+    ecrireln("6. Comparaison de booléens:")
+    b1 = vrai
+    b2 = faux
+
+    ecrireln("b1 = ", b1, ", b2 = ", b2)
+    ecrireln("b1 == vrai : ", si b1 == vrai alors "VRAI" sinon "FAUX")
+    ecrireln("b2 == faux : ", si b2 == faux alors "VRAI" sinon "FAUX")
+    ecrireln("b1 <> b2 : ", si b1 <> b2 alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 7: Comparaisons avec nombres négatifs =====
+    ecrireln("7. Nombres négatifs:")
+    a = -5
+    b = 10
+
+    ecrireln("a = ", a, ", b = ", b)
+    ecrireln("a < b : ", si a < b alors "VRAI" sinon "FAUX")
+    ecrireln("a < 0 : ", si a < 0 alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 8: Comparaisons de chaînes numériques =====
+    ecrireln("8. Chaînes vs nombres:")
+    s1 = "10"
+    a = 10
+
+    ecrireln("s1 = '", s1, "' (chaîne), a = ", a, " (entier)")
+    ecrireln("s1 == a : ", si s1 == a alors "VRAI (comparaison comme nombres)" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 9: Ordre alphabétique complexe =====
+    ecrireln("9. Ordre alphabétique:")
+    s1 = "Apple"
+    s2 = "Banana"
+
+    ecrireln("s1 = '", s1, "', s2 = '", s2, "'")
+    ecrireln("s1 < s2 : ", si s1 < s2 alors "VRAI" sinon "FAUX")
+
+    s1 = "abc"
+    s2 = "abcd"
+    ecrireln("s1 = '", s1, "', s2 = '", s2, "'")
+    ecrireln("s1 < s2 : ", si s1 < s2 alors "VRAI (plus court)" sinon "FAUX")
+    ecrireln()
+
+    // ===== TEST 10: Égalité stricte =====
+    ecrireln("10. Égalité stricte:")
+    a = 0
+    b1 = faux
+
+    ecrireln("a = ", a, " (entier), b1 = ", b1, " (booléen)")
+    ecrireln("a == 0 : ", si a == 0 alors "VRAI" sinon "FAUX")
+    ecrireln("b1 == faux : ", si b1 == faux alors "VRAI" sinon "FAUX")
+    ecrireln()
+
+    ecrireln("=== TOUS LES TESTS TERMINÉS ===")
+fin
+

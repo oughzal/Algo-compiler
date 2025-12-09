@@ -1,0 +1,62 @@
+algorithme TestComparaison
+
+variables
+    a, b : entier
+    x, y : reel
+    s1, s2 : chaine
+
+debut
+    // Test comparaison entiers
+    a = 10
+    b = 20
+
+    ecrireln("Test entiers:")
+    ecrireln("a = ", a, ", b = ", b)
+
+    si a < b alors
+        ecrireln("a < b : VRAI")
+    sinon
+        ecrireln("a < b : FAUX")
+    finsi
+
+    si a == 10 alors
+        ecrireln("a == 10 : VRAI")
+    sinon
+        ecrireln("a == 10 : FAUX")
+    finsi
+
+    // Test comparaison réels
+    x = 5.5
+    y = 3.2
+
+    ecrireln("")
+    ecrireln("Test réels:")
+    ecrireln("x = ", x, ", y = ", y)
+
+    si x > y alors
+        ecrireln("x > y : VRAI")
+    sinon
+        ecrireln("x > y : FAUX")
+    finsi
+
+    // Test comparaison chaînes
+    s1 = "abc"
+    s2 = "def"
+
+    ecrireln("")
+    ecrireln("Test chaînes:")
+    ecrireln("s1 = ", s1, ", s2 = ", s2)
+
+    si s1 == "abc" alors
+        ecrireln("s1 == 'abc' : VRAI")
+    sinon
+        ecrireln("s1 == 'abc' : FAUX")
+    finsi
+
+    si s1 < s2 alors
+        ecrireln("s1 < s2 : VRAI (ordre alphabétique)")
+    sinon
+        ecrireln("s1 < s2 : FAUX")
+    finsi
+fin
+

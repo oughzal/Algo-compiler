@@ -2,7 +2,7 @@
     "name": "algo-compiler",
     "displayName": "Algo Compiler",
     "description": "Compilateur de pseudo-code français: Matrices 2D, 40+ fonctions, opérateur ^, sinonSi, expression conditionnelle - Coloration, snippets, exécution directe",
-    "version": "1.6.0",
+    "version": "1.7.4",
     "icon": "images/icon.png",
     "publisher": "omarcomputer",
     "license": "MIT",
@@ -134,8 +134,8 @@
             "properties": {
                 "algoCompiler.compilerPath": {
                     "type": "string",
-                    "default": "",
-                    "description": "Chemin vers le JAR du compilateur Algo (laisser vide pour auto-détection)"
+                    "default": "c:\\algo-compiler-1.6.0.jar",
+                    "description": "Chemin vers le JAR du compilateur Algo (par défaut: c:\\algo-compiler-1.6.0.jar)"
                 },
                 "algoCompiler.javaPath": {
                     "type": "string",

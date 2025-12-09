@@ -6,7 +6,27 @@
 
 Extension Visual Studio Code pour **Algo-Compiler** - Écrivez, éditez et exécutez des programmes en pseudocode algorithmique français avec **40 fonctions intégrées** !
 
-🌐 **Télécharger le compiler** : [algo-compiler-1.6.0.jar](https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar)
+---
+
+## 📥 Installation Rapide
+
+### 1. Télécharger le Compilateur
+🔗 **[algo-compiler-1.6.0.jar](https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar)** ← Cliquez pour télécharger
+
+📍 **Placer le fichier à** : `c:\algo-compiler-1.6.0.jar`
+
+### 2. Installer Java 21+
+☕ **[Java 21+](https://www.oracle.com/java/technologies/downloads/#java21)** ← Télécharger si nécessaire
+
+### 3. Installer cette Extension
+📦 Dans VS Code : Extensions → Rechercher "Algo Compiler" → Installer
+
+**C'est tout ! L'extension détectera automatiquement le compilateur.**
+
+---
+
+
+
 🌐 **Site web** : [https://oughzal.github.io/Algo-compiler/](https://oughzal.github.io/Algo-compiler/)
 
 ---

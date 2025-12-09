@@ -5,7 +5,7 @@
             "algorithme ${1:NomAlgorithme}",
             "",
             "variables",
-            "    ${2:variable} : ${3:entier}",
+            "    $2",
             "",
             "debut",
             "    $0",
