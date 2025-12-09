@@ -881,61 +881,91 @@ class Interpreter {
 
     /**
      * Convertit une valeur vers le type cible avec casting implicite
-     * Règles de conversion :
-     * - entier -> reel : conversion automatique
-     * - caractere -> chaine : conversion automatique
-     * - caractere -> entier : ord(c) - code ASCII
-     * - entier -> caractere : chr(n) - si dans les limites
-     * - reel -> entier : troncature
-     * - chaine -> caractere : premier caractère si possible
-     * - booleen reste booleen
+     * Règles de conversion strictes :
+     * - entier -> reel : conversion automatique ✅
+     * - caractere -> chaine : conversion automatique ✅
+     * - caractere -> entier : ord(c) - code ASCII ✅
+     * - entier -> caractere : chr(n) - si dans les limites ✅
+     * - reel -> entier : troncature ✅
+     *
+     * Conversions INTERDITES (génèrent une erreur) :
+     * - chaine -> caractere ❌
+     * - entier -> chaine ❌
+     * - reel -> chaine ❌
+     * - booleen -> chaine ❌
+     * - chaine -> entier ❌
+     * - chaine -> reel ❌
      */
     private fun castToType(value: Any, targetType: String): Any {
         val normalizedTargetType = normalize(targetType)
+
+        // Fonction helper pour obtenir le nom du type d'une valeur
+        fun getTypeName(v: Any): String {
+            return when (v) {
+                is Int -> "entier"
+                is Double -> "reel"
+                is String -> "chaine"
+                is Char -> "caractere"
+                is Boolean -> "booleen"
+                else -> "inconnu"
+            }
+        }
 
         return when (normalizedTargetType) {
             "entier" -> {
                 when (value) {
                     is Int -> value
-                    is Double -> value.toInt() // Troncature
-                    is Char -> value.code // ord(c)
-                    is String -> value.toIntOrNull() ?: 0
-                    is Boolean -> if (value) 1 else 0
+                    is Double -> value.toInt() // Troncature autorisée
+                    is Char -> value.code // ord(c) autorisé
+                    is String -> {
+                        // ❌ INTERDIT : chaine -> entier
+                        throw Exception("Erreur de type : Impossible de convertir une chaine en entier. Utilisez versEntier() pour une conversion explicite.")
+                    }
+                    is Boolean -> if (value) 1 else 0 // Autorisé pour les tests
                     else -> toInt(value)
                 }
             }
             "reel" -> {
                 when (value) {
                     is Double -> value
-                    is Int -> value.toDouble() // Casting implicite entier -> reel
-                    is Char -> value.code.toDouble()
-                    is String -> value.toDoubleOrNull() ?: 0.0
-                    is Boolean -> if (value) 1.0 else 0.0
+                    is Int -> value.toDouble() // ✅ Casting implicite entier -> reel
+                    is Char -> value.code.toDouble() // ord(c) autorisé
+                    is String -> {
+                        // ❌ INTERDIT : chaine -> reel
+                        throw Exception("Erreur de type : Impossible de convertir une chaine en reel. Utilisez versReel() pour une conversion explicite.")
+                    }
+                    is Boolean -> if (value) 1.0 else 0.0 // Autorisé pour les tests
                     else -> toDouble(value)
                 }
             }
             "chaine" -> {
                 when (value) {
                     is String -> value
-                    is Char -> value.toString() // Casting implicite caractere -> chaine
-                    is Int -> value.toString()
-                    is Double -> {
-                        if (value % 1.0 == 0.0) {
-                            value.toInt().toString()
-                        } else {
-                            value.toString()
-                        }
+                    is Char -> value.toString() // ✅ Casting implicite caractere -> chaine
+                    is Int -> {
+                        // ❌ INTERDIT : entier -> chaine
+                        throw Exception("Erreur de type : Impossible de convertir un entier en chaine. Utilisez versChaine() pour une conversion explicite.")
                     }
-                    is Boolean -> if (value) "vrai" else "faux"
-                    else -> value.toString()
+                    is Double -> {
+                        // ❌ INTERDIT : reel -> chaine
+                        throw Exception("Erreur de type : Impossible de convertir un reel en chaine. Utilisez versChaine() pour une conversion explicite.")
+                    }
+                    is Boolean -> {
+                        // ❌ INTERDIT : booleen -> chaine
+                        throw Exception("Erreur de type : Impossible de convertir un booleen en chaine. Utilisez versChaine() pour une conversion explicite.")
+                    }
+                    else -> throw Exception("Erreur de type : Conversion vers chaine non supportée pour le type ${getTypeName(value)}")
                 }
             }
             "caractere" -> {
                 when (value) {
                     is Char -> value
-                    is String -> if (value.isNotEmpty()) value[0] else '\u0000'
+                    is String -> {
+                        // ❌ INTERDIT : chaine -> caractere
+                        throw Exception("Erreur de type : Impossible de convertir une chaine en caractere. La chaine peut contenir plusieurs caractères.")
+                    }
                     is Int -> {
-                        // chr(n) - vérifier les limites
+                        // ✅ chr(n) autorisé - vérifier les limites
                         if (value in 0..Char.MAX_VALUE.code) {
                             value.toChar()
                         } else {
@@ -950,7 +980,7 @@ class Interpreter {
                             throw Exception("Valeur $intValue hors limites pour un caractère")
                         }
                     }
-                    else -> '\u0000'
+                    else -> throw Exception("Erreur de type : Conversion vers caractere non supportée pour le type ${getTypeName(value)}")
                 }
             }
             "booleen" -> {
@@ -958,7 +988,14 @@ class Interpreter {
                     is Boolean -> value
                     is Int -> value != 0
                     is Double -> value != 0.0
-                    is String -> value.isNotEmpty() && value.lowercase() != "faux" && value != "0"
+                    is String -> {
+                        // Pour les booléens, on peut être plus permissif pour les valeurs littérales
+                        when (value.lowercase()) {
+                            "vrai", "true" -> true
+                            "faux", "false" -> false
+                            else -> throw Exception("Erreur de type : Impossible de convertir la chaine '$value' en booleen. Valeurs autorisées: 'vrai', 'faux'")
+                        }
+                    }
                     is Char -> value != '\u0000'
                     else -> toBoolean(value)
                 }

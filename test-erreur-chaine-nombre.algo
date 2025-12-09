@@ -1,0 +1,14 @@
+algorithme TestErreurChaineNombre
+
+variables
+    s : chaine
+    i : entier
+    r : reel
+
+debut
+    ecrireln("TEST: Tentative chaine -> entier")
+    s = "123"
+    i = s  // ❌ ERREUR ATTENDUE
+    ecrireln("Si vous voyez ceci, le test a échoué!")
+fin
+

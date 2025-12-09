@@ -1,0 +1,9 @@
+﻿algorithme TestConversionExplicite
+variables
+    i : entier
+    s : chaine
+debut
+    i = 42
+    s = versChaine(i)
+    ecrireln(\"s = \", s)
+fin

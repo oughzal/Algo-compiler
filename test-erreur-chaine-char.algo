@@ -1,0 +1,20 @@
+algorithme TestErreurs
+
+variables
+    i : entier
+    r : reel
+    s : chaine
+    c : caractere
+    b : booleen
+
+debut
+    ecrireln("=== TEST DES ERREURS DE TYPAGE ===")
+    ecrireln()
+
+    // ===== TEST 1: chaine -> caractere (DOIT GÉNÉRER UNE ERREUR) =====
+    ecrireln("TEST 1: Tentative chaine -> caractere")
+    s = "Hello"
+    c = s  // ❌ ERREUR ATTENDUE
+    ecrireln("Si vous voyez ceci, le test a échoué!")
+fin
+
