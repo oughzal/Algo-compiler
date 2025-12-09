@@ -33,14 +33,14 @@
         }
 
         :root {
-            --primary: #2563eb;
-            --secondary: #7c3aed;
-            --accent: #10b981;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --text: #0f172a;
-            --text-light: #64748b;
-            --border: #e2e8f0;
+            --primary: #0d6efd;
+            --secondary: #6610f2;
+            --accent: #198754;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #dee2e6;
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
@@ -157,7 +157,7 @@
         /* Hero Section */
         .hero {
             padding: 3rem 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
             color: white;
             text-align: center;
         }
@@ -429,7 +429,7 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.875rem;
-            opacity: 0.8;
+            color: rgba(255,255,255,0.8);
         }
 
         /* Tablet & Desktop */
@@ -694,8 +694,8 @@
                     <p>Téléchargez le fichier JAR depuis GitHub Releases</p>
                     <code>algo-compiler-1.6.0.jar</code>
                     <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;align-items:center;">
-                        <a href="https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar" class="btn btn-primary">Télécharger JAR</a>
-                        <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" class="btn btn-secondary">Voir la release</a>
+                        <a href="https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar" style="background:#0d6efd;color:white;padding:0.75rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;">Télécharger JAR</a>
+                        <a href="https://github.com/oughzal/Algo-compiler/releases/tag/release" style="background:#6c757d;color:white;padding:0.75rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;">Voir la release</a>
                     </div>
                 </div>
 
@@ -704,7 +704,7 @@
                     <h3>Installer Java 21+</h3>
                     <p>Le compilateur nécessite Java 21 ou supérieur</p>
                     <code>java -version</code>
-                    <a href="https://adoptium.net/" class="btn btn-secondary mt-2" target="_blank">Télécharger Java</a>
+                    <a href="https://adoptium.net/" style="background:#6c757d;color:white;padding:0.75rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;margin-top:0.75rem;" target="_blank">Télécharger Java</a>
                 </div>
 
                 <div class="install-step">
@@ -712,8 +712,8 @@
                     <h3>Extension VS Code</h3>
                     <p>Installez l'extension depuis le Marketplace ou en local (fichier .vsix généré)</p>
                     <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;align-items:center;">
-                        <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" class="btn btn-primary" target="_blank">Installer depuis Marketplace</a>
-                        <a href="algo-compiler-vscode/algo-compiler-1.6.0.vsix" class="btn btn-secondary">Télécharger .vsix</a>
+                        <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" style="background:#0d6efd;color:white;padding:0.75rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;" target="_blank">Installer depuis Marketplace</a>
+                        <a href="algo-compiler-vscode/algo-compiler-1.6.0.vsix" style="background:#6c757d;color:white;padding:0.75rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;">Télécharger .vsix</a>
                     </div>
                     <div style="margin-top:1rem;display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;">
                         <img src="vscode_marketplace.png" alt="Algo Compiler Marketplace" style="max-width:320px;border-radius:8px;box-shadow:var(--shadow);" />
