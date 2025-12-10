@@ -1,0 +1,24 @@
+algorithme TestDebug
+variables
+    M : tableau[3][3] de entier
+    i, j : entier
+debut
+    ecrireln("Debut initialisation")
+    pour i de 0 à 2 faire
+        pour j de 0 à 2 faire
+            M[i][j] = i * 10 + j
+        finpour
+    finpour
+    ecrireln("Fin initialisation")
+
+    ecrireln("Debut affichage")
+    pour i de 0 à 2 faire
+        ecrire("Ligne i=", i, ": ")
+        pour j de 0 à 2 faire
+            ecrire(M[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln("Fin affichage")
+fin
+

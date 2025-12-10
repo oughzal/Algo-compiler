@@ -59,6 +59,20 @@ class Interpreter {
             val value = evaluateExpression(varDecl.initialValue)
             // Appliquer le casting selon le type déclaré
             variables[normalizedName] = castToType(value, normalizedType)
+        } else if (varDecl.arraySize != null && varDecl.arraySize2 != null) {
+            // Initialize matrix (2D array) with default values
+            val defaultValue =
+                    when (normalizedType) {
+                        "entier" -> 0
+                        "reel" -> 0.0
+                        "chaine" -> ""
+                        "caractere" -> '\u0000'
+                        "booleen" -> false
+                        else -> 0
+                    }
+            variables[normalizedName] = MutableList(varDecl.arraySize) {
+                MutableList(varDecl.arraySize2) { defaultValue }
+            }
         } else if (varDecl.arraySize != null) {
             // Initialize array with default values
             val defaultValue =
@@ -311,10 +325,11 @@ class Interpreter {
         val output = values.joinToString("") { formatValue(it) }
         if (writeStatement.newline) {
             println(output)
+            System.out.flush()
         } else {
             print(output)
+            System.out.flush()
         }
-        // Ne rien retourner explicitement
     }
 
     private fun executeReadStatement(readStatement: ReadStatement) {

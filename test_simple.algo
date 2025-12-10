@@ -1,0 +1,13 @@
+algorithme TestSimple
+variables
+    i : entier
+debut
+    ecrireln("Ligne 1")
+    ecrireln("Ligne 2")
+    ecrireln("Ligne 3")
+    pour i de 0 à 2 faire
+        ecrireln("Boucle ", i)
+    finpour
+    ecrireln("Ligne 4")
+fin
+

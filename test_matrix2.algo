@@ -1,0 +1,23 @@
+algorithme MatriceTest
+variables
+    M : tableau[3][3] de entier
+    i, j : entier
+debut
+    // Initialisation
+    pour i de 0 à 2 faire
+        pour j de 0 à 2 faire
+            M[i][j] = (i + 1) * 10 + (j + 1)
+        finpour
+    finpour
+
+    ecrireln("Matrice 3x3:")
+    // Affichage
+    pour i de 0 à 2 faire
+        ecrire("Ligne ", i, ": ")
+        pour j de 0 à 2 faire
+            ecrire(M[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+fin
+

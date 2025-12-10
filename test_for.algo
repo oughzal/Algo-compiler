@@ -1,0 +1,8 @@
+﻿algorithme Test
+variables
+    i : entier
+debut
+    pour i de 0 à 2 faire
+        ecrireln(i)
+    finpour
+fin

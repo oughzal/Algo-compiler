@@ -69,7 +69,8 @@ class Parser(private val tokens: List<Token>) {
         while (current().type != TokenType.FIN && current().type != TokenType.EOF) {
             skipNewlines()
             if (current().type == TokenType.FIN) break
-            statements.add(parseStatement())
+            val stmt = parseStatement()
+            statements.add(stmt)
             skipNewlines()
         }
 
