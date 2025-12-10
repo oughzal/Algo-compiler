@@ -1,20 +1,31 @@
 algorithme ExempleMatrice
 variables
     M : tableau[3][3] de entier
+    N : tableau[2][2] de entier = [[10, 20], [30, 40]]
     i, j : entier
 debut
-    // Initialisation de la matrice
+    // Initialisation de la matrice M
     pour i de 0 à 2 faire
         pour j de 0 à 2 faire
             M[i][j] = (i + 1) * 10 + (j + 1)
         finpour
     finpour
 
-    // Affichage de la matrice
-    ecrireln("Matrice 3x3:")
+    // Affichage de la matrice M
+    ecrireln("Matrice M (3x3):")
     pour i de 0 à 2 faire
         pour j de 0 à 2 faire
             ecrire(M[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // Affichage de la matrice N (initialisée avec valeurs)
+    ecrireln("Matrice N (2x2) - initialisée avec valeurs:")
+    pour i de 0 à 1 faire
+        pour j de 0 à 1 faire
+            ecrire(N[i][j], " ")
         finpour
         ecrireln()
     finpour
