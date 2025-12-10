@@ -54,48 +54,78 @@ class Interpreter {
         // Stocker le type de la variable
         variableTypes[normalizedName] = normalizedType
 
-        // Check if there's an initial value
-        if (varDecl.initialValue != null) {
-            val value = evaluateExpression(varDecl.initialValue)
-            // Appliquer le casting selon le type déclaré
-            variables[normalizedName] = castToType(value, normalizedType)
-        } else if (varDecl.arraySize != null && varDecl.arraySize2 != null) {
-            // Initialize matrix (2D array) with default values
-            val defaultValue =
-                    when (normalizedType) {
-                        "entier" -> 0
-                        "reel" -> 0.0
-                        "chaine" -> ""
-                        "caractere" -> '\u0000'
-                        "booleen" -> false
-                        else -> 0
-                    }
-            variables[normalizedName] = MutableList(varDecl.arraySize) {
-                MutableList(varDecl.arraySize2) { defaultValue }
+        if (varDecl.arraySize != null && varDecl.arraySize2 != null) {
+            // Initialize matrix (2D array)
+            if (varDecl.initialValue != null) {
+                // With initial value
+                val value = evaluateExpression(varDecl.initialValue)
+                if (value is List<*>) {
+                    @Suppress("UNCHECKED_CAST")
+                    variables[normalizedName] = (value as List<List<Any>>).map { row ->
+                        row.map { castToType(it, normalizedType) }.toMutableList()
+                    }.toMutableList()
+                } else {
+                    throw Exception("La valeur d'initialisation pour '${varDecl.name}' doit être une matrice")
+                }
+            } else {
+                // With default values
+                val defaultValue =
+                        when (normalizedType) {
+                            "entier" -> 0
+                            "reel" -> 0.0
+                            "chaine" -> ""
+                            "caractere" -> '\u0000'
+                            "booleen" -> false
+                            else -> 0
+                        }
+                variables[normalizedName] = MutableList(varDecl.arraySize) {
+                    MutableList(varDecl.arraySize2) { defaultValue }
+                }
             }
         } else if (varDecl.arraySize != null) {
-            // Initialize array with default values
-            val defaultValue =
-                    when (normalizedType) {
-                        "entier" -> 0
-                        "reel" -> 0.0
-                        "chaine" -> ""
-                        "caractere" -> '\u0000'
-                        "booleen" -> false
-                        else -> 0
-                    }
-            variables[normalizedName] = MutableList(varDecl.arraySize) { defaultValue }
+            // Initialize array (1D)
+            if (varDecl.initialValue != null) {
+                // With initial value
+                val value = evaluateExpression(varDecl.initialValue)
+                if (value is List<*>) {
+                    @Suppress("UNCHECKED_CAST")
+                    variables[normalizedName] = (value as List<Any>).map {
+                        castToType(it, normalizedType)
+                    }.toMutableList()
+                } else {
+                    throw Exception("La valeur d'initialisation pour '${varDecl.name}' doit être un tableau")
+                }
+            } else {
+                // With default values
+                val defaultValue =
+                        when (normalizedType) {
+                            "entier" -> 0
+                            "reel" -> 0.0
+                            "chaine" -> ""
+                            "caractere" -> '\u0000'
+                            "booleen" -> false
+                            else -> 0
+                        }
+                variables[normalizedName] = MutableList(varDecl.arraySize) { defaultValue }
+            }
         } else {
-            // Initialize simple variable with default value
-            variables[normalizedName] =
-                    when (normalizedType) {
-                        "entier" -> 0
-                        "reel" -> 0.0
-                        "chaine" -> ""
-                        "caractere" -> '\u0000'
-                        "booleen" -> false
-                        else -> 0
-                    }
+            // Initialize simple variable
+            if (varDecl.initialValue != null) {
+                val value = evaluateExpression(varDecl.initialValue)
+                // Appliquer le casting selon le type déclaré
+                variables[normalizedName] = castToType(value, normalizedType)
+            } else {
+                // With default value
+                variables[normalizedName] =
+                        when (normalizedType) {
+                            "entier" -> 0
+                            "reel" -> 0.0
+                            "chaine" -> ""
+                            "caractere" -> '\u0000'
+                            "booleen" -> false
+                            else -> 0
+                        }
+            }
         }
     }
 

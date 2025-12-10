@@ -1,0 +1,44 @@
+algorithme ExempleInitialisation
+variables
+    // Variables simples avec initialisation
+    age : entier = 25
+    prix : reel = 19.99
+    nom : chaine = "Alice"
+
+    // Tableau avec initialisation
+    notes : tableau[5] de entier = [15, 18, 12, 20, 16]
+
+    // Matrice avec initialisation
+    matrice : tableau[2][3] de entier = [[1, 2, 3], [4, 5, 6]]
+
+    i, j : entier
+debut
+    // Afficher les variables simples
+    ecrireln("=== Variables simples ===")
+    ecrireln("Nom: ", nom)
+    ecrireln("Age: ", age, " ans")
+    ecrireln("Prix: ", prix, " euros")
+    ecrireln()
+
+    // Afficher le tableau
+    ecrireln("=== Tableau de notes ===")
+    ecrire("Notes: [")
+    pour i de 0 à 4 faire
+        ecrire(notes[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Afficher la matrice
+    ecrireln("=== Matrice 2x3 ===")
+    pour i de 0 à 1 faire
+        pour j de 0 à 2 faire
+            ecrire(matrice[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+fin
+
