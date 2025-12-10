@@ -165,15 +165,44 @@ class Interpreter {
         }
         val value = evaluateExpression(assignment.expression)
 
-        // Appliquer le casting selon le type déclaré de la variable
-        val targetType = variableTypes[normalizedName]
-        val castedValue = if (targetType != null) {
-            castToType(value, targetType)
-        } else {
-            value
-        }
+        // Vérifier si la variable existante est un tableau ou une matrice
+        val existingValue = variables[normalizedName]
 
-        variables[normalizedName] = castedValue
+        if (existingValue is MutableList<*>) {
+            // C'est un tableau ou une matrice
+            if (existingValue.firstOrNull() is MutableList<*>) {
+                // C'est une matrice (2D)
+                if (value is List<*>) {
+                    val targetType = variableTypes[normalizedName]
+                    @Suppress("UNCHECKED_CAST")
+                    variables[normalizedName] = (value as List<List<Any>>).map { row ->
+                        row.map { if (targetType != null) castToType(it, targetType) else it }.toMutableList()
+                    }.toMutableList()
+                } else {
+                    throw Exception("Impossible d'affecter une valeur non-matrice à la matrice '${assignment.variable}'")
+                }
+            } else {
+                // C'est un tableau (1D)
+                if (value is List<*>) {
+                    val targetType = variableTypes[normalizedName]
+                    @Suppress("UNCHECKED_CAST")
+                    variables[normalizedName] = (value as List<Any>).map {
+                        if (targetType != null) castToType(it, targetType) else it
+                    }.toMutableList()
+                } else {
+                    throw Exception("Impossible d'affecter une valeur non-tableau au tableau '${assignment.variable}'")
+                }
+            }
+        } else {
+            // C'est une variable simple
+            val targetType = variableTypes[normalizedName]
+            val castedValue = if (targetType != null) {
+                castToType(value, targetType)
+            } else {
+                value
+            }
+            variables[normalizedName] = castedValue
+        }
     }
 
     private fun executeArrayAssignment(assignment: ArrayAssignment) {

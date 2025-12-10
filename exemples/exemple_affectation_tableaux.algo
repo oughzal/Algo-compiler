@@ -1,0 +1,51 @@
+algorithme ExempleAffectationTableaux
+variables
+    notes : tableau[5] de entier
+    matrice : tableau[2][3] de entier
+    i, j : entier
+debut
+    ecrireln("=== Affectation de tableaux dans le corps ===")
+    ecrireln()
+
+    // Affectation d'un tableau
+    ecrireln("1. Affectation d'un tableau:")
+    notes = [15, 18, 12, 20, 16]
+
+    ecrire("   notes = [")
+    pour i de 0 à 4 faire
+        ecrire(notes[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // Affectation d'une matrice
+    ecrireln("2. Affectation d'une matrice:")
+    matrice = [[1, 2, 3], [4, 5, 6]]
+
+    ecrireln("   matrice =")
+    pour i de 0 à 1 faire
+        ecrire("   ")
+        pour j de 0 à 2 faire
+            ecrire(matrice[i][j], " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // Réaffectation avec de nouvelles valeurs
+    ecrireln("3. Réaffectation du tableau:")
+    notes = [20, 19, 18, 17, 16]
+
+    ecrire("   notes = [")
+    pour i de 0 à 4 faire
+        ecrire(notes[i])
+        si i < 4 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+fin
+
