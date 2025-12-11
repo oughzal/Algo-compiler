@@ -35,7 +35,7 @@
             "patterns": [
                 {
                     "name": "keyword.control.algo",
-                    "match": "(?i)\\b(algorithme|début|debut|fin|si|alors|sinon|sinonsi|sinonSi|finsi|pour|de|à|faire|finpour|tantque|fintantque|repeter|répéter|jusqua|jusqu'à|selon|cas|defaut|défaut|finselon|retourner)\\b"
+                    "match": "(?i)\\b(algorithme|début|debut|fin|si|alors|sinon|sinonsi|sinonSi|finsi|pour|de|à|pas|faire|finpour|tantque|fintantque|repeter|répéter|jusqua|jusqu'à|selon|cas|defaut|défaut|finselon|retourner)\\b"
                 },
                 {
                     "name": "keyword.declaration.algo",

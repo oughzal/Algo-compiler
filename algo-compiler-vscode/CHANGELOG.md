@@ -2,6 +2,13 @@
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
 
+## [1.7.6] - 2025-12-11
+
+### 🎨 Amélioration de la Coloration Syntaxique
+
+- ✅ Ajout du mot-clé `pas` dans la coloration syntaxique
+- ✅ Meilleure lisibilité des boucles avec pas personnalisé
+
 ## [1.7.5] - 2025-12-11
 
 ### ✨ Nouvelles Fonctionnalités
