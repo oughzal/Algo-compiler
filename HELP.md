@@ -112,9 +112,44 @@ finselon
 
 Opérateurs
 
+**Arithmétiques** :
+- Addition : `+`
+- Soustraction : `-`
+- Multiplication : `*`
+- Division réelle : `/` (renvoie un réel)
+- Division entière : `div` (renvoie un entier, ex: `17 div 5` → `3`)
+- Modulo (reste) : `mod` ou `%` (ex: `17 mod 5` → `2`)
 - Puissance : `^` et `**` (alias). L'alias `^` et `**` sont supportés et `^` est recommandé pour la lisibilité.
-- Logiques : `et`, `ou`, `non`
-- Comparaison : `==`, `<>`, `!=`, `<`, `>`, `<=`, `>=`
+
+**Logiques** :
+- `et` : ET logique
+- `ou` : OU logique
+- `non` : NON logique
+
+**Comparaison** : 
+- `==`, `<>`, `!=`, `<`, `>`, `<=`, `>=`
+
+**Exemples d'opérateurs arithmétiques** :
+```algo
+a = 17
+b = 5
+
+// Division réelle
+resultat = a / b    // 3.4
+
+// Division entière
+quotient = a div b  // 3
+
+// Modulo (reste)
+reste = a mod b     // 2
+
+// Vérification: 17 = 5 × 3 + 2
+ecrireln(a, " = ", b, " × ", quotient, " + ", reste)
+
+// Puissance
+p = 2 ** 8          // 256
+p = 2 ^ 8           // 256 (alias)
+```
 
 Typage Fort et Comparaisons
 

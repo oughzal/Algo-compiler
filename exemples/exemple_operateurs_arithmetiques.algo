@@ -1,0 +1,58 @@
+algorithme ExempleOperateursArithmetiques
+variables
+    a, b : entier
+    quotient, reste : entier
+    x, y, resultat : reel
+debut
+    ecrireln("=== Opérateurs arithmétiques ===")
+    ecrireln()
+
+    // Opérateurs de base
+    ecrireln("1. Opérateurs de base:")
+    a = 10
+    b = 3
+    ecrireln("   a = ", a, ", b = ", b)
+    ecrireln("   a + b = ", a + b, " (addition)")
+    ecrireln("   a - b = ", a - b, " (soustraction)")
+    ecrireln("   a * b = ", a * b, " (multiplication)")
+    ecrireln()
+
+    // Division réelle vs entière
+    ecrireln("2. Division réelle (/) vs division entière (div):")
+    x = 17.0
+    y = 5.0
+    resultat = x / y
+    ecrireln("   ", x, " / ", y, " = ", resultat, " (division réelle)")
+
+    a = 17
+    b = 5
+    quotient = a div b
+    ecrireln("   ", a, " div ", b, " = ", quotient, " (division entière)")
+    ecrireln()
+
+    // Modulo
+    ecrireln("3. Opérateur modulo (mod ou %):")
+    a = 17
+    b = 5
+    reste = a mod b
+    ecrireln("   ", a, " mod ", b, " = ", reste, " (reste de la division)")
+    ecrireln()
+
+    // Division euclidienne complète
+    ecrireln("4. Division euclidienne:")
+    a = 23
+    b = 7
+    quotient = a div b
+    reste = a mod b
+    ecrireln("   ", a, " = ", b, " × ", quotient, " + ", reste)
+    ecrireln("   Vérification: ", b, " × ", quotient, " + ", reste, " = ", b * quotient + reste)
+    ecrireln()
+
+    // Puissance
+    ecrireln("5. Opérateur puissance (** ou ^):")
+    a = 2
+    b = 8
+    ecrireln("   ", a, " ** ", b, " = ", a ** b)
+    ecrireln("   ", a, " ^ ", b, " = ", a ^ b)
+fin
+
