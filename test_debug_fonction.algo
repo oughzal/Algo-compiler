@@ -1,0 +1,13 @@
+algorithme TestDebugFonction
+variables
+    x, y : entier
+debut
+    x = 10
+    y = 20
+
+    // Erreur : fonction non définie - ligne 8
+    calculer(x, y)
+
+    ecrireln("Fin")
+fin
+

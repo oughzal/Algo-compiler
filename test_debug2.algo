@@ -1,0 +1,14 @@
+algorithme TestDebug2
+variables
+    x : entier
+    y : entier
+debut
+    x = 10
+    y = 20
+
+    // Cette ligne devrait générer une erreur
+    z = x + y  // Variable z non définie - ligne 9
+
+    ecrireln(z)
+fin
+

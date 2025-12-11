@@ -1,5 +1,7 @@
 package com.algocompiler
 
+import com.algocompiler.ParseException
+
 class Parser(private val tokens: List<Token>) {
     private var pos = 0
 
@@ -9,10 +11,17 @@ class Parser(private val tokens: List<Token>) {
         if (pos < tokens.size) pos++
     }
 
+    // Helper pour lancer une erreur de parsing avec infos (ligne, token)
+    private fun error(message: String, token: Token? = null): Nothing {
+        val t = token ?: current()
+        val tokenInfo = if (t.value.isNotEmpty()) t.value else "EOF"
+        throw com.algocompiler.ParseException("Erreur de parsing : $message (ligne ${t.line}, token='$tokenInfo')", t.line, t)
+    }
+
     private fun expect(type: TokenType): Token {
         val token = current()
         if (token.type != type) {
-            throw Exception("Attendu $type, mais trouvé ${token.type} à la ligne ${token.line}")
+            error("Attendu $type, mais trouvé ${token.type}")
         }
         advance()
         return token
@@ -123,9 +132,7 @@ class Parser(private val tokens: List<Token>) {
                         TokenType.CARACTERE -> "caractere"
                         TokenType.BOOLEEN -> "booleen"
                         else ->
-                                throw Exception(
-                                        "Type de variable invalide à la ligne ${current().line}"
-                                )
+                                error("Type de variable invalide")
                     }
             advance()
 
@@ -163,9 +170,7 @@ class Parser(private val tokens: List<Token>) {
                         TokenType.CARACTERE -> "caractere"
                         TokenType.BOOLEEN -> "booleen"
                         else ->
-                                throw Exception(
-                                        "Type de constante invalide à la ligne ${current().line}"
-                                )
+                                error("Type de constante invalide")
                     }
             advance()
 
@@ -210,9 +215,7 @@ class Parser(private val tokens: List<Token>) {
                         TokenType.CARACTERE -> "caractere"
                         TokenType.BOOLEEN -> "booleen"
                         else ->
-                                throw Exception(
-                                        "Type de retour invalide à la ligne ${current().line}"
-                                )
+                                error("Type de retour invalide")
                     }
             advance()
         }
@@ -272,9 +275,7 @@ class Parser(private val tokens: List<Token>) {
                     TokenType.CARACTERE -> "caractere"
                     TokenType.BOOLEEN -> "booleen"
                     else ->
-                            throw Exception(
-                                    "Type de paramètre invalide à la ligne ${current().line}"
-                            )
+                            error("Type de paramètre invalide")
                 }
         advance()
 
@@ -296,20 +297,19 @@ class Parser(private val tokens: List<Token>) {
             TokenType.LIRE -> parseReadStatement()
             TokenType.RETOURNER -> parseReturnStatement()
             else ->
-                    throw Exception(
-                            "Instruction invalide '${current().value}' à la ligne ${current().line}"
-                    )
+                    error("Instruction invalide '${current().value}'")
         }
     }
 
     private fun parseAssignmentOrFunctionCall(): Statement {
+        val startToken = current()
         val name = expect(TokenType.IDENTIFICATEUR).value
 
         return when (current().type) {
             TokenType.AFFECTATION -> {
                 advance()
                 val expression = parseExpression()
-                Assignment(name, expression)
+                Assignment(name, expression, startToken.line)
             }
             TokenType.CROCHET_GAUCHE -> {
                 advance()
@@ -323,11 +323,11 @@ class Parser(private val tokens: List<Token>) {
                     expect(TokenType.CROCHET_DROIT)
                     expect(TokenType.AFFECTATION)
                     val expression = parseExpression()
-                    MatrixAssignment(name, index1, index2, expression)
+                    MatrixAssignment(name, index1, index2, expression, startToken.line)
                 } else {
                     expect(TokenType.AFFECTATION)
                     val expression = parseExpression()
-                    ArrayAssignment(name, index1, expression)
+                    ArrayAssignment(name, index1, expression, startToken.line)
                 }
             }
             TokenType.PAREN_GAUCHE -> {
@@ -341,12 +341,10 @@ class Parser(private val tokens: List<Token>) {
                     }
                 }
                 expect(TokenType.PAREN_DROITE)
-                FunctionCall(name, arguments)
+                FunctionCall(name, arguments, startToken.line)
             }
             else ->
-                    throw Exception(
-                            "Attendu '=' ou '[' ou '(' après l'identificateur à la ligne ${current().line}"
-                    )
+                    error("Attendu '=' ou '[' ou '(' après l'identificateur")
         }
     }
 
@@ -363,6 +361,7 @@ class Parser(private val tokens: List<Token>) {
     }
 
     private fun parseIfStatement(): IfStatement {
+        val siToken = current()
         expect(TokenType.SI)
         val condition = parseExpression()
         expect(TokenType.ALORS)
@@ -384,6 +383,7 @@ class Parser(private val tokens: List<Token>) {
         // Parse elseIf clauses (sinonSi)
         val elseIfClauses = mutableListOf<ElseIfClause>()
         while (current().type == TokenType.SINONSI) {
+            val sinonSiToken = current()
             advance() // consume SINONSI
             val elseIfCondition = parseExpression()
             expect(TokenType.ALORS)
@@ -402,7 +402,7 @@ class Parser(private val tokens: List<Token>) {
                 skipNewlines()
             }
 
-            elseIfClauses.add(ElseIfClause(elseIfCondition, elseIfBranch))
+            elseIfClauses.add(ElseIfClause(elseIfCondition, elseIfBranch, sinonSiToken.line))
         }
 
         // Parse else clause (sinon)
@@ -422,10 +422,11 @@ class Parser(private val tokens: List<Token>) {
 
         expect(TokenType.FINSI)
 
-        return IfStatement(condition, thenBranch, elseIfClauses, elseBranch)
+        return IfStatement(condition, thenBranch, elseIfClauses, elseBranch, siToken.line)
     }
 
     private fun parseForLoop(): ForLoop {
+        val pourToken = current()
         expect(TokenType.POUR)
         val variable = expect(TokenType.IDENTIFICATEUR).value
         expect(TokenType.DE)
@@ -435,9 +436,7 @@ class Parser(private val tokens: List<Token>) {
         if (current().type != TokenType.IDENTIFICATEUR ||
                         current().value.lowercase() != "à"
         ) {
-            throw Exception(
-                    "Attendu 'à' après 'de' dans la boucle 'pour', trouvé ${current().value} à la ligne ${current().line}"
-            )
+            error("Attendu 'à' après 'de' dans la boucle 'pour', trouvé ${current().value}")
         }
         advance()
 
@@ -455,10 +454,11 @@ class Parser(private val tokens: List<Token>) {
 
         expect(TokenType.FINPOUR)
 
-        return ForLoop(variable, start, end, body)
+        return ForLoop(variable, start, end, body, pourToken.line)
     }
 
     private fun parseWhileLoop(): WhileLoop {
+        val tantQueToken = current()
         expect(TokenType.TANTQUE)
         val condition = parseExpression()
         expect(TokenType.FAIRE)
@@ -474,10 +474,11 @@ class Parser(private val tokens: List<Token>) {
 
         expect(TokenType.FINTANTQUE)
 
-        return WhileLoop(condition, body)
+        return WhileLoop(condition, body, tantQueToken.line)
     }
 
     private fun parseRepeatUntilLoop(): RepeatUntilLoop {
+        val repeterToken = current()
         expect(TokenType.REPETER)
         skipNewlines()
 
@@ -492,10 +493,11 @@ class Parser(private val tokens: List<Token>) {
         expect(TokenType.JUSQUA)
         val condition = parseExpression()
 
-        return RepeatUntilLoop(body, condition)
+        return RepeatUntilLoop(body, condition, repeterToken.line)
     }
 
     private fun parseWhenStatement(): WhenStatement {
+        val selonToken = current()
         expect(TokenType.SELON)
         expect(TokenType.PAREN_GAUCHE)
         val expression = parseExpression()
@@ -558,7 +560,7 @@ class Parser(private val tokens: List<Token>) {
 
         expect(TokenType.FINSELON)
 
-        return WhenStatement(expression, cases, defaultCase)
+        return WhenStatement(expression, cases, defaultCase, selonToken.line)
     }
 
     private fun parseWriteStatement(): WriteStatement {
@@ -655,13 +657,14 @@ class Parser(private val tokens: List<Token>) {
     private fun parseConditional(): Expression {
         // Check if it starts with 'si' (conditional expression)
         if (current().type == TokenType.SI) {
+            val siToken = current()
             advance() // consume 'si'
             val condition = parseLogicalOr()
             expect(TokenType.ALORS)
             val thenValue = parseLogicalOr()
             expect(TokenType.SINON)
             val elseValue = parseLogicalOr()
-            return ConditionalExpression(condition, thenValue, elseValue)
+            return ConditionalExpression(condition, thenValue, elseValue, siToken.line)
         }
 
         return parseLogicalOr()
@@ -671,10 +674,11 @@ class Parser(private val tokens: List<Token>) {
         var left = parseLogicalAnd()
 
         while (current().type == TokenType.OU) {
-            val op = current().value
+            val opToken = current()
+            val op = opToken.value
             advance()
             val right = parseLogicalAnd()
-            left = BinaryOp(left, op, right)
+            left = BinaryOp(left, op, right, opToken.line)
         }
 
         return left
@@ -684,10 +688,11 @@ class Parser(private val tokens: List<Token>) {
         var left = parseComparison()
 
         while (current().type == TokenType.ET) {
-            val op = current().value
+            val opToken = current()
+            val op = opToken.value
             advance()
             val right = parseComparison()
-            left = BinaryOp(left, op, right)
+            left = BinaryOp(left, op, right, opToken.line)
         }
 
         return left
@@ -705,10 +710,11 @@ class Parser(private val tokens: List<Token>) {
                         TokenType.INFERIEUR_EGAL,
                         TokenType.SUPERIEUR_EGAL
                 )) {
-            val op = current().value
+            val opToken = current()
+            val op = opToken.value
             advance()
             val right = parseAdditive()
-            left = BinaryOp(left, op, right)
+            left = BinaryOp(left, op, right, opToken.line)
         }
 
         return left
@@ -718,10 +724,11 @@ class Parser(private val tokens: List<Token>) {
         var left = parseMultiplicative()
 
         while (current().type in listOf(TokenType.PLUS, TokenType.MOINS)) {
-            val op = current().value
+            val opToken = current()
+            val op = opToken.value
             advance()
             val right = parseMultiplicative()
-            left = BinaryOp(left, op, right)
+            left = BinaryOp(left, op, right, opToken.line)
         }
 
         return left
@@ -732,15 +739,16 @@ class Parser(private val tokens: List<Token>) {
 
         while (current().type in
                 listOf(TokenType.MULT, TokenType.DIV, TokenType.DIV_ENTIERE, TokenType.MOD)) {
+            val opToken = current()
             val op =
-                    when (current().type) {
+                    when (opToken.type) {
                         TokenType.DIV_ENTIERE -> "div"
                         TokenType.MOD -> "mod"
-                        else -> current().value
+                        else -> opToken.value
                     }
             advance()
             val right = parsePower()
-            left = BinaryOp(left, op, right)
+            left = BinaryOp(left, op, right, opToken.line)
         }
 
         return left
@@ -750,11 +758,12 @@ class Parser(private val tokens: List<Token>) {
         var left = parseUnary()
 
         while (current().type == TokenType.PUISSANCE) {
-            val operator = current().value  // Stocker l'opérateur tel qu'il est (** ou ^)
+            val opToken = current()
+            val operator = opToken.value  // Stocker l'opérateur tel qu'il est (** ou ^)
             advance()
             // L'opérateur ** ou ^ est associatif à droite, donc on appelle récursivement parsePower
             val right = parsePower()
-            left = BinaryOp(left, operator, right)
+            left = BinaryOp(left, operator, right, opToken.line)
         }
 
         return left
@@ -762,13 +771,15 @@ class Parser(private val tokens: List<Token>) {
 
     private fun parseUnary(): Expression {
         if (current().type == TokenType.MOINS) {
+            val opToken = current()
             advance()
-            return UnaryOp("-", parseUnary())
+            return UnaryOp("-", parseUnary(), opToken.line)
         }
 
         if (current().type == TokenType.NON) {
+            val opToken = current()
             advance()
-            return UnaryOp("non", parseUnary())
+            return UnaryOp("non", parseUnary(), opToken.line)
         }
 
         return parsePrimary()
@@ -777,30 +788,36 @@ class Parser(private val tokens: List<Token>) {
     private fun parsePrimary(): Expression {
         return when (current().type) {
             TokenType.NOMBRE -> {
-                val value = current().value.toDouble()
+                val token = current()
+                val value = token.value.toDouble()
                 advance()
-                NumberLiteral(value)
+                NumberLiteral(value, token.line)
             }
             TokenType.TEXTE -> {
-                val value = current().value
+                val token = current()
+                val value = token.value
                 advance()
-                StringLiteral(value)
+                StringLiteral(value, token.line)
             }
             TokenType.CARACTERE_LITERAL -> {
-                val value = current().value[0]
+                val token = current()
+                val value = token.value[0]
                 advance()
-                CharLiteral(value)
+                CharLiteral(value, token.line)
             }
             TokenType.VRAI -> {
+                val token = current()
                 advance()
-                BooleanLiteral(true)
+                BooleanLiteral(true, token.line)
             }
             TokenType.FAUX -> {
+                val token = current()
                 advance()
-                BooleanLiteral(false)
+                BooleanLiteral(false, token.line)
             }
             TokenType.IDENTIFICATEUR -> {
-                val name = current().value
+                val token = current()
+                val name = token.value
                 advance()
 
                 when (current().type) {
@@ -814,9 +831,9 @@ class Parser(private val tokens: List<Token>) {
                             advance()
                             val index2 = parseExpression()
                             expect(TokenType.CROCHET_DROIT)
-                            MatrixAccess(name, index1, index2)
+                            MatrixAccess(name, index1, index2, token.line)
                         } else {
-                            ArrayAccess(name, index1)
+                            ArrayAccess(name, index1, token.line)
                         }
                     }
                     TokenType.PAREN_GAUCHE -> {
@@ -830,9 +847,9 @@ class Parser(private val tokens: List<Token>) {
                             }
                         }
                         expect(TokenType.PAREN_DROITE)
-                        FunctionCallExpression(name, arguments)
+                        FunctionCallExpression(name, arguments, token.line)
                     }
-                    else -> Variable(name)
+                    else -> Variable(name, token.line)
                 }
             }
             TokenType.PAREN_GAUCHE -> {
@@ -843,6 +860,7 @@ class Parser(private val tokens: List<Token>) {
             }
             TokenType.CROCHET_GAUCHE -> {
                 // Array literal: [1, 2, 3, 4]
+                val token = current()
                 advance()
                 val elements = mutableListOf<Expression>()
 
@@ -855,12 +873,10 @@ class Parser(private val tokens: List<Token>) {
                 }
 
                 expect(TokenType.CROCHET_DROIT)
-                ArrayLiteral(elements)
+                ArrayLiteral(elements, token.line)
             }
             else ->
-                    throw Exception(
-                            "Expression invalide à la ligne ${current().line}: ${current().value}"
-                    )
+                    error("Expression invalide: ${current().value}")
         }
     }
 }

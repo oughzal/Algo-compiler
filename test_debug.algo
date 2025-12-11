@@ -1,0 +1,15 @@
+algorithme TestDebug
+variables
+    T : tableau[5] de entier
+    x : entier
+debut
+    T[0] = 1
+    T[1] = 2
+    T[2] = 3
+
+    // Cette ligne devrait générer une erreur avec le numéro de ligne
+    x = T[10]  // Index hors limites - ligne 11
+
+    ecrireln(x)
+fin
+

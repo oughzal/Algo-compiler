@@ -1,0 +1,10 @@
+algorithme TestOK
+variables
+    x, y, z : entier
+debut
+    x = 10
+    y = 20
+    z = x + y
+    ecrireln("Résultat: ", z)
+fin
+

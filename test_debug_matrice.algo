@@ -1,0 +1,18 @@
+algorithme TestDebugMatrice
+variables
+    M : tableau[3][3] de entier
+    i, j : entier
+debut
+    // Initialisation correcte
+    pour i de 0 à 2 faire
+        pour j de 0 à 2 faire
+            M[i][j] = i * 10 + j
+        finpour
+    finpour
+
+    // Erreur : index hors limites pour une matrice - ligne 14
+    M[5][2] = 100
+
+    ecrireln("Fin")
+fin
+

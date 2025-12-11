@@ -1,0 +1,10 @@
+algorithme TestDebug3
+variables
+    x : entier
+debut
+    x = 5
+
+    // Cette ligne devrait générer une erreur - variable 'inexistante' non définie
+    ecrireln(inexistante)  // ligne 7
+fin
+

@@ -9,6 +9,12 @@ class Interpreter {
     private val constants = mutableSetOf<String>()
     private val functions = mutableMapOf<String, FunctionDeclaration>()
     private val variableTypes = mutableMapOf<String, String>() // Stocker les types déclarés
+    private var currentLine = 0 // Numéro de ligne en cours d'exécution
+
+    // Helper pour lancer une erreur d'exécution avec le numéro de ligne
+    private fun runtimeError(message: String): Nothing {
+        throw Exception("Erreur ligne $currentLine: $message")
+    }
 
     // Normalisation des noms (case insensitive)
     private fun normalize(name: String): String {
@@ -65,7 +71,7 @@ class Interpreter {
                         row.map { castToType(it, normalizedType) }.toMutableList()
                     }.toMutableList()
                 } else {
-                    throw Exception("La valeur d'initialisation pour '${varDecl.name}' doit être une matrice")
+                    runtimeError("La valeur d'initialisation pour '${varDecl.name}' doit être une matrice")
                 }
             } else {
                 // With default values
@@ -93,7 +99,7 @@ class Interpreter {
                         castToType(it, normalizedType)
                     }.toMutableList()
                 } else {
-                    throw Exception("La valeur d'initialisation pour '${varDecl.name}' doit être un tableau")
+                    runtimeError("La valeur d'initialisation pour '${varDecl.name}' doit être un tableau")
                 }
             } else {
                 // With default values
@@ -137,6 +143,9 @@ class Interpreter {
     }
 
     private fun executeStatement(statement: Statement) {
+        // Mettre à jour le numéro de ligne courant
+        currentLine = statement.line
+
         when (statement) {
             is Assignment -> executeAssignment(statement)
             is ArrayAssignment -> executeArrayAssignment(statement)
@@ -161,7 +170,7 @@ class Interpreter {
     private fun executeAssignment(assignment: Assignment) {
         val normalizedName = normalize(assignment.variable)
         if (constants.contains(normalizedName)) {
-            throw Exception("Impossible de modifier la constante '${assignment.variable}'")
+            runtimeError("Impossible de modifier la constante '${assignment.variable}'")
         }
         val value = evaluateExpression(assignment.expression)
 
@@ -179,7 +188,7 @@ class Interpreter {
                         row.map { if (targetType != null) castToType(it, targetType) else it }.toMutableList()
                     }.toMutableList()
                 } else {
-                    throw Exception("Impossible d'affecter une valeur non-matrice à la matrice '${assignment.variable}'")
+                    runtimeError("Impossible d'affecter une valeur non-matrice à la matrice '${assignment.variable}'")
                 }
             } else {
                 // C'est un tableau (1D)
@@ -190,7 +199,7 @@ class Interpreter {
                         if (targetType != null) castToType(it, targetType) else it
                     }.toMutableList()
                 } else {
-                    throw Exception("Impossible d'affecter une valeur non-tableau au tableau '${assignment.variable}'")
+                    runtimeError("Impossible d'affecter une valeur non-tableau au tableau '${assignment.variable}'")
                 }
             }
         } else {
@@ -213,12 +222,12 @@ class Interpreter {
         @Suppress("UNCHECKED_CAST")
         val array =
                 variables[normalizedName] as? MutableList<Any>
-                        ?: throw Exception(
+                        ?: runtimeError(
                                 "Variable '${assignment.arrayName}' n'est pas un tableau"
                         )
 
         if (index < 0 || index >= array.size) {
-            throw Exception("Index $index hors limites pour le tableau '${assignment.arrayName}'")
+            runtimeError("Index $index hors limites pour le tableau '${assignment.arrayName}'")
         }
 
         // Déduire le type d'élément du tableau depuis le premier élément
@@ -249,16 +258,16 @@ class Interpreter {
         @Suppress("UNCHECKED_CAST")
         val matrix =
                 variables[normalizedName] as? MutableList<MutableList<Any>>
-                        ?: throw Exception(
+                        ?: runtimeError(
                                 "Variable '${assignment.matrixName}' n'est pas une matrice"
                         )
 
         if (index1 < 0 || index1 >= matrix.size) {
-            throw Exception("Index ligne $index1 hors limites pour la matrice '${assignment.matrixName}'")
+            runtimeError("Index ligne $index1 hors limites pour la matrice '${assignment.matrixName}'")
         }
 
         if (index2 < 0 || index2 >= matrix[index1].size) {
-            throw Exception("Index colonne $index2 hors limites pour la matrice '${assignment.matrixName}'")
+            runtimeError("Index colonne $index2 hors limites pour la matrice '${assignment.matrixName}'")
         }
 
         // Déduire le type d'élément de la matrice depuis le premier élément
@@ -419,12 +428,12 @@ class Interpreter {
                     @Suppress("UNCHECKED_CAST")
                     val array =
                             variables[normalizedName] as? MutableList<Any>
-                                    ?: throw Exception(
+                                    ?: runtimeError(
                                             "Variable '${target.arrayName}' n'est pas un tableau"
                                     )
 
                     if (index < 0 || index >= array.size) {
-                        throw Exception(
+                        runtimeError(
                                 "Index $index hors limites pour le tableau '${target.arrayName}'"
                         )
                     }
@@ -448,7 +457,7 @@ class Interpreter {
             return builtInResult
         }
 
-        val function = functions[normalizedName] ?: throw Exception("Fonction '$name' non définie")
+        val function = functions[normalizedName] ?: runtimeError("Fonction '$name' non définie")
 
         // Save current variable context
         val savedVariables = variables.toMap()
@@ -555,108 +564,108 @@ class Interpreter {
         return when (nameLower) {
             // Fonctions mathématiques
             "abs" -> {
-                if (args.isEmpty()) throw Exception("abs() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("abs() nécessite 1 argument")
                 abs(toDouble(args[0]))
             }
             "racine" -> {
-                if (args.isEmpty()) throw Exception("racine() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("racine() nécessite 1 argument")
                 sqrt(toDouble(args[0]))
             }
             "puissance" -> {
-                if (args.size < 2) throw Exception("puissance() nécessite 2 arguments")
+                if (args.size < 2) runtimeError("puissance() nécessite 2 arguments")
                 toDouble(args[0]).pow(toDouble(args[1]))
             }
             "arrondi" -> {
-                if (args.isEmpty()) throw Exception("arrondi() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("arrondi() nécessite 1 argument")
                 round(toDouble(args[0])).toInt()
             }
             "plancher" -> {
-                if (args.isEmpty()) throw Exception("plancher() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("plancher() nécessite 1 argument")
                 floor(toDouble(args[0])).toInt()
             }
             "plafond" -> {
-                if (args.isEmpty()) throw Exception("plafond() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("plafond() nécessite 1 argument")
                 ceil(toDouble(args[0])).toInt()
             }
             "min" -> {
-                if (args.size < 2) throw Exception("min() nécessite 2 arguments")
+                if (args.size < 2) runtimeError("min() nécessite 2 arguments")
                 min(toDouble(args[0]), toDouble(args[1]))
             }
             "max" -> {
-                if (args.size < 2) throw Exception("max() nécessite 2 arguments")
+                if (args.size < 2) runtimeError("max() nécessite 2 arguments")
                 max(toDouble(args[0]), toDouble(args[1]))
             }
             "reste" -> {
-                if (args.size < 2) throw Exception("reste() nécessite 2 arguments")
+                if (args.size < 2) runtimeError("reste() nécessite 2 arguments")
                 toInt(args[0]) % toInt(args[1])
             }
             "quotient" -> {
-                if (args.size < 2) throw Exception("quotient() nécessite 2 arguments")
+                if (args.size < 2) runtimeError("quotient() nécessite 2 arguments")
                 toInt(args[0]) / toInt(args[1])
             }
             "sin" -> {
-                if (args.isEmpty()) throw Exception("sin() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("sin() nécessite 1 argument")
                 sin(toDouble(args[0]))
             }
             "cos" -> {
-                if (args.isEmpty()) throw Exception("cos() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("cos() nécessite 1 argument")
                 cos(toDouble(args[0]))
             }
             "tan" -> {
-                if (args.isEmpty()) throw Exception("tan() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("tan() nécessite 1 argument")
                 tan(toDouble(args[0]))
             }
             "log" -> {
-                if (args.isEmpty()) throw Exception("log() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("log() nécessite 1 argument")
                 ln(toDouble(args[0]))
             }
             "exp" -> {
-                if (args.isEmpty()) throw Exception("exp() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("exp() nécessite 1 argument")
                 exp(toDouble(args[0]))
             }
 
             // Fonctions de chaînes
             "longueur" -> {
-                if (args.isEmpty()) throw Exception("longueur() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("longueur() nécessite 1 argument")
                 args[0].toString().length
             }
             "majuscule" -> {
-                if (args.isEmpty()) throw Exception("majuscule() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("majuscule() nécessite 1 argument")
                 args[0].toString().uppercase()
             }
             "minuscule" -> {
-                if (args.isEmpty()) throw Exception("minuscule() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("minuscule() nécessite 1 argument")
                 args[0].toString().lowercase()
             }
             "souschaine", "sousChaine" -> {
                 if (args.size < 3)
-                        throw Exception("sousChaine() nécessite 3 arguments (chaine, debut, fin)")
+                        runtimeError("sousChaine() nécessite 3 arguments (chaine, debut, fin)")
                 val str = args[0].toString()
                 val debut = toInt(args[1])
                 val fin = toInt(args[2])
                 if (debut < 0 || fin > str.length || debut > fin) {
-                    throw Exception("Indices invalides pour sousChaine")
+                    runtimeError("Indices invalides pour sousChaine")
                 }
                 str.substring(debut, fin)
             }
             "estvide", "estVide" -> {
-                if (args.isEmpty()) throw Exception("estVide() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("estVide() nécessite 1 argument")
                 args[0].toString().isEmpty()
             }
             "contient" -> {
-                if (args.size < 2) throw Exception("contient() nécessite 2 arguments (chaine, sous_chaine)")
+                if (args.size < 2) runtimeError("contient() nécessite 2 arguments (chaine, sous_chaine)")
                 args[0].toString().contains(args[1].toString())
             }
             "commence" -> {
-                if (args.size < 2) throw Exception("commence() nécessite 2 arguments (chaine, prefixe)")
+                if (args.size < 2) runtimeError("commence() nécessite 2 arguments (chaine, prefixe)")
                 args[0].toString().startsWith(args[1].toString())
             }
             "termine" -> {
-                if (args.size < 2) throw Exception("termine() nécessite 2 arguments (chaine, suffixe)")
+                if (args.size < 2) runtimeError("termine() nécessite 2 arguments (chaine, suffixe)")
                 args[0].toString().endsWith(args[1].toString())
             }
             "position" -> {
-                if (args.size < 2) throw Exception("position() nécessite 2 arguments (chaine, sous_chaine)")
+                if (args.size < 2) runtimeError("position() nécessite 2 arguments (chaine, sous_chaine)")
                 args[0].toString().indexOf(args[1].toString())
             }
 
@@ -678,25 +687,25 @@ class Interpreter {
 
             // Fonctions de caractères
             "ord" -> {
-                if (args.isEmpty()) throw Exception("ord() nécessite 1 argument (un caractère)")
+                if (args.isEmpty()) runtimeError("ord() nécessite 1 argument (un caractère)")
                 val value = args[0]
                 when (value) {
                     is Char -> value.code
                     is String -> if (value.isNotEmpty()) value[0].code else 0
-                    else -> throw Exception("ord() nécessite un caractère en argument")
+                    else -> runtimeError("ord() nécessite un caractère en argument")
                 }
             }
             "chr" -> {
-                if (args.isEmpty()) throw Exception("chr() nécessite 1 argument (un code ASCII)")
+                if (args.isEmpty()) runtimeError("chr() nécessite 1 argument (un code ASCII)")
                 val code = toInt(args[0])
                 // Accepter la plage complète des code points représentables par un Char Kotlin
                 if (code < 0 || code > Char.MAX_VALUE.code) {
-                    throw Exception("chr() : le code doit être entre 0 et ${Char.MAX_VALUE.code}")
+                    runtimeError("chr() : le code doit être entre 0 et ${Char.MAX_VALUE.code}")
                 }
                 code.toChar()
             }
             "estlettre", "estLettre" -> {
-                if (args.isEmpty()) throw Exception("estLettre() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("estLettre() nécessite 1 argument")
                 val value = args[0]
                 when (value) {
                     is Char -> value.isLetter()
@@ -705,7 +714,7 @@ class Interpreter {
                 }
             }
             "estchiffre", "estChiffre" -> {
-                if (args.isEmpty()) throw Exception("estChiffre() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("estChiffre() nécessite 1 argument")
                 val value = args[0]
                 when (value) {
                     is Char -> value.isDigit()
@@ -714,7 +723,7 @@ class Interpreter {
                 }
             }
             "estmajuscule", "estMajuscule" -> {
-                if (args.isEmpty()) throw Exception("estMajuscule() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("estMajuscule() nécessite 1 argument")
                 val value = args[0]
                 when (value) {
                     is Char -> value.isUpperCase()
@@ -723,7 +732,7 @@ class Interpreter {
                 }
             }
             "estminuscule", "estMinuscule" -> {
-                if (args.isEmpty()) throw Exception("estMinuscule() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("estMinuscule() nécessite 1 argument")
                 val value = args[0]
                 when (value) {
                     is Char -> value.isLowerCase()
@@ -732,35 +741,35 @@ class Interpreter {
                 }
             }
             "versmajuscule", "versMajuscule" -> {
-                if (args.isEmpty()) throw Exception("versMajuscule() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("versMajuscule() nécessite 1 argument")
                 val value = args[0]
                 when (value) {
                     is Char -> value.uppercaseChar()
                     is String -> if (value.isNotEmpty()) value[0].uppercaseChar() else '\u0000'
-                    else -> throw Exception("versMajuscule() nécessite un caractère")
+                    else -> runtimeError("versMajuscule() nécessite un caractère")
                 }
             }
             "versminuscule", "versMinuscule" -> {
-                if (args.isEmpty()) throw Exception("versMinuscule() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("versMinuscule() nécessite 1 argument")
                 val value = args[0]
                 when (value) {
                     is Char -> value.lowercaseChar()
                     is String -> if (value.isNotEmpty()) value[0].lowercaseChar() else '\u0000'
-                    else -> throw Exception("versMinuscule() nécessite un caractère")
+                    else -> runtimeError("versMinuscule() nécessite un caractère")
                 }
             }
 
             // Fonctions de conversion
             "versentier", "versEntier" -> {
-                if (args.isEmpty()) throw Exception("versEntier() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("versEntier() nécessite 1 argument")
                 toInt(args[0])
             }
             "versreel", "versReel" -> {
-                if (args.isEmpty()) throw Exception("versReel() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("versReel() nécessite 1 argument")
                 toDouble(args[0])
             }
             "verschaine", "versChaine" -> {
-                if (args.isEmpty()) throw Exception("versChaine() nécessite 1 argument")
+                if (args.isEmpty()) runtimeError("versChaine() nécessite 1 argument")
                 val value = args[0]
                 when (value) {
                     is Double -> {
@@ -778,24 +787,29 @@ class Interpreter {
     }
 
     private fun evaluateExpression(expression: Expression): Any {
+        // Mettre à jour le numéro de ligne si l'expression en a un
+        if (expression.line > 0) {
+            currentLine = expression.line
+        }
+
         return when (expression) {
             is NumberLiteral -> expression.value
             is StringLiteral -> expression.value
             is CharLiteral -> expression.value
             is BooleanLiteral -> expression.value
             is Variable -> variables[normalize(expression.name)]
-                            ?: throw Exception("Variable '${expression.name}' non définie")
+                            ?: runtimeError("Variable '${expression.name}' non définie")
             is ArrayAccess -> {
                 val normalizedName = normalize(expression.name)
                 @Suppress("UNCHECKED_CAST")
                 val array =
                         variables[normalizedName] as? List<Any>
-                                ?: throw Exception(
+                                ?: runtimeError(
                                         "Variable '${expression.name}' n'est pas un tableau"
                                 )
                 val index = toInt(evaluateExpression(expression.index))
                 if (index < 0 || index >= array.size) {
-                    throw Exception(
+                    runtimeError(
                             "Index $index hors limites pour le tableau '${expression.name}'"
                     )
                 }
@@ -806,19 +820,19 @@ class Interpreter {
                 @Suppress("UNCHECKED_CAST")
                 val matrix =
                         variables[normalizedName] as? List<List<Any>>
-                                ?: throw Exception(
+                                ?: runtimeError(
                                         "Variable '${expression.name}' n'est pas une matrice"
                                 )
                 val index1 = toInt(evaluateExpression(expression.index1))
                 val index2 = toInt(evaluateExpression(expression.index2))
 
                 if (index1 < 0 || index1 >= matrix.size) {
-                    throw Exception(
+                    runtimeError(
                             "Index ligne $index1 hors limites pour la matrice '${expression.name}'"
                     )
                 }
                 if (index2 < 0 || index2 >= matrix[index1].size) {
-                    throw Exception(
+                    runtimeError(
                             "Index colonne $index2 hors limites pour la matrice '${expression.name}'"
                     )
                 }
@@ -826,7 +840,7 @@ class Interpreter {
             }
             is FunctionCallExpression -> {
                 executeFunctionCall(expression.name, expression.arguments)
-                        ?: throw Exception(
+                        ?: runtimeError(
                                 "La fonction '${expression.name}' ne retourne pas de valeur"
                         )
             }
@@ -874,7 +888,7 @@ class Interpreter {
             ">=" -> !compareLess(left, right)
             "et" -> toBoolean(left) && toBoolean(right)
             "ou" -> toBoolean(left) || toBoolean(right)
-            else -> throw Exception("Opérateur invalide: ${binaryOp.operator}")
+            else -> runtimeError("Opérateur invalide: ${binaryOp.operator}")
         }
     }
 
@@ -993,7 +1007,7 @@ class Interpreter {
                     is Char -> value.code // ord(c) autorisé
                     is String -> {
                         // ❌ INTERDIT : chaine -> entier
-                        throw Exception("Erreur de type : Impossible de convertir une chaine en entier. Utilisez versEntier() pour une conversion explicite.")
+                        runtimeError("Erreur de type : Impossible de convertir une chaine en entier. Utilisez versEntier() pour une conversion explicite.")
                     }
                     is Boolean -> if (value) 1 else 0 // Autorisé pour les tests
                     else -> toInt(value)
@@ -1006,7 +1020,7 @@ class Interpreter {
                     is Char -> value.code.toDouble() // ord(c) autorisé
                     is String -> {
                         // ❌ INTERDIT : chaine -> reel
-                        throw Exception("Erreur de type : Impossible de convertir une chaine en reel. Utilisez versReel() pour une conversion explicite.")
+                        runtimeError("Erreur de type : Impossible de convertir une chaine en reel. Utilisez versReel() pour une conversion explicite.")
                     }
                     is Boolean -> if (value) 1.0 else 0.0 // Autorisé pour les tests
                     else -> toDouble(value)
@@ -1018,17 +1032,17 @@ class Interpreter {
                     is Char -> value.toString() // ✅ Casting implicite caractere -> chaine
                     is Int -> {
                         // ❌ INTERDIT : entier -> chaine
-                        throw Exception("Erreur de type : Impossible de convertir un entier en chaine. Utilisez versChaine() pour une conversion explicite.")
+                        runtimeError("Erreur de type : Impossible de convertir un entier en chaine. Utilisez versChaine() pour une conversion explicite.")
                     }
                     is Double -> {
                         // ❌ INTERDIT : reel -> chaine
-                        throw Exception("Erreur de type : Impossible de convertir un reel en chaine. Utilisez versChaine() pour une conversion explicite.")
+                        runtimeError("Erreur de type : Impossible de convertir un reel en chaine. Utilisez versChaine() pour une conversion explicite.")
                     }
                     is Boolean -> {
                         // ❌ INTERDIT : booleen -> chaine
-                        throw Exception("Erreur de type : Impossible de convertir un booleen en chaine. Utilisez versChaine() pour une conversion explicite.")
+                        runtimeError("Erreur de type : Impossible de convertir un booleen en chaine. Utilisez versChaine() pour une conversion explicite.")
                     }
-                    else -> throw Exception("Erreur de type : Conversion vers chaine non supportée pour le type ${getTypeName(value)}")
+                    else -> runtimeError("Erreur de type : Conversion vers chaine non supportée pour le type ${getTypeName(value)}")
                 }
             }
             "caractere" -> {
@@ -1036,14 +1050,14 @@ class Interpreter {
                     is Char -> value
                     is String -> {
                         // ❌ INTERDIT : chaine -> caractere
-                        throw Exception("Erreur de type : Impossible de convertir une chaine en caractere. La chaine peut contenir plusieurs caractères.")
+                        runtimeError("Erreur de type : Impossible de convertir une chaine en caractere. La chaine peut contenir plusieurs caractères.")
                     }
                     is Int -> {
                         // ✅ chr(n) autorisé - vérifier les limites
                         if (value in 0..Char.MAX_VALUE.code) {
                             value.toChar()
                         } else {
-                            throw Exception("Valeur $value hors limites pour un caractère (0-${Char.MAX_VALUE.code})")
+                            runtimeError("Valeur $value hors limites pour un caractère (0-${Char.MAX_VALUE.code})")
                         }
                     }
                     is Double -> {
@@ -1051,10 +1065,10 @@ class Interpreter {
                         if (intValue in 0..Char.MAX_VALUE.code) {
                             intValue.toChar()
                         } else {
-                            throw Exception("Valeur $intValue hors limites pour un caractère")
+                            runtimeError("Valeur $intValue hors limites pour un caractère")
                         }
                     }
-                    else -> throw Exception("Erreur de type : Conversion vers caractere non supportée pour le type ${getTypeName(value)}")
+                    else -> runtimeError("Erreur de type : Conversion vers caractere non supportée pour le type ${getTypeName(value)}")
                 }
             }
             "booleen" -> {
@@ -1067,7 +1081,7 @@ class Interpreter {
                         when (value.lowercase()) {
                             "vrai", "true" -> true
                             "faux", "false" -> false
-                            else -> throw Exception("Erreur de type : Impossible de convertir la chaine '$value' en booleen. Valeurs autorisées: 'vrai', 'faux'")
+                            else -> runtimeError("Erreur de type : Impossible de convertir la chaine '$value' en booleen. Valeurs autorisées: 'vrai', 'faux'")
                         }
                     }
                     is Char -> value != '\u0000'
@@ -1084,7 +1098,7 @@ class Interpreter {
         return when (unaryOp.operator) {
             "-" -> -toDouble(operand)
             "non" -> !toBoolean(operand)
-            else -> throw Exception("Opérateur unaire invalide: ${unaryOp.operator}")
+            else -> runtimeError("Opérateur unaire invalide: ${unaryOp.operator}")
         }
     }
 

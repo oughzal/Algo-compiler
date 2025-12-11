@@ -1,0 +1,149 @@
+// Exemples d'algorithmes pour tester les messages d'erreur de débogage
+
+// ====================================
+// EXEMPLE 1 : Erreur de syntaxe (manque 'alors')
+// ====================================
+algorithme ErreurSyntaxe1
+variables
+    x : entier
+debut
+    x = 5
+    si x == 5
+        ecrire("cinq")  // ERREUR : manque 'alors' après la condition
+    finsi
+fin
+
+// Message d'erreur attendu :
+// ParseException: Erreur de parsing : Attendu ALORS, mais trouvé IDENTIFICATEUR (ligne 7, token='ecrire')
+
+
+// ====================================
+// EXEMPLE 2 : Type de variable invalide
+// ====================================
+algorithme ErreurType
+variables
+    x : nombre_invalide  // ERREUR : type invalide
+debut
+    x = 5
+fin
+
+// Message d'erreur attendu :
+// ParseException: Erreur de parsing : Type de variable invalide (ligne 3, token='nombre_invalide')
+
+
+// ====================================
+// EXEMPLE 3 : Manque 'à' dans boucle pour
+// ====================================
+algorithme ErreurBouclePour
+variables
+    i : entier
+debut
+    pour i de 1 jusqu 10 faire  // ERREUR : devrait être 'à' pas 'jusqu'
+        ecrire(i)
+    finpour
+fin
+
+// Message d'erreur attendu :
+// ParseException: Erreur de parsing : Attendu 'à' après 'de' dans la boucle 'pour', trouvé jusqu (ligne 5, token='jusqu')
+
+
+// ====================================
+// EXEMPLE 4 : Variable non définie
+// ====================================
+algorithme ErreurVariableNonDefinie
+debut
+    ecrire(x)  // ERREUR : variable x non déclarée
+fin
+
+// Message d'erreur attendu :
+// Exception: Variable 'x' non définie
+
+
+// ====================================
+// EXEMPLE 5 : Index hors limites
+// ====================================
+algorithme ErreurIndexTableau
+variables
+    T : tableau[5] de entier
+debut
+    T[0] = 1
+    T[10] = 42  // ERREUR : index hors limites (tableau de taille 5)
+fin
+
+// Message d'erreur attendu :
+// Exception: Index 10 hors limites pour le tableau 'T'
+
+
+// ====================================
+// EXEMPLE 6 : Fonction non définie
+// ====================================
+algorithme ErreurFonctionInexistante
+debut
+    fonctionQuiNexistePas()  // ERREUR : fonction non définie
+fin
+
+// Message d'erreur attendu :
+// Exception: Fonction 'fonctionQuiNexistePas' non définie
+
+
+// ====================================
+// EXEMPLE 7 : Manque opérateur d'affectation
+// ====================================
+algorithme ErreurAffectation
+variables
+    x : entier
+debut
+    x 5  // ERREUR : manque '='
+fin
+
+// Message d'erreur attendu :
+// ParseException: Erreur de parsing : Attendu '=' ou '[' ou '(' après l'identificateur (ligne 5, token='5')
+
+
+// ====================================
+// EXEMPLE CORRECT : Algorithme valide
+// ====================================
+algorithme AlgorithmeCorrect
+variables
+    x, y, z : entier
+    i, j : entier
+    M : tableau[2][2] de entier
+debut
+    // Affectations simples
+    x = 5
+    y = 10
+    z = x + y
+
+    // Condition
+    si z > 10 alors
+        ecrireln("z est supérieur à 10")
+    sinonsi z == 10 alors
+        ecrireln("z est égal à 10")
+    sinon
+        ecrireln("z est inférieur à 10")
+    finsi
+
+    // Boucle for
+    pour i de 1 à 5 faire
+        ecrire(i)
+        ecrire(" ")
+    finpour
+    ecrireln()
+
+    // Matrice
+    pour i de 0 à 1 faire
+        pour j de 0 à 1 faire
+            M[i][j] = i * 2 + j
+            ecrire(M[i][j])
+            ecrire(" ")
+        finpour
+        ecrireln()
+    finpour
+
+    // Expression complexe
+    z = (x + y) * (x - y) + x ** 2
+    ecrireln("Résultat : ", z)
+fin
+
+// Ce programme devrait s'exécuter sans erreur
+
