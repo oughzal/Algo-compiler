@@ -403,9 +403,48 @@ finsi
 ### Boucles
 
 #### Boucle Pour
+
+**Syntaxe de base :**
 ```
 pour i de 1 à 10 faire
     ecrire(i)
+finpour
+```
+
+**Avec pas (step) :**
+```
+pour i de debut à fin pas increment faire
+    ...
+finpour
+```
+
+**Comportement du pas :**
+- Si `pas` n'est pas spécifié :
+  - Le pas par défaut est **1** si `debut ≤ fin` (boucle ascendante)
+  - Le pas par défaut est **-1** si `debut > fin` (boucle descendante)
+- Le pas peut être positif ou négatif
+- Le pas ne peut pas être 0 (erreur d'exécution)
+
+**Exemples :**
+```
+// Boucle ascendante (pas = 1 par défaut)
+pour i de 0 à 10 faire
+    ecrire(i, " ")  // 0 1 2 3 4 5 6 7 8 9 10
+finpour
+
+// Boucle descendante (pas = -1 par défaut)
+pour i de 10 à 0 faire
+    ecrire(i, " ")  // 10 9 8 7 6 5 4 3 2 1 0
+finpour
+
+// Boucle avec pas positif explicite
+pour i de 0 à 20 pas 3 faire
+    ecrire(i, " ")  // 0 3 6 9 12 15 18
+finpour
+
+// Boucle avec pas négatif explicite
+pour i de 20 à 0 pas -2 faire
+    ecrire(i, " ")  // 20 18 16 14 12 10 8 6 4 2 0
 finpour
 ```
 

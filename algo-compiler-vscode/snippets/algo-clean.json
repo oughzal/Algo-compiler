@@ -91,6 +91,15 @@
         ],
         "description": "Boucle pour"
     },
+    "Pour avec Pas": {
+        "prefix": "pourpas",
+        "body": [
+            "pour ${1:i} de ${2:0} à ${3:10} pas ${4:1} faire",
+            "    $0",
+            "finpour"
+        ],
+        "description": "Boucle pour avec pas (step)"
+    },
     "Tantque": {
         "prefix": "tantque",
         "body": [

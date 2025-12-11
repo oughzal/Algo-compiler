@@ -69,6 +69,7 @@ data class ForLoop(
         val variable: String,
         val start: Expression,
         val end: Expression,
+        val step: Expression? = null,
         val body: List<Statement>,
         override val line: Int = 0
 ) : Statement(line)

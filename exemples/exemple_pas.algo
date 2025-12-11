@@ -1,0 +1,78 @@
+// Exemples d'utilisation du pas dans la boucle pour
+// ================================================
+
+algorithme ExemplesPas
+variables
+    i, somme : entier
+debut
+    ecrireln("=== Exemples d'utilisation du pas dans la boucle pour ===")
+    ecrireln()
+
+    // Exemple 1 : Compter de 2 en 2
+    ecrireln("1. Nombres pairs de 0 à 20 :")
+    pour i de 0 à 20 pas 2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Exemple 2 : Compter de 5 en 5
+    ecrireln("2. Multiples de 5 de 0 à 50 :")
+    pour i de 0 à 50 pas 5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Exemple 3 : Compte à rebours
+    ecrireln("3. Compte à rebours de 10 à 0 :")
+    pour i de 10 à 0 pas -1 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Exemple 4 : Compte à rebours rapide
+    ecrireln("4. De 100 à 0 par pas de -10 :")
+    pour i de 100 à 0 pas -10 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Exemple 5 : Somme des nombres pairs
+    ecrireln("5. Somme des nombres pairs de 0 à 100 :")
+    somme = 0
+    pour i de 0 à 100 pas 2 faire
+        somme = somme + i
+    finpour
+    ecrireln("Somme = ", somme)
+    ecrireln()
+
+    // Exemple 6 : Table de multiplication par 3
+    ecrireln("6. Table de multiplication par 3 :")
+    pour i de 0 à 30 pas 3 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Exemple 7 : Pas par défaut ascendant
+    ecrireln("7. Pas par défaut ascendant (1) - de 1 à 5 :")
+    pour i de 1 à 5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Exemple 8 : Pas par défaut descendant
+    ecrireln("8. Pas par défaut descendant (-1) - de 5 à 1 :")
+    pour i de 5 à 1 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    ecrireln()
+    ecrireln("=== Fin des exemples ===")
+fin
+

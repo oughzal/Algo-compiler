@@ -2,7 +2,7 @@
     "name": "algo-compiler",
     "displayName": "Algo Compiler",
     "description": "Compilateur de pseudo-code français: Matrices 2D, 40+ fonctions, opérateur ^, sinonSi, expression conditionnelle - Coloration, snippets, exécution directe",
-    "version": "1.7.4",
+    "version": "1.7.5",
     "icon": "images/icon.png",
     "publisher": "omarcomputer",
     "license": "MIT",

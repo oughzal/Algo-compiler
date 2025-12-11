@@ -110,6 +110,90 @@ sinon : ecrire("autre")
 finselon
 ```
 
+Boucles
+
+**Boucle Pour** :
+
+Syntaxe de base :
+```
+pour variable de debut à fin faire
+  ...
+finpour
+```
+
+**Avec pas (step)** :
+```
+pour variable de debut à fin pas increment faire
+  ...
+finpour
+```
+
+**Comportement** :
+- Si `pas` n'est pas spécifié :
+  - Le pas par défaut est **1** si `debut ≤ fin` (boucle ascendante)
+  - Le pas par défaut est **-1** si `debut > fin` (boucle descendante)
+- Le pas peut être positif ou négatif
+- Le pas ne peut pas être 0 (erreur d'exécution)
+
+**Exemples** :
+```algo
+// Boucle ascendante avec pas par défaut (1)
+pour i de 0 à 10 faire
+  ecrire(i, " ")  // 0 1 2 3 4 5 6 7 8 9 10
+finpour
+
+// Boucle descendante avec pas par défaut (-1)
+pour i de 10 à 0 faire
+  ecrire(i, " ")  // 10 9 8 7 6 5 4 3 2 1 0
+finpour
+
+// Boucle avec pas positif explicite
+pour i de 0 à 20 pas 3 faire
+  ecrire(i, " ")  // 0 3 6 9 12 15 18
+finpour
+
+// Boucle avec pas négatif explicite
+pour i de 20 à 0 pas -2 faire
+  ecrire(i, " ")  // 20 18 16 14 12 10 8 6 4 2 0
+finpour
+
+// Boucle avec pas -5
+pour i de 100 à 50 pas -5 faire
+  ecrire(i, " ")  // 100 95 90 85 80 75 70 65 60 55 50
+finpour
+```
+
+**Boucle TantQue** :
+```
+tantQue condition faire
+  ...
+finTantQue
+```
+
+**Boucle Répéter...Jusqu'à** :
+```
+repeter
+  ...
+jusqua condition
+```
+
+Exemples :
+```algo
+// TantQue
+i = 0
+tantQue i < 5 faire
+  ecrireln(i)
+  i = i + 1
+finTantQue
+
+// Répéter...Jusqu'à
+i = 0
+repeter
+  ecrireln(i)
+  i = i + 1
+jusqua i >= 5
+```
+
 Opérateurs
 
 **Arithmétiques** :

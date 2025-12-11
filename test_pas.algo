@@ -1,0 +1,40 @@
+algorithme TestPas
+variables
+    i : entier
+debut
+    // Test 1: Boucle descendante avec pas -1 (par défaut)
+    ecrireln("Test 1: de 10 à 0 (pas -1 par défaut):")
+    pour i de 10 à 0 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 2: Boucle descendante avec pas -2 explicite
+    ecrireln("Test 2: de 20 à 0 pas -2:")
+    pour i de 20 à 0 pas -2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 3: Boucle ascendante avec pas 1 (par défaut)
+    ecrireln("Test 3: de 0 à 10 (pas 1 par défaut):")
+    pour i de 0 à 10 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 4: Boucle ascendante avec pas 3 explicite
+    ecrireln("Test 4: de 0 à 20 pas 3:")
+    pour i de 0 à 20 pas 3 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 5: Boucle descendante avec pas -5
+    ecrireln("Test 5: de 100 à 50 pas -5:")
+    pour i de 100 à 50 pas -5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+fin
+

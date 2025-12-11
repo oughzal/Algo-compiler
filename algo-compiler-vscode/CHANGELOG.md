@@ -2,6 +2,30 @@
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
 
+## [1.7.5] - 2025-12-11
+
+### ✨ Nouvelles Fonctionnalités
+
+#### 🔄 Support du Pas (Step) dans les Boucles Pour
+- **Syntaxe étendue** : `pour variable de debut à fin pas increment faire`
+- **Pas automatique** :
+  - Pas = 1 si début ≤ fin (boucle ascendante)
+  - Pas = -1 si début > fin (boucle descendante)
+- **Pas personnalisé** : Supporte les valeurs positives et négatives
+- **Validation** : Erreur si pas = 0
+
+#### 📦 Nouveau Snippet
+- **`pourpas`** : Boucle pour avec pas personnalisé
+
+#### 📝 Documentation
+- Exemples complets dans le README
+- Nouveaux fichiers d'exemples : `exemple_pas.algo`
+- Documentation détaillée dans `HELP.md`
+
+### 🧪 Tests
+- ✅ Tous les cas de pas testés et validés
+- ✅ Compatibilité avec le code existant maintenue
+
 ## [1.7.4] - 2025-12-09
 
 ### 🎯 Améliorations de Configuration

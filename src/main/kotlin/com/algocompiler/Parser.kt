@@ -441,6 +441,15 @@ class Parser(private val tokens: List<Token>) {
         advance()
 
         val end = parseExpression()
+
+        // Vérifier si on a un "pas"
+        var step: Expression? = null
+        if (current().type == TokenType.IDENTIFICATEUR &&
+            current().value.lowercase() == "pas") {
+            advance() // consommer "pas"
+            step = parseExpression()
+        }
+
         expect(TokenType.FAIRE)
         skipNewlines()
 
@@ -454,7 +463,7 @@ class Parser(private val tokens: List<Token>) {
 
         expect(TokenType.FINPOUR)
 
-        return ForLoop(variable, start, end, body, pourToken.line)
+        return ForLoop(variable, start, end, step, body, pourToken.line)
     }
 
     private fun parseWhileLoop(): WhileLoop {

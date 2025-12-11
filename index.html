@@ -594,14 +594,20 @@
 
             <div class="features-grid">
                 <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Boucle avec Pas <span class="new-badge">NOUVEAU</span></h3>
+                    <p>Support du pas dans les boucles : <code>pour i de 0 à 100 pas 2</code> pour plus de flexibilité</p>
+                </div>
+
+                <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <h3>Matrices 2D <span class="new-badge">NOUVEAU</span></h3>
+                    <h3>Matrices 2D</h3>
                     <p>Support complet des tableaux à deux dimensions avec syntaxe intuitive <code>M[i][j]</code></p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>Opérateur ^ <span class="new-badge">NOUVEAU</span></h3>
+                    <h3>Opérateur ^</h3>
                     <p>Opérateur de puissance simplifié : <code>2 ^ 3</code> au lieu de <code>2 ** 3</code></p>
                 </div>
 
@@ -677,6 +683,26 @@
 
     aire = <span class="code-number">3.14159</span> * rayon <span class="code-keyword">^</span> <span class="code-number">2</span>
     <span class="code-keyword">ecrireln</span>(<span class="code-string">"Aire = "</span>, aire)
+<span class="code-keyword">fin</span></code></pre>
+            </div>
+
+            <h3 class="text-center mb-2 mt-2">Boucle avec Pas</h3>
+            <div class="code-example">
+<pre><code><span class="code-keyword">algorithme</span> BouclePas
+
+<span class="code-keyword">variables</span>
+    i : <span class="code-keyword">entier</span>
+
+<span class="code-keyword">debut</span>
+    <span class="code-comment">// Nombres pairs de 0 à 20</span>
+    <span class="code-keyword">pour</span> i <span class="code-keyword">de</span> <span class="code-number">0</span> <span class="code-keyword">à</span> <span class="code-number">20</span> <span class="code-keyword">pas</span> <span class="code-number">2</span> <span class="code-keyword">faire</span>
+        <span class="code-keyword">ecrire</span>(i, <span class="code-string">" "</span>)  <span class="code-comment">// 0 2 4 6 8 10 ...</span>
+    <span class="code-keyword">finpour</span>
+
+    <span class="code-comment">// Compte à rebours</span>
+    <span class="code-keyword">pour</span> i <span class="code-keyword">de</span> <span class="code-number">10</span> <span class="code-keyword">à</span> <span class="code-number">0</span> <span class="code-keyword">pas</span> <span class="code-number">-1</span> <span class="code-keyword">faire</span>
+        <span class="code-keyword">ecrireln</span>(i)  <span class="code-comment">// 10 9 8 7 6 5 4 3 2 1 0</span>
+    <span class="code-keyword">finpour</span>
 <span class="code-keyword">fin</span></code></pre>
             </div>
         </div>

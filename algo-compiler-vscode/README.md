@@ -273,6 +273,45 @@ cd algo-compiler
 
 ### Exemples de Code
 
+#### Boucles avec Pas (Step)
+
+```algo
+algorithme ExemplesPas
+
+variables
+    i : entier
+
+debut
+    // Boucle ascendante avec pas par défaut (1)
+    ecrireln("Nombres de 1 à 10:")
+    pour i de 1 à 10 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    
+    // Boucle descendante avec pas par défaut (-1)
+    ecrireln("Compte à rebours:")
+    pour i de 10 à 0 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    
+    // Boucle avec pas positif explicite
+    ecrireln("Nombres pairs de 0 à 20:")
+    pour i de 0 à 20 pas 2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    
+    // Boucle avec pas négatif explicite
+    ecrireln("De 20 à 0 par pas de -2:")
+    pour i de 20 à 0 pas -2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+fin
+```
+
 #### Utiliser les 40 fonctions intégrées
 
 ```algo

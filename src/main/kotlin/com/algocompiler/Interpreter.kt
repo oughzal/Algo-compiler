@@ -327,10 +327,34 @@ class Interpreter {
         val startInt = toInt(start)
         val endInt = toInt(end)
 
-        for (i in startInt..endInt) {
-            variables[normalize(forLoop.variable)] = i
-            for (statement in forLoop.body) {
-                executeStatement(statement)
+        // Calculer le pas : expression optionnelle dans l'AST
+        val stepValue = if (forLoop.step != null) {
+            val sv = toInt(evaluateExpression(forLoop.step))
+            if (sv == 0) runtimeError("Le pas de la boucle ne peut pas être 0")
+            sv
+        } else {
+            // Par défaut : +1 si on monte, -1 si on descend
+            if (startInt <= endInt) 1 else -1
+        }
+
+        var i = startInt
+        if (stepValue > 0) {
+            // Boucle ascendante
+            while (i <= endInt) {
+                variables[normalize(forLoop.variable)] = i
+                for (statement in forLoop.body) {
+                    executeStatement(statement)
+                }
+                i += stepValue
+            }
+        } else {
+            // Boucle descendante
+            while (i >= endInt) {
+                variables[normalize(forLoop.variable)] = i
+                for (statement in forLoop.body) {
+                    executeStatement(statement)
+                }
+                i += stepValue // stepValue est négatif
             }
         }
     }

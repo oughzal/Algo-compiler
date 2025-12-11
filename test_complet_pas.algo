@@ -1,0 +1,114 @@
+algorithme TestCompletPas
+// Test complet du support du pas dans les boucles
+
+variables
+    i, somme : entier
+    T : tableau[10] de entier
+
+debut
+    ecrireln("╔════════════════════════════════════════════╗")
+    ecrireln("║  Test Complet - Boucles avec Pas (Step)  ║")
+    ecrireln("╚════════════════════════════════════════════╝")
+    ecrireln()
+
+    // Test 1 : Pas par défaut ascendant
+    ecrireln("1️⃣  Pas par défaut ascendant (de 1 à 5):")
+    ecrire("   Résultat : ")
+    pour i de 1 à 5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 2 : Pas par défaut descendant
+    ecrireln("2️⃣  Pas par défaut descendant (de 5 à 1):")
+    ecrire("   Résultat : ")
+    pour i de 5 à 1 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 3 : Pas +2 (nombres pairs)
+    ecrireln("3️⃣  Pas +2 - Nombres pairs de 0 à 20:")
+    ecrire("   Résultat : ")
+    pour i de 0 à 20 pas 2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 4 : Pas +3
+    ecrireln("4️⃣  Pas +3 - De 0 à 30:")
+    ecrire("   Résultat : ")
+    pour i de 0 à 30 pas 3 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 5 : Pas -2
+    ecrireln("5️⃣  Pas -2 - De 20 à 0:")
+    ecrire("   Résultat : ")
+    pour i de 20 à 0 pas -2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 6 : Pas -5
+    ecrireln("6️⃣  Pas -5 - De 50 à 0:")
+    ecrire("   Résultat : ")
+    pour i de 50 à 0 pas -5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 7 : Calcul de somme avec pas
+    ecrireln("7️⃣  Somme des nombres pairs de 0 à 100:")
+    somme = 0
+    pour i de 0 à 100 pas 2 faire
+        somme = somme + i
+    finpour
+    ecrireln("   Somme = ", somme, " (attendu: 2550)")
+    ecrireln()
+
+    // Test 8 : Parcours d'un tableau avec pas
+    ecrireln("8️⃣  Parcours de tableau avec pas 2:")
+    T = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    ecrire("   Tableau : ")
+    pour i de 0 à 9 faire
+        ecrire(T[i], " ")
+    finpour
+    ecrireln()
+    ecrire("   Éléments d'index pair : ")
+    pour i de 0 à 9 pas 2 faire
+        ecrire(T[i], " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 9 : Compte à rebours
+    ecrireln("9️⃣  Compte à rebours (simulation de lancement):")
+    ecrire("   ")
+    pour i de 10 à 0 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln("🚀 DÉCOLLAGE !")
+    ecrireln()
+
+    // Test 10 : Table de multiplication
+    ecrireln("🔟 Table de multiplication par 7 (0 à 70):")
+    ecrire("   Résultat : ")
+    pour i de 0 à 70 pas 7 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    ecrireln("╔════════════════════════════════════════════╗")
+    ecrireln("║          ✅ Tous les tests réussis !       ║")
+    ecrireln("╚════════════════════════════════════════════╝")
+fin
+
