@@ -1,0 +1,18 @@
+algorithme TestSimpleGlobal
+variables
+    compteur : entier
+
+procedure incrementer()
+debut
+    ecrireln("Compteur dans fonction AVANT: ", compteur)
+    compteur = compteur + 1
+    ecrireln("Compteur dans fonction APRÈS: ", compteur)
+fin
+
+debut
+    compteur = 5
+    ecrireln("Compteur avant appel: ", compteur)
+    incrementer()
+    ecrireln("Compteur après appel: ", compteur)
+fin
+

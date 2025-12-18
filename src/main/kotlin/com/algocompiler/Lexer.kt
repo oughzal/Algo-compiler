@@ -50,7 +50,11 @@ class Lexer(private val input: String) {
                     "fonction" to TokenType.FONCTION,
                     "procedure" to TokenType.PROCEDURE,
                     "retourner" to TokenType.RETOURNER,
-                    "tableau" to TokenType.TABLEAU
+                    "tableau" to TokenType.TABLEAU,
+                    "varref" to TokenType.VAR,
+                    "ref" to TokenType.VAR,
+                    "reference" to TokenType.VAR,
+                    "pas" to TokenType.PAS
             )
 
     // Fonction pour normaliser les chaînes (enlever les accents et convertir en minuscules)

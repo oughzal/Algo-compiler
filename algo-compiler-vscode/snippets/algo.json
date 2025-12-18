@@ -34,6 +34,41 @@
         ],
         "description": "Définir une procédure"
     },
+    "Procédure avec référence": {
+        "prefix": "procref",
+        "body": [
+            "procedure ${1:nom}(ref ${2:param} : ${3:entier})",
+            "debut",
+            "    $0",
+            "fin"
+        ],
+        "description": "Procédure avec passage par référence"
+    },
+    "Fonction avec référence": {
+        "prefix": "foncref",
+        "body": [
+            "fonction ${1:nom}(ref ${2:param} : ${3:entier}) : ${4:entier}",
+            "debut",
+            "    $0",
+            "    retourner ${5:resultat}",
+            "fin"
+        ],
+        "description": "Fonction avec passage par référence"
+    },
+    "Procédure échanger": {
+        "prefix": "echanger",
+        "body": [
+            "procedure echanger(ref a : ${1:entier}, ref b : ${1:entier})",
+            "variables",
+            "    temp : ${1:entier}",
+            "debut",
+            "    temp = a",
+            "    a = b",
+            "    b = temp",
+            "fin"
+        ],
+        "description": "Procédure d'échange de valeurs"
+    },
     "Si Alors": {
         "prefix": "si",
         "body": [

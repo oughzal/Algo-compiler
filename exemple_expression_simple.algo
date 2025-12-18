@@ -1,0 +1,14 @@
+algorithme ExempleSimple
+
+variables
+    a, b : entier
+
+debut
+    a = 7
+    b = 6
+
+    // Expression seule - affiche automatiquement le résultat
+    a + b
+
+fin
+

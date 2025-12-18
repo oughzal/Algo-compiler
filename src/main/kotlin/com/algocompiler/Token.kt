@@ -32,6 +32,8 @@ enum class TokenType {
     PROCEDURE,
     RETOURNER,
     TABLEAU,
+    VAR,
+    PAS,
 
     // Types
     ENTIER,

@@ -31,7 +31,64 @@ Extension Visual Studio Code pour **Algo-Compiler** - Écrivez, éditez et exéc
 
 ---
 
-## 🎉 Nouveautés Version 1.6.0
+## 🎉 Nouveautés Version 1.8.0
+
+### ⚡ Évaluation en Court-Circuit (Short-Circuit)
+Les opérateurs logiques `et` et `ou` utilisent maintenant l'évaluation en court-circuit comme dans Kotlin :
+```algo
+// Pour ET : si le premier est faux, le second n'est pas évalué
+x = 0
+resultat = (x == 1) et (10 / x > 0)  // Pas d'erreur de division par zéro !
+
+// Pour OU : si le premier est vrai, le second n'est pas évalué
+resultat = (x == 0) ou (10 / x > 0)  // Pas d'erreur de division par zéro !
+```
+**Avantages** : Meilleures performances et code plus sûr
+
+### 🔄 Passage par Référence
+Modifiez les variables directement avec le mot-clé `ref` :
+```algo
+procedure echanger(ref a : entier, ref b : entier)
+variables
+    temp : entier
+debut
+    temp = a
+    a = b
+    b = temp
+fin
+
+variables
+    x, y : entier
+debut
+    x = 10
+    y = 20
+    echanger(x, y)  // x = 20, y = 10
+fin
+```
+
+### 🌍 Variables Globales
+Les fonctions/procédures peuvent accéder et modifier les variables de l'algorithme principal :
+```algo
+variables
+    compteur : entier
+
+procedure incrementer()
+debut
+    compteur = compteur + 1  // Modifie la variable globale
+fin
+
+debut
+    compteur = 0
+    incrementer()  // compteur = 1
+fin
+```
+
+### ✅ Expressions avec Fonctions
+Écrivez des expressions naturelles commençant par des fonctions :
+```algo
+resultat = racine(16) + abs(-5)     // 9
+valeur = puissance(2, 3) * abs(-2)  // 16
+```
 
 ### 📊 Matrices (Tableaux 2D)
 Créez et manipulez des tableaux à deux dimensions :

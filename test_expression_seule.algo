@@ -1,0 +1,13 @@
+algorithme TestExpressionSeule
+variables
+    a : entier
+    b : entier
+debut
+    a = 7
+    b = 6
+    a + b
+    a * b
+    (a + b) * 2
+    a > b
+fin
+

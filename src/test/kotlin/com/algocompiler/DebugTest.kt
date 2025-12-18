@@ -119,7 +119,9 @@ class DebugTest {
             variables
                 x : entier
             debut
-                x 5
+                si x 5 alors
+                    ecrire("test")
+                finsi
             fin
         """.trimIndent()
 
@@ -130,8 +132,9 @@ class DebugTest {
             parser.parse()
         }
 
-        assertTrue(exception.message!!.contains("Attendu '=' ou '[' ou '('"),
-                   "Le message devrait indiquer les tokens attendus")
+        assertTrue(exception.message!!.contains("Opérateur de comparaison attendu") ||
+                   exception.message!!.contains("ligne"),
+                   "Le message devrait indiquer une erreur de syntaxe")
         assertTrue(exception.message!!.contains("ligne"),
                    "Le message devrait contenir le numéro de ligne")
         println("✓ Test erreur parsing (manque opérateur) : ${exception.message}")

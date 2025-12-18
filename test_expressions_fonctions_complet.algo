@@ -1,0 +1,64 @@
+algorithme TestExpressionsFonctions
+variables
+    a, b, c, x, y : réel
+debut
+    a = 4
+    b = 5
+    c = -3
+
+    ecrireln("=== Tests d'expressions commençant par des fonctions ===")
+    ecrireln()
+
+    // Test 1: Fonction + addition
+    ecrireln("Test 1: racine(a) + b")
+    x = racine(a) + b
+    ecrireln("Dans affectation: ", x)
+    racine(a) + b
+    ecrireln()
+
+    // Test 2: Fonction + multiplication
+    ecrireln("Test 2: abs(c) * 2")
+    x = abs(c) * 2
+    ecrireln("Dans affectation: ", x)
+    abs(c) * 2
+    ecrireln()
+
+    // Test 3: Fonction puissance
+    ecrireln("Test 3: puissance(2, 3) + 1")
+    x = puissance(2, 3) + 1
+    ecrireln("Dans affectation: ", x)
+    puissance(2, 3) + 1
+    ecrireln()
+
+    // Test 4: Combinaison de fonctions
+    ecrireln("Test 4: racine(16) * abs(-2)")
+    x = racine(16) * abs(-2)
+    ecrireln("Dans affectation: ", x)
+    racine(16) * abs(-2)
+    ecrireln()
+
+    // Test 5: Expression complexe
+    ecrireln("Test 5: puissance(2, 3) + racine(16) - abs(c)")
+    x = puissance(2, 3) + racine(16) - abs(c)
+    ecrireln("Dans affectation: ", x)
+    puissance(2, 3) + racine(16) - abs(c)
+    ecrireln()
+
+    // Test 6: Fonction avec comparaison
+    ecrireln("Test 6: abs(c) == 3")
+    si abs(c) == 3 alors
+        ecrireln("abs(-3) est bien égal à 3")
+    finsi
+    abs(c) == 3
+    ecrireln()
+
+    // Test 7: Division et modulo
+    ecrireln("Test 7: puissance(2, 4) div 3")
+    x = puissance(2, 4) div 3
+    ecrireln("Dans affectation: ", x)
+    puissance(2, 4) div 3
+    ecrireln()
+
+    ecrireln("=== Tous les tests réussis! ===")
+fin
+

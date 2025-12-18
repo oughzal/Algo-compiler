@@ -2,6 +2,137 @@
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
 
+## [1.8.1] - 2025-12-18
+
+### ⚡ Nouvelle Fonctionnalité Majeure
+
+#### Évaluation en Court-Circuit (Short-Circuit)
+- ✅ Les opérateurs logiques `et` et `ou` utilisent maintenant l'évaluation en court-circuit
+- ✅ **Pour `et`** : Si le premier opérande est faux, le second n'est **pas évalué**
+- ✅ **Pour `ou`** : Si le premier opérande est vrai, le second n'est **pas évalué**
+- ✅ Améliore les **performances** (évite des calculs inutiles)
+- ✅ Améliore la **sécurité** (évite les erreurs d'exécution)
+- ✅ Cohérent avec les langages modernes (Kotlin, Java, C++, Python, etc.)
+
+**Exemples :**
+```algo
+// Éviter une division par zéro avec ET
+x = 0
+resultat = (x == 1) et (10 / x > 0)  // Pas d'erreur !
+
+// Éviter une division par zéro avec OU
+resultat = (x == 0) ou (10 / x > 0)  // Pas d'erreur !
+
+// Vérification sécurisée d'accès à un tableau
+si (index >= 0) et (index < 10) et (tab[index] > 5) alors
+    // Pas d'erreur hors limites si index est invalide
+finsi
+```
+
+**Avantages :**
+- 🚀 Code plus rapide (calculs évités quand non nécessaires)
+- 🛡️ Code plus sûr (prévention des erreurs)
+- 📝 Code plus expressif et naturel
+
+**Documentation complète :** [EVALUATION_COURT_CIRCUIT.md](https://github.com/oughzal/Algo-compiler/blob/main/EVALUATION_COURT_CIRCUIT.md)
+
+---
+
+## [1.8.0] - 2025-12-14
+
+### 🚀 Fonctionnalités Majeures
+
+#### 🔄 Passage par Référence
+- ✅ Nouveau mot-clé `ref` pour passer des paramètres par référence
+- ✅ Syntaxe : `procedure nom(ref param : type)`
+- ✅ Permet de modifier directement les variables passées en argument
+- ✅ Exemple : `procedure echanger(ref a : entier, ref b : entier)`
+- ✅ Snippets ajoutés : `procref`, `foncref`, `echanger`
+
+**Exemple :**
+```algo
+procedure echanger(ref a : entier, ref b : entier)
+variables
+    temp : entier
+debut
+    temp = a
+    a = b
+    b = temp
+fin
+
+variables
+    x, y : entier
+debut
+    x = 10
+    y = 20
+    echanger(x, y)  // x = 20, y = 10
+fin
+```
+
+#### 🌍 Variables Globales
+- ✅ Les fonctions/procédures peuvent accéder aux variables de l'algorithme principal
+- ✅ Modification directe des variables globales possible
+- ✅ Variables locales masquent temporairement les globales
+- ✅ Portée des variables conforme aux conventions pédagogiques
+
+**Exemple :**
+```algo
+variables
+    compteur : entier
+
+procedure incrementer()
+debut
+    compteur = compteur + 1  // Modifie la variable globale
+fin
+
+debut
+    compteur = 0
+    incrementer()  // compteur = 1
+fin
+```
+
+#### ✅ Expressions avec Fonctions Améliorées
+- ✅ Support des expressions commençant par des appels de fonction
+- ✅ Exemple : `racine(16) + abs(-5)` fonctionne maintenant correctement
+- ✅ Gestion correcte de tous les opérateurs après appel de fonction
+
+### 📝 Documentation
+- Ajout de `PASSAGE_REFERENCE.md`
+- Ajout de `VARIABLES_GLOBALES_FONCTIONS.md`
+- Mise à jour complète du README avec exemples
+
+### 🧪 Tests
+- 8 nouveaux tests unitaires ajoutés
+- Tests d'intégration pour passage par référence
+- Tests de portée des variables
+
+## [1.7.7] - 2025-12-14
+
+### ✨ Nouvelles Fonctionnalités
+
+#### 🎯 Expressions Seules avec Affichage Automatique
+
+- ✅ Support des expressions seules qui affichent automatiquement leur résultat
+- ✅ Format d'affichage : `expression = résultat`
+- ✅ Exemple : `a + b` affiche `a + b = 13` (où a=7, b=6)
+- ✅ Fonctionne avec variables, nombres, fonctions et expressions complexes
+- ✅ Gestion intelligente des parenthèses selon la priorité des opérateurs
+- ✅ Idéal pour le débogage et les tests rapides
+
+**Exemples :**
+```algo
+a + b              // a + b = 13
+(a + b) * 2        // (a + b) * 2 = 26
+max(a, b)          // max(a, b) = 7
+5 + 3              // 5 + 3 = 8
+```
+
+### 📝 Documentation
+
+- Ajout de `EXPRESSIONS_SEULES.md` avec documentation complète
+- Mise à jour du README et HELP avec exemples
+- Fichiers de test et exemples créés
+
 ## [1.7.6] - 2025-12-11
 
 ### 🎨 Amélioration de la Coloration Syntaxique

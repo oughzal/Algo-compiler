@@ -1,0 +1,22 @@
+algorithme TestMemoire
+variables
+    i, somme : entier
+debut
+    somme = 0
+    pour i de 1 à 100 faire
+        somme = somme + i
+    finpour
+
+    ecrireln("Somme de 1 à 100 : ", somme)
+
+    // Test expression standalone
+    somme * 2
+
+    // Test condition
+    si somme == 5050 alors
+        ecrireln("✓ Calcul correct!")
+    sinon
+        ecrireln("✗ Erreur de calcul")
+    finsi
+fin
+

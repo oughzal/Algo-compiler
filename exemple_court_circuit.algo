@@ -1,0 +1,126 @@
+algorithme ExempleCourtCircuitPratique
+variables
+    nombres : tableau[10] de entier
+    recherche : entier
+    position : entier
+    trouve : booleen
+    compte : entier
+
+// Fonction qui simule un calcul coûteux
+fonction calculComplexe(n : entier) : entier
+debut
+    ecrireln("  [Calcul complexe appelé pour ", n, "]")
+    retourner n * n
+fin
+
+debut
+    ecrireln("=== Démonstration de l'évaluation en court-circuit ===")
+    ecrireln()
+
+    // Initialisation du tableau
+    ecrireln("1. Initialisation du tableau")
+    pour i de 0 à 9 faire
+        nombres[i] = i + 1
+    finpour
+    ecrire("   Tableau : ")
+    pour i de 0 à 9 faire
+        ecrire(nombres[i], " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // Test 1 : Recherche sécurisée avec vérification d'index
+    ecrireln("2. Recherche sécurisée avec ET")
+    recherche = 5
+    position = 0
+    trouve = faux
+
+    tantque (position < 10) et (non trouve) faire
+        si nombres[position] == recherche alors
+            trouve = vrai
+        sinon
+            position = position + 1
+        finsi
+    fintantque
+
+    si trouve alors
+        ecrireln("   Nombre ", recherche, " trouvé à l'index ", position)
+    sinon
+        ecrireln("   Nombre ", recherche, " non trouvé")
+    finsi
+    ecrireln()
+
+    // Test 2 : Éviter les calculs inutiles avec OU
+    ecrireln("3. Optimisation avec OU (court-circuit)")
+    compte = 0
+
+    ecrireln("   Test avec premier opérande VRAI (calcul évité) :")
+    si (compte == 0) ou (calculComplexe(100) > 50) alors
+        ecrireln("   -> Condition vraie (calculComplexe non appelé)")
+    finsi
+    ecrireln()
+
+    ecrireln("   Test avec premier opérande FAUX (calcul effectué) :")
+    si (compte == 1) ou (calculComplexe(100) > 50) alors
+        ecrireln("   -> Condition vraie (calculComplexe appelé)")
+    finsi
+    ecrireln()
+
+    // Test 3 : Protection contre les erreurs avec ET
+    ecrireln("4. Protection contre division par zéro avec ET")
+    pour i de -2 à 2 faire
+        ecrire("   i = ", i, " : ")
+
+        // Sans court-circuit, ceci causerait une erreur quand i = 0
+        // Avec court-circuit, 100 / i n'est évalué que si i <> 0 est vrai
+        si (i <> 0) et (100 / i > 10) alors
+            ecrireln("100 / ", i, " > 10")
+        sinon
+            si i == 0 alors
+                ecrireln("Division par zéro évitée grâce au court-circuit")
+            sinon
+                ecrireln("100 / ", i, " <= 10")
+            finsi
+        finsi
+    finpour
+    ecrireln()
+
+    // Test 4 : Vérifications en cascade
+    ecrireln("5. Vérifications en cascade sécurisées")
+    position = 15  // Index hors limites
+
+    ecrire("   Position ", position, " : ")
+    si (position >= 0) et (position < 10) et (nombres[position] > 5) alors
+        ecrireln("Valeur > 5")
+    sinon
+        ecrireln("Index invalide ou valeur <= 5")
+    finsi
+
+    position = 7  // Index valide
+    ecrire("   Position ", position, " : ")
+    si (position >= 0) et (position < 10) et (nombres[position] > 5) alors
+        ecrireln("Valeur = ", nombres[position], " > 5")
+    sinon
+        ecrireln("Index invalide ou valeur <= 5")
+    finsi
+    ecrireln()
+
+    // Test 5 : Combinaison ET et OU
+    ecrireln("6. Combinaison complexe ET / OU")
+    pour i de 0 à 9 faire
+        // Vérifie si le nombre est pair OU (impair ET > 5)
+        // Court-circuit : si i % 2 == 0 (pair), le reste n'est pas évalué
+        si (nombres[i] mod 2 == 0) ou ((nombres[i] mod 2 == 1) et (nombres[i] > 5)) alors
+            ecrireln("   ", nombres[i], " satisfait la condition")
+        finsi
+    finpour
+    ecrireln()
+
+    ecrireln("=== Fin de la démonstration ===")
+    ecrireln()
+    ecrireln("Points clés :")
+    ecrireln("- ET : si premier faux -> second non évalué")
+    ecrireln("- OU : si premier vrai -> second non évalué")
+    ecrireln("- Améliore performances et sécurité")
+fin
+

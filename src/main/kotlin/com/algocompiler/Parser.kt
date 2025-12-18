@@ -194,7 +194,7 @@ class Parser(private val tokens: List<Token>) {
         expect(TokenType.PAREN_GAUCHE)
 
         val parameters = mutableListOf<VariableDeclaration>()
-        if (current().type == TokenType.IDENTIFICATEUR) {
+        if (current().type == TokenType.IDENTIFICATEUR || current().type == TokenType.VAR) {
             parameters.add(parseParameter())
             while (current().type == TokenType.VIRGULE) {
                 advance()
@@ -247,6 +247,13 @@ class Parser(private val tokens: List<Token>) {
     }
 
     private fun parseParameter(): VariableDeclaration {
+        // Vérifier si c'est un passage par référence (var, ref, reference)
+        var isByReference = false
+        if (current().type == TokenType.VAR) {
+            isByReference = true
+            advance()
+        }
+
         val name = expect(TokenType.IDENTIFICATEUR).value
         expect(TokenType.DEUX_POINTS)
 
@@ -279,7 +286,7 @@ class Parser(private val tokens: List<Token>) {
                 }
         advance()
 
-        return VariableDeclaration(name, type, if (isArray) arraySize else null, null, null)
+        return VariableDeclaration(name, type, if (isArray) arraySize else null, null, null, isByReference)
     }
 
     private fun parseStatement(): Statement {
@@ -296,6 +303,12 @@ class Parser(private val tokens: List<Token>) {
             TokenType.ECRIRELN -> parseWriteLnStatement()
             TokenType.LIRE -> parseReadStatement()
             TokenType.RETOURNER -> parseReturnStatement()
+            // Support pour les expressions seules (nombres, parenthèses, etc.)
+            TokenType.NOMBRE, TokenType.PAREN_GAUCHE, TokenType.MOINS, TokenType.PLUS -> {
+                val startToken = current()
+                val expr = parseExpression()
+                ExpressionStatement(expr, startToken.line)
+            }
             else ->
                     error("Instruction invalide '${current().value}'")
         }
@@ -331,6 +344,8 @@ class Parser(private val tokens: List<Token>) {
                 }
             }
             TokenType.PAREN_GAUCHE -> {
+                // Sauvegarder la position avant de parser l'appel de fonction
+                val savedPos = pos
                 advance()
                 val arguments = mutableListOf<Expression>()
                 if (current().type != TokenType.PAREN_DROITE) {
@@ -341,12 +356,37 @@ class Parser(private val tokens: List<Token>) {
                     }
                 }
                 expect(TokenType.PAREN_DROITE)
-                FunctionCall(name, arguments, startToken.line)
+
+                // Vérifier si c'est un appel de fonction seul ou une expression plus complexe
+                // Si le token suivant est un opérateur, c'est une expression standalone
+                if (current().type in listOf(TokenType.PLUS, TokenType.MOINS, TokenType.MULT,
+                                              TokenType.DIV, TokenType.DIV_ENTIERE, TokenType.MOD,
+                                              TokenType.PUISSANCE, TokenType.EGAL, TokenType.DIFFERENT,
+                                              TokenType.INFERIEUR, TokenType.SUPERIEUR,
+                                              TokenType.INFERIEUR_EGAL, TokenType.SUPERIEUR_EGAL,
+                                              TokenType.ET, TokenType.OU)) {
+                    // C'est une expression complexe, reculer et re-parser complètement
+                    // Revenir à l'identificateur
+                    pos = savedPos - 1
+                    val expr = parseExpression()
+                    ExpressionStatement(expr, startToken.line)
+                } else {
+                    // C'est juste un appel de fonction (statement)
+                    FunctionCall(name, arguments, startToken.line)
+                }
             }
-            else ->
-                    error("Attendu '=' ou '[' ou '(' après l'identificateur")
+            // Si ce n'est ni une affectation, ni un accès tableau, ni un appel de fonction
+            // C'est une expression seule qui commence par un identificateur
+            else -> {
+                // Reculer d'un token pour re-parser comme expression complète
+                pos--
+                val expr = parseExpression()
+                ExpressionStatement(expr, startToken.line)
+            }
         }
     }
+
+
 
     private fun parseReturnStatement(): ReturnStatement {
         expect(TokenType.RETOURNER)

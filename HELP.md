@@ -61,6 +61,41 @@ ecrire("Bonjour ", nom)   // pas de \n
 ecrireln("Fin")
 ```
 
+Expressions Seules (Affichage Automatique)
+
+Vous pouvez écrire une expression sur une ligne, sans affectation, et le résultat sera automatiquement affiché au format `expression = résultat`.
+
+**Syntaxe** :
+```
+variables
+    a, b : entier
+debut
+    a = 7
+    b = 6
+    a + b    // Affiche: a + b = 13
+fin
+```
+
+**Exemples** :
+```
+// Expressions avec variables
+a + b              // a + b = 13
+a * b              // a * b = 42
+
+// Expressions avec parenthèses
+(a + b) * 2        // (a + b) * 2 = 26
+
+// Expressions avec fonctions
+max(a, b)          // max(a, b) = 7
+racine(16)         // racine(16) = 4
+
+// Expressions numériques directes
+5 + 3              // 5 + 3 = 8
+2 ^ 8              // 2 ^ 8 = 256
+```
+
+**Note** : Les expressions seules n'affectent pas les variables. Pour stocker un résultat, utilisez l'affectation (`resultat = a + b`).
+
 Caractères
 
 - Assignation : `lettre := 'A'`
@@ -206,9 +241,55 @@ Opérateurs
 - Puissance : `^` et `**` (alias). L'alias `^` et `**` sont supportés et `^` est recommandé pour la lisibilité.
 
 **Logiques** :
-- `et` : ET logique
-- `ou` : OU logique
+- `et` : ET logique (avec évaluation en court-circuit)
+- `ou` : OU logique (avec évaluation en court-circuit)
 - `non` : NON logique
+
+**Évaluation en court-circuit (Short-Circuit)** :
+
+Les opérateurs `et` et `ou` utilisent l'évaluation en court-circuit, comme dans Kotlin :
+
+1. **Pour `et` (AND)** : Si le premier opérande est **faux**, le second n'est **pas évalué**.
+   ```algo
+   x = 0
+   resultat = (x == 1) et (10 / x > 0)  // Pas d'erreur de division par zéro !
+   // Explication : x == 1 est faux, donc 10 / x n'est jamais évalué
+   ```
+
+2. **Pour `ou` (OR)** : Si le premier opérande est **vrai**, le second n'est **pas évalué**.
+   ```algo
+   x = 1
+   resultat = (x == 1) ou (10 / 0 > 0)  // Pas d'erreur de division par zéro !
+   // Explication : x == 1 est vrai, donc 10 / 0 n'est jamais évalué
+   ```
+
+**Avantages** :
+- Évite des erreurs d'exécution inutiles
+- Améliore les performances (ne calcule que ce qui est nécessaire)
+- Permet des conditions plus sûres
+
+**Exemple pratique** :
+```algo
+algorithme ExempleCourtCircuit
+variables
+    tab : tableau[5] de entier
+    index : entier
+debut
+    // Initialiser le tableau
+    pour i de 0 à 4 faire
+        tab[i] = i * 10
+    finpour
+    
+    // Vérification sécurisée avec court-circuit
+    index = 10
+    si (index >= 0) et (index < 5) et (tab[index] == 30) alors
+        ecrireln("Valeur trouvée")
+    sinon
+        ecrireln("Index hors limites ou valeur non trouvée")
+    finsi
+    // Pas d'erreur : dès que (index < 5) est faux, tab[index] n'est pas évalué
+fin
+```
 
 **Comparaison** : 
 - `==`, `<>`, `!=`, `<`, `>`, `<=`, `>=`

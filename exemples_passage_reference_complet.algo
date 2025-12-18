@@ -1,0 +1,135 @@
+algorithme ExemplesPassageReference
+variables
+    a, b, c : entier
+    T : tableau[5] de entier
+    i : entier
+    min, max, somme, moyenne : entier
+
+// Exemple 1: Tri de 3 valeurs
+procedure trier3(ref x : entier, ref y : entier, ref z : entier)
+variables
+    temp : entier
+debut
+    // Trier x et y
+    si x > y alors
+        temp = x
+        x = y
+        y = temp
+    finsi
+
+    // Trier y et z
+    si y > z alors
+        temp = y
+        y = z
+        z = temp
+    finsi
+
+    // Retrier x et y si nécessaire
+    si x > y alors
+        temp = x
+        x = y
+        y = temp
+    finsi
+fin
+
+// Exemple 2: Division euclidienne
+procedure divEuclidienne(dividende : entier, diviseur : entier, ref quotient : entier, ref reste : entier)
+debut
+    quotient = dividende div diviseur
+    reste = dividende mod diviseur
+fin
+
+// Exemple 3: Statistiques sur tableau
+procedure calculerStats(T : tableau de entier, taille : entier, ref min : entier, ref max : entier, ref somme : entier, ref moyenne : entier)
+variables
+    i : entier
+debut
+    min = T[0]
+    max = T[0]
+    somme = 0
+
+    pour i de 0 à taille - 1 faire
+        si T[i] < min alors
+            min = T[i]
+        finsi
+        si T[i] > max alors
+            max = T[i]
+        finsi
+        somme = somme + T[i]
+    finpour
+
+    moyenne = somme div taille
+fin
+
+// Exemple 4: Initialisation de tableau
+procedure remplirTableau(ref T : tableau de entier, taille : entier, valeur : entier)
+variables
+    i : entier
+debut
+    pour i de 0 à taille - 1 faire
+        T[i] = valeur
+    finpour
+fin
+
+// Exemple 5: Incrémenter et retourner l'ancienne valeur
+fonction postIncrement(ref n : entier) : entier
+variables
+    ancien : entier
+debut
+    ancien = n
+    n = n + 1
+    retourner ancien
+fin
+
+debut
+    ecrireln("=== EXEMPLES PASSAGE PAR RÉFÉRENCE ===")
+    ecrireln()
+
+    // Test 1: Tri de 3 valeurs
+    ecrireln("--- Test 1: Tri de 3 valeurs ---")
+    a = 30
+    b = 10
+    c = 20
+    ecrireln("Avant tri: a=", a, ", b=", b, ", c=", c)
+    trier3(a, b, c)
+    ecrireln("Après tri: a=", a, ", b=", b, ", c=", c)
+    ecrireln()
+
+    // Test 2: Division euclidienne
+    ecrireln("--- Test 2: Division euclidienne ---")
+    divEuclidienne(17, 5, a, b)
+    ecrireln("17 div 5 = ", a, " reste ", b)
+    ecrireln()
+
+    // Test 3: Initialisation de tableau
+    ecrireln("--- Test 3: Initialisation de tableau ---")
+    remplirTableau(T, 5, 0)
+    T[0] = 5
+    T[1] = 12
+    T[2] = 3
+    T[3] = 18
+    T[4] = 7
+    ecrireln("Tableau: ", T)
+    ecrireln()
+
+    // Test 4: Statistiques
+    ecrireln("--- Test 4: Statistiques ---")
+    calculerStats(T, 5, min, max, somme, moyenne)
+    ecrireln("Min: ", min)
+    ecrireln("Max: ", max)
+    ecrireln("Somme: ", somme)
+    ecrireln("Moyenne: ", moyenne)
+    ecrireln()
+
+    // Test 5: Post-incrément
+    ecrireln("--- Test 5: Post-incrément ---")
+    a = 10
+    ecrireln("a = ", a)
+    b = postIncrement(a)
+    ecrireln("Valeur retournée: ", b)
+    ecrireln("Nouvelle valeur de a: ", a)
+    ecrireln()
+
+    ecrireln("=== TOUS LES TESTS RÉUSSIS ===")
+fin
+

@@ -1,0 +1,25 @@
+algorithme TestColorationPas
+// Test de la coloration syntaxique du mot-clé 'pas'
+
+variables
+    i : entier
+
+debut
+    // Le mot-clé 'pas' devrait être coloré en tant que keyword
+
+    // Exemple 1 : pas positif
+    pour i de 0 à 20 pas 2 faire
+        ecrire(i, " ")
+    finpour
+
+    // Exemple 2 : pas négatif
+    pour i de 10 à 0 pas -1 faire
+        ecrire(i, " ")
+    finpour
+
+    // Exemple 3 : pas avec expression
+    pour i de 0 à 100 pas (5 * 2) faire
+        ecrire(i, " ")
+    finpour
+fin
+

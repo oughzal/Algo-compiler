@@ -1,0 +1,23 @@
+algorithme TestFonctionExpression
+variables
+    a, b, resultat : réel
+debut
+    a = 4
+    b = 5
+
+    ecrireln("Test 1: racine(a) + b")
+    resultat = racine(a) + b
+    ecrireln("Résultat: ", resultat)
+
+    ecrireln("Test 2: abs(-3) * 2")
+    resultat = abs(-3) * 2
+    ecrireln("Résultat: ", resultat)
+
+    ecrireln("Test 3: puissance(2, 3) + 1")
+    resultat = puissance(2, 3) + 1
+    ecrireln("Résultat: ", resultat)
+
+    ecrireln("Test 4: Expression standalone")
+    racine(a) + b
+fin
+

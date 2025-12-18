@@ -164,6 +164,141 @@ class Interpreter {
                             else null
                     )
             is FunctionCall -> executeFunctionCall(statement.name, statement.arguments)
+            is ExpressionStatement -> executeExpressionStatement(statement)
+        }
+    }
+
+    private fun executeExpressionStatement(exprStmt: ExpressionStatement) {
+        // Évaluer l'expression
+        val result = evaluateExpression(exprStmt.expression)
+
+        // Convertir l'expression en texte avec valeurs substituées
+        val exprWithValues = expressionToStringWithValues(exprStmt.expression)
+
+        // Afficher : expression avec valeurs = résultat
+        println("$exprWithValues = ${formatValue(result)}")
+    }
+
+    private fun expressionToString(expr: Expression, parentPrecedence: Int = 0): String {
+        return when (expr) {
+            is NumberLiteral -> expr.value.let {
+                if (it == it.toLong().toDouble()) it.toLong().toString() else it.toString()
+            }
+            is StringLiteral -> "\"${expr.value}\""
+            is CharLiteral -> "'${expr.value}'"
+            is BooleanLiteral -> if (expr.value) "vrai" else "faux"
+            is Variable -> expr.name
+            is ArrayAccess -> "${expr.name}[${expressionToString(expr.index)}]"
+            is MatrixAccess -> "${expr.name}[${expressionToString(expr.index1)}][${expressionToString(expr.index2)}]"
+            is FunctionCallExpression -> {
+                val args = expr.arguments.joinToString(", ") { expressionToString(it) }
+                "${expr.name}($args)"
+            }
+            is BinaryOp -> {
+                val precedence = getOperatorPrecedence(expr.operator)
+                val needsParens = precedence < parentPrecedence
+
+                val left = expressionToString(expr.left, precedence)
+                val right = expressionToString(expr.right, precedence + 1)
+                val result = "$left ${expr.operator} $right"
+
+                if (needsParens) "($result)" else result
+            }
+            is UnaryOp -> {
+                val operand = expressionToString(expr.operand, 100)
+                "${expr.operator}$operand"
+            }
+            is ConditionalExpression ->
+                "si ${expressionToString(expr.condition)} alors ${expressionToString(expr.thenValue)} sinon ${expressionToString(expr.elseValue)}"
+            is ArrayLiteral -> {
+                val elements = expr.elements.joinToString(", ") { expressionToString(it) }
+                "[$elements]"
+            }
+        }
+    }
+
+    private fun expressionToStringWithValues(expr: Expression, parentPrecedence: Int = 0): String {
+        return when (expr) {
+            is NumberLiteral -> expr.value.let {
+                if (it == it.toLong().toDouble()) it.toLong().toString() else it.toString()
+            }
+            is StringLiteral -> "\"${expr.value}\""
+            is CharLiteral -> "'${expr.value}'"
+            is BooleanLiteral -> if (expr.value) "vrai" else "faux"
+            is Variable -> {
+                val normalizedName = normalize(expr.name)
+                val value = variables[normalizedName] ?: constants.firstOrNull { normalize(it) == normalizedName }?.let { variables[it] }
+                formatValueForExpression(value)
+            }
+            is ArrayAccess -> {
+                try {
+                    val value = evaluateExpression(expr)
+                    formatValueForExpression(value)
+                } catch (_: Exception) {
+                    "${expr.name}[${expressionToStringWithValues(expr.index)}]"
+                }
+            }
+            is MatrixAccess -> {
+                try {
+                    val value = evaluateExpression(expr)
+                    formatValueForExpression(value)
+                } catch (_: Exception) {
+                    "${expr.name}[${expressionToStringWithValues(expr.index1)}][${expressionToStringWithValues(expr.index2)}]"
+                }
+            }
+            is FunctionCallExpression -> {
+                val args = expr.arguments.joinToString(", ") { expressionToStringWithValues(it) }
+                "${expr.name}($args)"
+            }
+            is BinaryOp -> {
+                val precedence = getOperatorPrecedence(expr.operator)
+                val needsParens = precedence < parentPrecedence
+
+                val left = expressionToStringWithValues(expr.left, precedence)
+                val right = expressionToStringWithValues(expr.right, precedence + 1)
+                val result = "$left ${expr.operator} $right"
+
+                if (needsParens) "($result)" else result
+            }
+            is UnaryOp -> {
+                val operand = expressionToStringWithValues(expr.operand, 100)
+                "${expr.operator}$operand"
+            }
+            is ConditionalExpression ->
+                "si ${expressionToStringWithValues(expr.condition)} alors ${expressionToStringWithValues(expr.thenValue)} sinon ${expressionToStringWithValues(expr.elseValue)}"
+            is ArrayLiteral -> {
+                val elements = expr.elements.joinToString(", ") { expressionToStringWithValues(it) }
+                "[$elements]"
+            }
+        }
+    }
+
+    private fun formatValueForExpression(value: Any?): String {
+        return when (value) {
+            is Double -> if (value == value.toLong().toDouble()) value.toLong().toString() else value.toString()
+            is Int -> value.toString()
+            is Long -> value.toString()
+            is String -> "\"$value\""
+            is Char -> "'$value'"
+            is Boolean -> if (value) "vrai" else "faux"
+            is List<*> -> {
+                val elements = value.joinToString(", ") { formatValueForExpression(it) }
+                "[$elements]"
+            }
+            null -> "null"
+            else -> value.toString()
+        }
+    }
+
+    private fun getOperatorPrecedence(op: String): Int {
+        return when (op) {
+            "ou" -> 1
+            "et" -> 2
+            "==", "<>", "!=", "<", ">", "<=", ">=" -> 3
+            "+", "-" -> 4
+            "*", "/", "div", "mod", "%" -> 5
+            "^", "**" -> 6
+            else -> 0
         }
     }
 
@@ -483,17 +618,38 @@ class Interpreter {
 
         val function = functions[normalizedName] ?: runtimeError("Fonction '$name' non définie")
 
-        // Save current variable context
-        val savedVariables = variables.toMap()
+        // Sauvegarder seulement les paramètres et variables locales de la fonction
+        // Les autres variables (globales) restent accessibles et modifiables
+        val localVariablesBackup = mutableMapOf<String, Any?>()
+        val referenceMap = mutableMapOf<String, String>()
 
         // Initialize function parameters
         for ((i, param) in function.parameters.withIndex()) {
+            val paramName = normalize(param.name)
+
+            // Sauvegarder si une variable de ce nom existe déjà
+            if (variables.containsKey(paramName)) {
+                localVariablesBackup[paramName] = variables[paramName]
+            }
+
             if (i < arguments.size) {
-                val argValue = evaluateExpression(arguments[i])
-                if (param.arraySize != null) {
-                    variables[normalize(param.name)] = argValue
+                if (param.isByReference) {
+                    // Passage par référence
+                    val arg = arguments[i]
+                    if (arg is Variable) {
+                        val originalVarName = normalize(arg.name)
+                        referenceMap[paramName] = originalVarName
+                        variables[paramName] = variables[originalVarName] ?: runtimeError("Variable '${arg.name}' non définie")
+                    } else if (arg is ArrayAccess) {
+                        val arrayName = normalize(arg.name)
+                        referenceMap[paramName] = arrayName
+                        variables[paramName] = variables[arrayName] ?: runtimeError("Tableau '${arg.name}' non défini")
+                    } else {
+                        runtimeError("Le passage par référence nécessite une variable, pas une expression")
+                    }
                 } else {
-                    variables[normalize(param.name)] = argValue
+                    // Passage par valeur
+                    variables[paramName] = evaluateExpression(arguments[i])
                 }
             } else {
                 initializeVariable(param)
@@ -502,6 +658,11 @@ class Interpreter {
 
         // Initialize function local variables
         for (varDecl in function.variables) {
+            val varName = normalize(varDecl.name)
+            // Sauvegarder si une variable de ce nom existe déjà
+            if (variables.containsKey(varName)) {
+                localVariablesBackup[varName] = variables[varName]
+            }
             initializeVariable(varDecl)
         }
 
@@ -515,9 +676,31 @@ class Interpreter {
             returnValue = e.value
         }
 
-        // Restore variable context
-        variables.clear()
-        variables.putAll(savedVariables)
+        // Mettre à jour les variables passées par référence
+        for ((paramName, originalVarName) in referenceMap) {
+            variables[originalVarName] = variables[paramName]!!
+        }
+
+        // Restaurer ou supprimer les variables locales
+        for ((varName, savedValue) in localVariablesBackup) {
+            if (savedValue != null) {
+                variables[varName] = savedValue
+            }
+        }
+
+        // Supprimer les nouvelles variables locales qui n'existaient pas avant
+        for (param in function.parameters) {
+            val paramName = normalize(param.name)
+            if (!localVariablesBackup.containsKey(paramName)) {
+                variables.remove(paramName)
+            }
+        }
+        for (varDecl in function.variables) {
+            val varName = normalize(varDecl.name)
+            if (!localVariablesBackup.containsKey(varName)) {
+                variables.remove(varName)
+            }
+        }
 
         return returnValue
     }
@@ -886,6 +1069,30 @@ class Interpreter {
     }
 
     private fun evaluateBinaryOp(binaryOp: BinaryOp): Any {
+        // Pour les opérateurs logiques ET et OU, implémenter l'évaluation en court-circuit
+        // comme dans Kotlin (short-circuit evaluation)
+        when (binaryOp.operator) {
+            "et" -> {
+                // Pour ET : si le premier opérande est faux, ne pas évaluer le second
+                val left = evaluateExpression(binaryOp.left)
+                if (!toBoolean(left)) {
+                    return false
+                }
+                val right = evaluateExpression(binaryOp.right)
+                return toBoolean(right)
+            }
+            "ou" -> {
+                // Pour OU : si le premier opérande est vrai, ne pas évaluer le second
+                val left = evaluateExpression(binaryOp.left)
+                if (toBoolean(left)) {
+                    return true
+                }
+                val right = evaluateExpression(binaryOp.right)
+                return toBoolean(right)
+            }
+        }
+
+        // Pour tous les autres opérateurs, évaluer les deux côtés
         val left = evaluateExpression(binaryOp.left)
         val right = evaluateExpression(binaryOp.right)
 
@@ -910,8 +1117,6 @@ class Interpreter {
             ">" -> compareLess(right, left)
             "<=" -> !compareLess(right, left)
             ">=" -> !compareLess(left, right)
-            "et" -> toBoolean(left) && toBoolean(right)
-            "ou" -> toBoolean(left) || toBoolean(right)
             else -> runtimeError("Opérateur invalide: ${binaryOp.operator}")
         }
     }

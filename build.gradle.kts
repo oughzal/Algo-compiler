@@ -29,6 +29,13 @@ tasks.jar {
 
 tasks.test {
     useJUnitPlatform()
+    // Augmenter la mémoire pour éviter les crashs
+    maxHeapSize = "2048m"
+    jvmArgs = listOf(
+        "-XX:MaxMetaspaceSize=512m",
+        "-XX:+HeapDumpOnOutOfMemoryError",
+        "-Xss2m"
+    )
 }
 
 kotlin {

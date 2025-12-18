@@ -39,7 +39,7 @@
                 },
                 {
                     "name": "keyword.declaration.algo",
-                    "match": "(?i)\\b(variables|var|constantes|const|fonction|procedure|procédure|tableau)\\b"
+                    "match": "(?i)\\b(variables|var|constantes|const|fonction|procedure|procédure|tableau|ref|reference|varref)\\b"
                 },
                 {
                     "name": "keyword.operator.logical.algo",

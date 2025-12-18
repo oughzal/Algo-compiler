@@ -17,6 +17,7 @@ data class VariableDeclaration(
     val arraySize: Int? = null,
     val arraySize2: Int? = null,
     val initialValue: Expression? = null,
+    val isByReference: Boolean = false,
     override val line: Int = 0
 ) : ASTNode(line)
 
@@ -101,6 +102,8 @@ data class ReadStatement(val targets: List<ReadTarget>, override val line: Int =
 data class ReturnStatement(val expression: Expression?, override val line: Int = 0) : Statement(line)
 
 data class FunctionCall(val name: String, val arguments: List<Expression>, override val line: Int = 0) : Statement(line)
+
+data class ExpressionStatement(val expression: Expression, override val line: Int = 0) : Statement(line)
 
 sealed class Expression(override val line: Int = 0) : ASTNode(line)
 

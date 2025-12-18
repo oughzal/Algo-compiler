@@ -1,0 +1,57 @@
+algorithme TestCourtCircuit
+variables
+    a, b, x : entier
+    resultat : booleen
+
+fonction divisionParZero(n : entier) : entier
+debut
+    ecrireln("ERREUR: Cette fonction ne devrait pas être appelée!")
+    retourner 10 / 0
+fin
+
+debut
+    // Test 1: ET avec premier opérande faux
+    // La fonction divisionParZero ne devrait PAS être appelée
+    a = 0
+    ecrireln("Test 1: a == 1 ET divisionParZero(5) == 5")
+    ecrireln("a = ", a)
+    resultat = (a == 1) et (divisionParZero(5) == 5)
+    ecrireln("Résultat: ", resultat)
+    ecrireln()
+
+    // Test 2: OU avec premier opérande vrai
+    // La fonction divisionParZero ne devrait PAS être appelée
+    b = 1
+    ecrireln("Test 2: b == 1 OU divisionParZero(5) == 5")
+    ecrireln("b = ", b)
+    resultat = (b == 1) ou (divisionParZero(5) == 5)
+    ecrireln("Résultat: ", resultat)
+    ecrireln()
+
+    // Test 3: ET avec premier opérande vrai (la fonction SERA appelée)
+    ecrireln("Test 3: a == 0 ET b == 1 (sans fonction)")
+    a = 0
+    b = 1
+    resultat = (a == 0) et (b == 1)
+    ecrireln("Résultat: ", resultat)
+    ecrireln()
+
+    // Test 4: OU avec premier opérande faux (le second est évalué)
+    ecrireln("Test 4: a == 1 OU b == 1")
+    a = 0
+    b = 1
+    resultat = (a == 1) ou (b == 1)
+    ecrireln("Résultat: ", resultat)
+    ecrireln()
+
+    // Test 5: Vérifier qu'avec ET, si le premier est faux, le reste n'est pas évalué
+    ecrireln("Test 5: Court-circuit avec division")
+    x = 0
+    resultat = (x == 1) et (10 / x > 0)
+    ecrireln("Pas d'erreur de division par zéro grâce au court-circuit!")
+    ecrireln("Résultat: ", resultat)
+    ecrireln()
+
+    ecrireln("Tous les tests de court-circuit sont passés avec succès!")
+fin
+

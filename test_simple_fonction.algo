@@ -1,0 +1,17 @@
+algorithme TestSimple
+variables
+    a, b, resultat : réel
+debut
+    a = 4
+    b = 5
+
+    ecrireln("Test: racine(a) + b")
+    resultat = racine(a) + b
+    ecrireln("Résultat affectation: ", resultat)
+
+    ecrireln("Test: expression standalone")
+    racine(a) + b
+
+    ecrireln("Fin du test")
+fin
+

@@ -1,0 +1,98 @@
+algorithme TestVariablesGlobales
+variables
+    x, y, resultat : entier
+    message : chaine
+    T : tableau[3] de entier
+
+procedure modifierGlobales()
+debut
+    x = 100
+    y = 200
+    message = "Modifié par la procédure"
+fin
+
+procedure incrementerX()
+debut
+    x = x + 1
+fin
+
+fonction doubleY() : entier
+debut
+    y = y * 2
+    retourner y
+fin
+
+procedure modifierTableau()
+variables
+    i : entier
+debut
+    pour i de 0 à 2 faire
+        T[i] = T[i] * 10
+    finpour
+fin
+
+procedure utiliserLocales()
+variables
+    x : entier
+debut
+    // x local masque x global
+    x = 999
+    ecrireln("x local dans la procédure: ", x)
+fin
+
+debut
+    ecrireln("=== TEST VARIABLES GLOBALES ===")
+    ecrireln()
+
+    // Test 1: Initialisation
+    ecrireln("--- Test 1: Initialisation ---")
+    x = 10
+    y = 20
+    message = "Initial"
+    ecrireln("x = ", x, ", y = ", y)
+    ecrireln("message = ", message)
+    ecrireln()
+
+    // Test 2: Modification par procédure
+    ecrireln("--- Test 2: Modification par procédure ---")
+    modifierGlobales()
+    ecrireln("Après modifierGlobales():")
+    ecrireln("x = ", x, ", y = ", y)
+    ecrireln("message = ", message)
+    ecrireln()
+
+    // Test 3: Incrémentation
+    ecrireln("--- Test 3: Incrémentation ---")
+    ecrireln("x avant = ", x)
+    incrementerX()
+    ecrireln("x après incrementerX() = ", x)
+    ecrireln()
+
+    // Test 4: Fonction modifiant et retournant
+    ecrireln("--- Test 4: Fonction modifiant global ---")
+    ecrireln("y avant = ", y)
+    resultat = doubleY()
+    ecrireln("Valeur retournée = ", resultat)
+    ecrireln("y après doubleY() = ", y)
+    ecrireln()
+
+    // Test 5: Modification de tableau
+    ecrireln("--- Test 5: Modification de tableau ---")
+    T[0] = 1
+    T[1] = 2
+    T[2] = 3
+    ecrireln("Tableau avant: ", T)
+    modifierTableau()
+    ecrireln("Tableau après modifierTableau(): ", T)
+    ecrireln()
+
+    // Test 6: Variable locale masquant globale
+    ecrireln("--- Test 6: Variable locale masquant globale ---")
+    ecrireln("x global avant = ", x)
+    utiliserLocales()
+    ecrireln("x global après (devrait être inchangé) = ", x)
+    ecrireln()
+
+    ecrireln("=== TOUS LES TESTS RÉUSSIS ===")
+fin
+

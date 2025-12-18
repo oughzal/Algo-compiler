@@ -8,6 +8,12 @@ Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu p
 
 ## Nouveautés importantes
 
+- **✨ NOUVEAU** : **Évaluation en court-circuit** : Les opérateurs `et` et `ou` utilisent maintenant l'évaluation en court-circuit (short-circuit) comme dans Kotlin - améliore les performances et évite les erreurs inutiles ([voir doc](EVALUATION_COURT_CIRCUIT.md))
+- **✨ NOUVEAU** : **Variables globales** : Les fonctions/procédures peuvent accéder et modifier les variables de l'algorithme principal ([voir doc](VARIABLES_GLOBALES_FONCTIONS.md))
+- **✨ NOUVEAU** : **Passage par référence** : Utilisez `ref` pour passer des paramètres par référence dans les fonctions/procédures (ex: `procedure echanger(ref a : entier, ref b : entier)`) ([voir doc](PASSAGE_REFERENCE.md))
+- **🔧 CORRIGÉ** : **Expressions avec fonctions** : Les expressions commençant par un appel de fonction fonctionnent maintenant correctement (ex: `racine(a) + b`) ([voir doc](CORRECTION_EXPRESSIONS_FONCTIONS.md))
+- **✨ NOUVEAU** : **Expressions seules** : Écrivez une expression sur une ligne et voyez automatiquement le résultat au format `expression = résultat` ([voir doc](EXPRESSIONS_SEULES.md))
+- **✨ NOUVEAU** : **Boucle avec pas** : `pour i de 0 à 20 pas 2 faire` - Support du pas (step) positif ou négatif dans les boucles
 - **✨ NOUVEAU** : **Matrices (tableaux 2D)** : `M : tableau[3][3] de entier` - Support complet des tableaux à deux dimensions ([voir doc](SUPPORT_MATRICES.md))
 - **✨ NOUVEAU** : **Opérateur puissance ^** : Alias pour `**` - Utilisez `2 ^ 3` ou `2 ** 3` (équivalents) ([voir doc](OPERATEUR_PUISSANCE_ALIAS.md))
 - **✨ NOUVEAU** : **Initialisation de variables** : `var a : entier = 5` - Déclarez et initialisez en une seule ligne ([voir doc](INITIALISATION_VARIABLES_TABLEAUX.md))
@@ -345,6 +351,41 @@ ecrire("Col1\tCol2\tCol3")
 
 // Écriture avec plusieurs valeurs (concaténation automatique)
 ecrire("x = ", x, ", y = ", y)
+```
+
+### Expressions Seules (Affichage Automatique)
+
+Vous pouvez écrire une **expression seule** sur une ligne, et le compilateur affichera automatiquement son résultat au format `expression = résultat`. C'est pratique pour le débogage et les tests rapides.
+
+```algocode
+variables
+    a, b : entier
+debut
+    a = 7
+    b = 6
+    
+    // Expression seule - affiche automatiquement
+    a + b              // Affiche: a + b = 13
+    
+    // Expressions avec opérateurs
+    a * b + 10         // Affiche: a * b + 10 = 52
+    
+    // Expressions avec parenthèses
+    (a + b) * 2        // Affiche: (a + b) * 2 = 26
+    
+    // Expressions avec fonctions
+    max(a, b)          // Affiche: max(a, b) = 7
+    racine(a * b)      // Affiche: racine(a * b) = 6.48...
+    
+    // Expressions numériques directes
+    5 + 3              // Affiche: 5 + 3 = 8
+    2 ^ 8              // Affiche: 2 ^ 8 = 256
+fin
+```
+
+**Note** : Les expressions seules n'affectent pas les variables, elles affichent uniquement le résultat. Pour stocker le résultat, utilisez l'affectation : `resultat = a + b`
+
+[📚 Documentation complète des expressions seules](EXPRESSIONS_SEULES.md)
 ```
 
 > Remarque : `ecrireln()` sans argument écrit simplement une ligne vide (saut de ligne).
@@ -1004,6 +1045,58 @@ Le dossier `examples/` contient de nombreux exemples pour vous aider à démarre
 **Séries d'exercices** :
 - `série01/` - Exercices de base
 - `série03/` - Exercices avancés
+
+## 🔧 Dépannage
+
+### Crashs de l'IDE / Erreurs de mémoire
+
+Si IntelliJ IDEA ou Gradle crash avec des erreurs `OutOfMemoryError` ou génère des fichiers `hs_err_*.log` :
+
+**✅ Solution** : Les configurations mémoire ont été optimisées. Si le problème persiste :
+
+1. **Vérifier les configurations** :
+   ```properties
+   # gradle.properties doit contenir :
+   org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError
+   kotlin.daemon.jvmargs=-Xmx2048m
+   ```
+
+2. **Redémarrer Gradle Daemon** :
+   ```bash
+   .\gradlew --stop
+   .\gradlew clean build
+   ```
+
+3. **Utiliser le script de vérification** :
+   ```bash
+   # Windows (Batch)
+   .\verifier-sante.bat
+   
+   # Windows (PowerShell)
+   .\verifier-sante.ps1
+   ```
+
+4. **Nettoyer les fichiers de crash** :
+   ```bash
+   Remove-Item -Path "hs_err_*.log" -Force
+   ```
+
+📖 **Documentation complète** : Voir [RESOLUTION_CRASHS_IDE.md](RESOLUTION_CRASHS_IDE.md) pour plus de détails.
+
+### Tests qui ne passent pas
+
+Si les tests échouent lors de la compilation :
+
+```bash
+# Nettoyer et recompiler
+.\gradlew clean test --info
+```
+
+### Configuration mémoire minimale
+
+- **RAM système** : 8 GB minimum (16 GB recommandé)
+- **Java Heap** : 2048m (configuré automatiquement)
+- **Java version** : JDK 21 requis
 
 ## Licence
 

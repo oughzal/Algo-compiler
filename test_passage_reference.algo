@@ -1,0 +1,66 @@
+algorithme TestPassageReference
+variables
+    x, y : entier
+    a, b : réel
+
+procedure echangerEntiers(ref val1 : entier, ref val2 : entier)
+variables
+    temp : entier
+debut
+    temp = val1
+    val1 = val2
+    val2 = temp
+fin
+
+procedure doublerValeur(ref n : entier)
+debut
+    n = n * 2
+fin
+
+fonction incrementer(ref n : entier) : entier
+variables
+    ancien : entier
+debut
+    ancien = n
+    n = n + 1
+    retourner ancien
+fin
+
+procedure initialiser(ref x : entier, ref y : entier, valX : entier, valY : entier)
+debut
+    x = valX
+    y = valY
+fin
+
+debut
+    ecrireln("=== Test 1: Échange de valeurs ===")
+    x = 10
+    y = 20
+    ecrireln("Avant échange: x = ", x, ", y = ", y)
+    echangerEntiers(x, y)
+    ecrireln("Après échange: x = ", x, ", y = ", y)
+    ecrireln()
+
+    ecrireln("=== Test 2: Doubler une valeur ===")
+    x = 5
+    ecrireln("Avant doublerValeur: x = ", x)
+    doublerValeur(x)
+    ecrireln("Après doublerValeur: x = ", x)
+    ecrireln()
+
+    ecrireln("=== Test 3: Incrémenter avec retour ===")
+    x = 100
+    ecrireln("x avant = ", x)
+    y = incrementer(x)
+    ecrireln("Valeur retournée = ", y)
+    ecrireln("x après = ", x)
+    ecrireln()
+
+    ecrireln("=== Test 4: Initialisation multiple ===")
+    initialiser(x, y, 42, 73)
+    ecrireln("Après initialisation: x = ", x, ", y = ", y)
+    ecrireln()
+
+    ecrireln("=== Tous les tests réussis! ===")
+fin
+
