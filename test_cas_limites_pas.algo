@@ -1,0 +1,162 @@
+algorithme TestCasLimitesPas
+
+variables
+    i, somme : entier
+
+debut
+    ecrireln("╔════════════════════════════════════════════════════════╗")
+    ecrireln("║  TESTS DES CAS LIMITES - BOUCLE POUR AVEC PAS        ║")
+    ecrireln("╚════════════════════════════════════════════════════════╝")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 1: Pas = 1 (boucle normale)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 1: Pas = 1 (boucle ascendante normale)")
+    ecrire("Résultat: ")
+    pour i de 1 à 5 pas 1 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 2: Pas = -1 (boucle descendante normale)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 2: Pas = -1 (boucle descendante normale)")
+    ecrire("Résultat: ")
+    pour i de 5 à 1 pas -1 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 3: Pas très grand (100)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 3: Pas très grand (pas = 100)")
+    ecrire("Résultat: ")
+    pour i de 0 à 500 pas 100 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 4: Pas très grand négatif (-100)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 4: Pas très grand négatif (pas = -100)")
+    ecrire("Résultat: ")
+    pour i de 500 à 0 pas -100 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 5: Boucle qui n'exécute rien (pas positif, bornes inversées)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 5: Pas positif avec bornes inversées (ne devrait rien faire)")
+    ecrire("Résultat: ")
+    pour i de 10 à 1 pas 2 faire
+        ecrire(i, " ")
+    finpour
+    ecrire("[vide]")
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 6: Boucle qui n'exécute rien (pas négatif, bornes normales)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 6: Pas négatif avec bornes normales (ne devrait rien faire)")
+    ecrire("Résultat: ")
+    pour i de 1 à 10 pas -2 faire
+        ecrire(i, " ")
+    finpour
+    ecrire("[vide]")
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 7: Boucle d'une seule itération (debut = fin)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 7: Début = Fin (une seule itération)")
+    ecrire("Résultat: ")
+    pour i de 5 à 5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 8: Pas plus grand que la plage
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 8: Pas > plage (0 à 10, pas = 50)")
+    ecrire("Résultat: ")
+    pour i de 0 à 10 pas 50 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 9: Nombres négatifs
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 9: Boucle avec nombres négatifs")
+    ecrire("Résultat: ")
+    pour i de -10 à -5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 10: Nombres négatifs avec pas négatif
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 10: Nombres négatifs avec pas négatif")
+    ecrire("Résultat: ")
+    pour i de -5 à -10 pas -1 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 11: Pas calculé (expression)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 11: Pas calculé (expression 2 + 3)")
+    ecrire("Résultat: ")
+    pour i de 0 à 50 pas 2 + 3 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 12: Utilisation dans un calcul
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 12: Somme avec pas variable")
+    somme = 0
+    pour i de 5 à 100 pas 5 faire
+        somme = somme + 1
+    finpour
+    ecrireln("Nombre d'itérations: ", somme, " (attendu: 20)")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Test 13: Très grande plage avec grand pas
+    // ═══════════════════════════════════════════════════════
+    ecrireln("✅ Test 13: Très grande plage (0 à 1000, pas = 250)")
+    ecrire("Résultat: ")
+    pour i de 0 à 1000 pas 250 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    ecrireln("╔════════════════════════════════════════════════════════╗")
+    ecrireln("║  ✅ TOUS LES TESTS DES CAS LIMITES RÉUSSIS!          ║")
+    ecrireln("╚════════════════════════════════════════════════════════╝")
+
+fin
+

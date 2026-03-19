@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 2 : Variables et Types - Algo Compiler</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../../icon.png" type="image/png">
+</head>
+<body>
+    <nav class="sidebar">
+        <a href="../index.html" class="nav-brand">
+            <img src="../../icon.png" alt="Algo Logo">
+            <span>Algo Compiler</span>
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-section">
+                <div class="nav-section-title">Navigation</div>
+                <ul>
+                    <li class="nav-item"><a href="../index.html" class="nav-link">🏠 Accueil</a></li>
+                    <li class="nav-item"><a href="01-introduction.html" class="nav-link">📚 Introduction</a></li>
+                    <li class="nav-item"><a href="02-variables-types.html" class="nav-link active">🔢 Variables et Types</a></li>
+                    <li class="nav-item"><a href="03-operateurs.html" class="nav-link">➕ Opérateurs</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+    <main class="main-content">
+        <div class="fade-in">
+            <h1>🔢 Chapitre 2 : Variables et Types de Données</h1>
+
+            <h2>Qu'est-ce qu'une variable ?</h2>
+
+            <p>
+                Une <strong>variable</strong> est un espace en mémoire qui permet de stocker une valeur.
+                Imaginez-la comme une boîte avec une étiquette (son nom) dans laquelle vous pouvez placer
+                des données.
+            </p>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Analogie</div>
+                <p>
+                    Une variable est comme un casier dans un vestiaire :
+                </p>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>Le numéro du casier</strong> = le nom de la variable</li>
+                    <li><strong>Ce qu'il contient</strong> = la valeur de la variable</li>
+                    <li><strong>Le type de contenu accepté</strong> = le type de la variable</li>
+                </ul>
+            </div>
+
+            <h2>Déclaration de variables</h2>
+
+            <p>
+                En Algo, les variables doivent être déclarées dans la section <code>variables</code>
+                avant de pouvoir être utilisées.
+            </p>
+
+            <h3>Syntaxe de base</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Déclaration simple</div>
+                <pre><code class="algo">variables
+    nomVariable : type</code></pre>
+            </div>
+
+            <h3>Déclaration multiple</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Plusieurs variables du même type</div>
+                <pre><code class="algo">variables
+    x, y, z : entier
+    nom, prenom : chaine</code></pre>
+            </div>
+
+            <h2>Les types de données</h2>
+
+            <p>
+                Le <strong>type</strong> d'une variable détermine quel genre de données elle peut contenir
+                et quelles opérations on peut effectuer dessus.
+            </p>
+
+            <h3>1️⃣ Type <code>entier</code></h3>
+
+            <p>
+                Stocke des nombres entiers (sans virgule) : ..., -2, -1, 0, 1, 2, ...
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Exemple avec des entiers</div>
+                <pre><code class="algo">algorithme ExempleEntiers
+
+variables
+    age : entier
+    temperature : entier
+    annee : entier
+
+debut
+    age = 25
+    temperature = -5
+    annee = 2026
+
+    ecrireln("Âge : ", age)
+    ecrireln("Température : ", temperature, "°C")
+    ecrireln("Année : ", annee)
+fin</code></pre>
+            </div>
+
+            <h3>2️⃣ Type <code>reel</code> (ou <code>réel</code>)</h3>
+
+            <p>
+                Stocke des nombres décimaux (avec virgule) : 3.14, -0.5, 2.0, ...
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Exemple avec des réels</div>
+                <pre><code class="algo">algorithme ExempleReels
+
+variables
+    prix : reel
+    moyenne : reel
+    pi : reel
+
+debut
+    prix = 19.99
+    moyenne = 15.75
+    pi = 3.14159
+
+    ecrireln("Prix : ", prix, " €")
+    ecrireln("Moyenne : ", moyenne, "/20")
+    ecrireln("Pi ≈ ", pi)
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-title">Important</div>
+                <p style="margin-bottom: 0;">
+                    En Algo, on utilise le <strong>point</strong> (.) comme séparateur décimal,
+                    pas la virgule (,).
+                </p>
+            </div>
+
+            <h3>3️⃣ Type <code>chaine</code> (ou <code>chaîne</code>)</h3>
+
+            <p>
+                Stocke du texte (une suite de caractères) : "Bonjour", "Alice", "123 rue de la Paix", ...
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Exemple avec des chaînes</div>
+                <pre><code class="algo">algorithme ExempleChaines
+
+variables
+    nom : chaine
+    ville : chaine
+    message : chaine
+
+debut
+    nom = "Alice Dupont"
+    ville = "Paris"
+    message = "Bonjour le monde !"
+
+    ecrireln("Nom : ", nom)
+    ecrireln("Ville : ", ville)
+    ecrireln(message)
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">À savoir</div>
+                <p style="margin-bottom: 0;">
+                    Les chaînes de caractères doivent être entourées de <strong>guillemets doubles</strong> (").
+                </p>
+            </div>
+
+            <h3>4️⃣ Type <code>caractere</code> (ou <code>caractère</code>)</h3>
+
+            <p>
+                Stocke un seul caractère : 'A', 'z', '5', '@', ...
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Exemple avec des caractères</div>
+                <pre><code class="algo">algorithme ExempleCaracteres
+
+variables
+    initiale : caractere
+    symbole : caractere
+    lettre : caractere
+
+debut
+    initiale = 'A'
+    symbole = '@'
+    lettre = 'z'
+
+    ecrireln("Initiale : ", initiale)
+    ecrireln("Symbole : ", symbole)
+    ecrireln("Lettre : ", lettre)
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">À savoir</div>
+                <p style="margin-bottom: 0;">
+                    Les caractères doivent être entourés d'<strong>apostrophes simples</strong> (').
+                </p>
+            </div>
+
+            <h3>5️⃣ Type <code>booleen</code> (ou <code>booléen</code>)</h3>
+
+            <p>
+                Stocke une valeur logique : <code>vrai</code> ou <code>faux</code>.
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Exemple avec des booléens</div>
+                <pre><code class="algo">algorithme ExempleBooleans
+
+variables
+    estMajeur : booleen
+    aReussi : booleen
+    estPair : booleen
+
+debut
+    estMajeur = vrai
+    aReussi = faux
+    estPair = (10 % 2 == 0)  // Résultat d'une comparaison
+
+    ecrireln("Est majeur ? ", estMajeur)
+    ecrireln("A réussi ? ", aReussi)
+    ecrireln("10 est pair ? ", estPair)
+fin</code></pre>
+            </div>
+
+            <h2>Récapitulatif des types</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Exemples de valeurs</th>
+                        <th>Notation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>entier</code></td>
+                        <td>Nombre entier</td>
+                        <td>-5, 0, 42, 1000</td>
+                        <td>Sans guillemets</td>
+                    </tr>
+                    <tr>
+                        <td><code>reel</code></td>
+                        <td>Nombre décimal</td>
+                        <td>3.14, -0.5, 2.0</td>
+                        <td>Avec point décimal</td>
+                    </tr>
+                    <tr>
+                        <td><code>chaine</code></td>
+                        <td>Texte</td>
+                        <td>"Bonjour", "Alice", ""</td>
+                        <td>Entre guillemets doubles "..."</td>
+                    </tr>
+                    <tr>
+                        <td><code>caractere</code></td>
+                        <td>Un seul caractère</td>
+                        <td>'A', 'z', '5', '@'</td>
+                        <td>Entre apostrophes '...'</td>
+                    </tr>
+                    <tr>
+                        <td><code>booleen</code></td>
+                        <td>Valeur logique</td>
+                        <td>vrai, faux</td>
+                        <td>Mots-clés vrai/faux</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Affectation de valeurs</h2>
+
+            <p>
+                Pour donner une valeur à une variable, on utilise le symbole <code>=</code>.
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Syntaxe d'affectation</div>
+                <pre><code class="algo">nomVariable = valeur</code></pre>
+            </div>
+
+            <h3>Exemples d'affectation</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Différents types d'affectation</div>
+                <pre><code class="algo">algorithme Affectations
+
+variables
+    x : entier
+    prix : reel
+    nom : chaine
+    initial : caractere
+    actif : booleen
+
+debut
+    // Affectation de valeurs littérales
+    x = 10
+    prix = 29.99
+    nom = "Alice"
+    initial = 'A'
+    actif = vrai
+
+    // Affichage
+    ecrireln("x = ", x)
+    ecrireln("prix = ", prix)
+    ecrireln("nom = ", nom)
+    ecrireln("initial = ", initial)
+    ecrireln("actif = ", actif)
+
+    // Réaffectation (changer la valeur)
+    x = 20
+    prix = prix + 5.00
+    nom = "Bob"
+
+    ecrireln("\nAprès modification :")
+    ecrireln("x = ", x)
+    ecrireln("prix = ", prix)
+    ecrireln("nom = ", nom)
+fin</code></pre>
+            </div>
+
+            <h2>Initialisation lors de la déclaration</h2>
+
+            <p>
+                Il est possible d'initialiser une variable directement lors de sa déclaration :
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Déclaration avec initialisation</div>
+                <pre><code class="algo">algorithme InitialisationDirecte
+
+variables
+    age : entier = 25
+    pi : reel = 3.14159
+    nom : chaine = "Alice"
+    actif : booleen = vrai
+
+debut
+    ecrireln("Âge : ", age)
+    ecrireln("Pi : ", pi)
+    ecrireln("Nom : ", nom)
+    ecrireln("Actif : ", actif)
+fin</code></pre>
+            </div>
+
+            <h2>Conversions de types</h2>
+
+            <p>
+                Parfois, il est nécessaire de convertir une valeur d'un type à un autre.
+                Algo fournit des fonctions de conversion :
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fonction</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>versEntier()</code></td>
+                        <td>Convertit en entier</td>
+                        <td><code>versEntier(3.7)</code> → 3</td>
+                    </tr>
+                    <tr>
+                        <td><code>versReel()</code></td>
+                        <td>Convertit en réel</td>
+                        <td><code>versReel(5)</code> → 5.0</td>
+                    </tr>
+                    <tr>
+                        <td><code>versChaine()</code></td>
+                        <td>Convertit en chaîne</td>
+                        <td><code>versChaine(42)</code> → "42"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+                <div class="code-block-header">Exemple de conversions</div>
+                <pre><code class="algo">algorithme Conversions
+
+variables
+    x : entier
+    y : reel
+    texte : chaine
+
+debut
+    // Conversion réel → entier (troncature)
+    y = 3.7
+    x = versEntier(y)
+    ecrireln("3.7 en entier : ", x)  // Affiche 3
+
+    // Conversion entier → réel
+    x = 5
+    y = versReel(x)
+    ecrireln("5 en réel : ", y)  // Affiche 5.0
+
+    // Conversion nombre → chaîne
+    x = 42
+    texte = versChaine(x)
+    ecrireln("42 en chaîne : ", texte)  // Affiche "42"
+fin</code></pre>
+            </div>
+
+            <h2>Règles de nommage des variables</h2>
+
+            <div class="alert alert-warning">
+                <div class="alert-title">Conventions importantes</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Le nom doit commencer par une <strong>lettre</strong></li>
+                    <li>Peut contenir des lettres, chiffres et underscores (_)</li>
+                    <li>Pas d'espaces dans le nom</li>
+                    <li>Évitez les mots-clés réservés (algorithme, debut, fin, si, etc.)</li>
+                    <li>Utilisez des noms <strong>descriptifs</strong> et significatifs</li>
+                </ul>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>✅ Valide</th>
+                        <th>❌ Invalide</th>
+                        <th>Raison</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>age</code></td>
+                        <td><code>2age</code></td>
+                        <td>Ne peut pas commencer par un chiffre</td>
+                    </tr>
+                    <tr>
+                        <td><code>nom_complet</code></td>
+                        <td><code>nom complet</code></td>
+                        <td>Pas d'espaces autorisés</td>
+                    </tr>
+                    <tr>
+                        <td><code>prix_TTC</code></td>
+                        <td><code>prix-TTC</code></td>
+                        <td>Le tiret n'est pas autorisé</td>
+                    </tr>
+                    <tr>
+                        <td><code>ma_variable</code></td>
+                        <td><code>si</code></td>
+                        <td>Mot-clé réservé</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Exemple complet</h2>
+
+            <div class="code-block">
+                <div class="code-block-header">calculateur_imc.algo</div>
+                <pre><code class="algo">algorithme CalculateurIMC
+
+variables
+    poids : reel
+    taille : reel
+    imc : reel
+    nom : chaine
+
+debut
+    // Demander les informations
+    ecrire("Entrez votre nom : ")
+    lire(nom)
+
+    ecrire("Entrez votre poids (en kg) : ")
+    lire(poids)
+
+    ecrire("Entrez votre taille (en m) : ")
+    lire(taille)
+
+    // Calculer l'IMC
+    imc = poids / (taille ^ 2)
+
+    // Afficher le résultat
+    ecrireln()
+    ecrireln("Bonjour ", nom, " !")
+    ecrireln("Votre IMC est : ", imc)
+
+    // Interprétation
+    si imc < 18.5 alors
+        ecrireln("Vous êtes en sous-poids.")
+    sinonsi imc < 25 alors
+        ecrireln("Vous avez un poids normal.")
+    sinonsi imc < 30 alors
+        ecrireln("Vous êtes en surpoids.")
+    sinon
+        ecrireln("Vous êtes en obésité.")
+    finsi
+fin</code></pre>
+            </div>
+
+            <h2>Points clés à retenir</h2>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résumé du chapitre</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Une variable stocke une valeur en mémoire</li>
+                    <li>Chaque variable a un <strong>nom</strong> et un <strong>type</strong></li>
+                    <li>5 types principaux : entier, reel, chaine, caractere, booleen</li>
+                    <li>Déclaration dans la section <code>variables</code></li>
+                    <li>Affectation avec <code>=</code></li>
+                    <li>Possibilité d'initialiser lors de la déclaration</li>
+                    <li>Fonctions de conversion : versEntier(), versReel(), versChaine()</li>
+                </ul>
+            </div>
+
+            <hr style="margin: 3rem 0;">
+
+            <div style="display: flex; justify-content: space-between;">
+                <a href="01-introduction.html" class="badge badge-secondary" style="padding: 0.75rem 1.5rem; text-decoration: none;">
+                    ← Chapitre précédent
+                </a>
+                <a href="03-operateurs.html" class="badge badge-primary" style="padding: 0.75rem 1.5rem; text-decoration: none;">
+                    Chapitre suivant : Opérateurs →
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/algo-highlighter.js"></script>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
+

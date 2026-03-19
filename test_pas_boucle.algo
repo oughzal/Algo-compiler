@@ -1,0 +1,84 @@
+algorithme TestPasBoucle
+
+variables
+    i : entier
+    somme : entier
+
+debut
+    // Test 1: Pas par défaut ascendant (1)
+    ecrireln("Test 1: Boucle ascendante (pas par défaut = 1)")
+    ecrire("De 1 à 5: ")
+    pour i de 1 à 5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 2: Pas par défaut descendant (-1)
+    ecrireln("Test 2: Boucle descendante (pas par défaut = -1)")
+    ecrire("De 5 à 1: ")
+    pour i de 5 à 1 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 3: Pas positif explicite (+2)
+    ecrireln("Test 3: Boucle avec pas +2")
+    ecrire("Nombres pairs de 0 à 20: ")
+    pour i de 0 à 20 pas 2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 4: Pas positif (+5)
+    ecrireln("Test 4: Boucle avec pas +5")
+    ecrire("Multiples de 5 de 0 à 50: ")
+    pour i de 0 à 50 pas 5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 5: Pas négatif explicite (-2)
+    ecrireln("Test 5: Boucle avec pas -2")
+    ecrire("De 20 à 0 par pas de -2: ")
+    pour i de 20 à 0 pas -2 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 6: Pas négatif (-5)
+    ecrireln("Test 6: Boucle avec pas -5")
+    ecrire("De 100 à 50 par pas de -5: ")
+    pour i de 100 à 50 pas -5 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 7: Calcul avec pas
+    ecrireln("Test 7: Calcul de somme avec pas")
+    somme = 0
+    pour i de 0 à 100 pas 10 faire
+        somme = somme + i
+    finpour
+    ecrireln("Somme des multiples de 10 de 0 à 100: ", somme)
+
+    // Test 8: Pas +3
+    ecrireln("Test 8: Boucle avec pas +3")
+    ecrire("De 3 à 30 par pas de 3: ")
+    pour i de 3 à 30 pas 3 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+
+    // Test 9: Compte à rebours
+    ecrireln("Test 9: Compte à rebours")
+    ecrireln("Décollage dans:")
+    pour i de 10 à 0 faire
+        ecrireln(i)
+    finpour
+    ecrireln("Décollage !")
+
+    ecrireln()
+    ecrireln("=== Tous les tests sont terminés avec succès! ===")
+
+fin
+

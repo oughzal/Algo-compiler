@@ -1,0 +1,152 @@
+algorithme ExemplesPasBoucle
+
+variables
+    i, j : entier
+    somme : entier
+    T : tableau[20] de entier
+    resultat : reel
+
+debut
+    ecrireln("╔════════════════════════════════════════════════════════╗")
+    ecrireln("║  EXEMPLES AVANCÉS - BOUCLE POUR AVEC PAS              ║")
+    ecrireln("╚════════════════════════════════════════════════════════╝")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 1: Table de multiplication par 3
+    // ═══════════════════════════════════════════════════════
+    ecrireln("📊 Exemple 1: Table de multiplication par 3")
+    ecrireln("─────────────────────────────────────────")
+    pour i de 3 à 30 pas 3 faire
+        ecrireln("3 × ", i / 3, " = ", i)
+    finpour
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 2: Années bissextiles entre 2000 et 2100
+    // ═══════════════════════════════════════════════════════
+    ecrireln("📅 Exemple 2: Années bissextiles (2000-2100)")
+    ecrireln("─────────────────────────────────────────")
+    ecrire("Années: ")
+    pour i de 2000 à 2100 pas 4 faire
+        ecrire(i, " ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 3: Température décroissante (simulation refroidissement)
+    // ═══════════════════════════════════════════════════════
+    ecrireln("🌡️  Exemple 3: Refroidissement (100°C → 0°C)")
+    ecrireln("─────────────────────────────────────────")
+    ecrire("Température: ")
+    pour i de 100 à 0 pas -10 faire
+        ecrire(i, "°C ")
+    finpour
+    ecrireln()
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 4: Remplissage d'un tableau avec pas
+    // ═══════════════════════════════════════════════════════
+    ecrireln("📦 Exemple 4: Remplissage tableau (multiples de 5)")
+    ecrireln("─────────────────────────────────────────")
+    j = 0
+    pour i de 5 à 100 pas 5 faire
+        T[j] = i
+        j = j + 1
+    finpour
+    ecrire("Tableau T: [")
+    pour i de 0 à 19 faire
+        ecrire(T[i])
+        si i < 19 alors
+            ecrire(", ")
+        finsi
+    finpour
+    ecrireln("]")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 5: Somme des nombres pairs
+    // ═══════════════════════════════════════════════════════
+    ecrireln("➕ Exemple 5: Somme des nombres pairs (0-100)")
+    ecrireln("─────────────────────────────────────────")
+    somme = 0
+    pour i de 0 à 100 pas 2 faire
+        somme = somme + i
+    finpour
+    ecrireln("Somme = ", somme, " (attendu: 2550)")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 6: Somme des nombres impairs
+    // ═══════════════════════════════════════════════════════
+    ecrireln("➕ Exemple 6: Somme des nombres impairs (1-99)")
+    ecrireln("─────────────────────────────────────────")
+    somme = 0
+    pour i de 1 à 99 pas 2 faire
+        somme = somme + i
+    finpour
+    ecrireln("Somme = ", somme, " (attendu: 2500)")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 7: Boucles imbriquées avec pas
+    // ═══════════════════════════════════════════════════════
+    ecrireln("🔢 Exemple 7: Boucles imbriquées (table de 2 et 5)")
+    ecrireln("─────────────────────────────────────────")
+    pour i de 2 à 10 pas 3 faire
+        pour j de 0 à 50 pas 10 faire
+            ecrire(i * j, " ")
+        finpour
+        ecrireln()
+    finpour
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 8: Compte à rebours spatial
+    // ═══════════════════════════════════════════════════════
+    ecrireln("🚀 Exemple 8: Lancement spatial")
+    ecrireln("─────────────────────────────────────────")
+    ecrireln("Décompte final...")
+    pour i de 30 à 0 pas -3 faire
+        ecrireln("T-", i, " secondes...")
+    finpour
+    ecrireln("🔥 DÉCOLLAGE! 🚀")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 9: Calcul de moyenne avec pas
+    // ═══════════════════════════════════════════════════════
+    ecrireln("📈 Exemple 9: Moyenne des multiples de 7 (0-70)")
+    ecrireln("─────────────────────────────────────────")
+    somme = 0
+    j = 0
+    pour i de 0 à 70 pas 7 faire
+        somme = somme + i
+        j = j + 1
+    finpour
+    resultat = somme / j
+    ecrireln("Moyenne = ", resultat, " (attendu: 35.0)")
+    ecrireln()
+
+    // ═══════════════════════════════════════════════════════
+    // Exemple 10: Affichage en colonnes
+    // ═══════════════════════════════════════════════════════
+    ecrireln("📊 Exemple 10: Affichage en colonnes (0-50, pas de 5)")
+    ecrireln("─────────────────────────────────────────")
+    ecrireln("N° │ Valeur │ Carré")
+    ecrireln("───┼────────┼──────")
+    j = 1
+    pour i de 0 à 50 pas 5 faire
+        ecrireln(j, "  │ ", i, "      │ ", i * i)
+        j = j + 1
+    finpour
+    ecrireln()
+
+    ecrireln("╔════════════════════════════════════════════════════════╗")
+    ecrireln("║  ✅ TOUS LES EXEMPLES SONT TERMINÉS!                  ║")
+    ecrireln("╚════════════════════════════════════════════════════════╝")
+
+fin
+

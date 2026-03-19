@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 1 : Introduction à l'Algorithmique - Algo Compiler</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../../icon.png" type="image/png">
+</head>
+<body>
+    <nav class="sidebar">
+        <a href="../index.html" class="nav-brand">
+            <img src="../../icon.png" alt="Algo Logo">
+            <span>Algo Compiler</span>
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-section">
+                <div class="nav-section-title">Navigation</div>
+                <ul>
+                    <li class="nav-item"><a href="../index.html" class="nav-link">🏠 Accueil</a></li>
+                    <li class="nav-item"><a href="01-introduction.html" class="nav-link active">📚 Introduction</a></li>
+                    <li class="nav-item"><a href="02-variables-types.html" class="nav-link">🔢 Variables et Types</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+    <main class="main-content">
+        <div class="fade-in">
+            <h1>📚 Chapitre 1 : Introduction à l'Algorithmique</h1>
+
+            <h2>Qu'est-ce qu'un algorithme ?</h2>
+
+            <p>
+                Un <strong>algorithme</strong> est une suite finie et ordonnée d'instructions qui permet de résoudre
+                un problème ou d'accomplir une tâche. C'est comme une recette de cuisine : vous suivez des étapes
+                précises pour obtenir un résultat.
+            </p>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exemple de la vie quotidienne</div>
+                <p><strong>Algorithme pour faire du thé :</strong></p>
+                <ol>
+                    <li>Faire bouillir de l'eau</li>
+                    <li>Mettre un sachet de thé dans une tasse</li>
+                    <li>Verser l'eau chaude dans la tasse</li>
+                    <li>Laisser infuser 3 minutes</li>
+                    <li>Retirer le sachet de thé</li>
+                    <li>Ajouter du sucre si désiré</li>
+                </ol>
+            </div>
+
+            <h2>Caractéristiques d'un bon algorithme</h2>
+
+            <p>Un algorithme efficace doit posséder les caractéristiques suivantes :</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Caractéristique</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fiabilité</strong></td>
+                        <td>Produit toujours le résultat attendu pour des entrées valides</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clarté</strong></td>
+                        <td>Facile à comprendre et à lire</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Efficacité</strong></td>
+                        <td>Utilise un minimum de ressources (temps, mémoire)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Généralité</strong></td>
+                        <td>Résout un problème général, pas seulement un cas particulier</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Finitude</strong></td>
+                        <td>Se termine toujours après un nombre fini d'étapes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Structure d'un algorithme en Algo</h2>
+
+            <p>
+                Dans le langage Algo, chaque algorithme suit une structure bien définie. Voici la structure minimale :
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Structure de base</div>
+                <pre><code class="algo">algorithme NomDeLAlgorithme
+
+variables
+    // Déclaration des variables
+
+debut
+    // Instructions de l'algorithme
+fin</code></pre>
+            </div>
+
+            <h3>Détails de la structure</h3>
+
+            <ul>
+                <li><code class="algo-keyword">algorithme</code> : Mot-clé obligatoire suivi du nom de l'algorithme</li>
+                <li><code class="algo-keyword">variables</code> : Section où l'on déclare les variables (optionnelle)</li>
+                <li><code class="algo-keyword">debut</code> : Marque le début des instructions</li>
+                <li><code class="algo-keyword">fin</code> : Marque la fin de l'algorithme</li>
+            </ul>
+
+            <h2>Premier exemple : "Bonjour le monde"</h2>
+
+            <p>
+                Voici votre premier algorithme en Algo. Il affiche simplement un message à l'écran :
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">bonjour.algo</div>
+                <pre><code class="algo">algorithme BonjourMonde
+
+debut
+    ecrireln("Bonjour le monde !")
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résultat de l'exécution</div>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem; margin-top: 0.5rem;">Bonjour le monde !</pre>
+            </div>
+
+            <h3>Explication ligne par ligne</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ligne</th>
+                        <th>Explication</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>algorithme BonjourMonde</code></td>
+                        <td>Déclare un algorithme nommé "BonjourMonde"</td>
+                    </tr>
+                    <tr>
+                        <td><code>debut</code></td>
+                        <td>Début du corps de l'algorithme</td>
+                    </tr>
+                    <tr>
+                        <td><code>ecrireln("Bonjour le monde !")</code></td>
+                        <td>Affiche le texte "Bonjour le monde !" suivi d'un retour à la ligne</td>
+                    </tr>
+                    <tr>
+                        <td><code>fin</code></td>
+                        <td>Fin de l'algorithme</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Exemple avec interaction</h2>
+
+            <p>
+                Un algorithme plus intéressant qui demande le nom de l'utilisateur et le salue :
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">salutation.algo</div>
+                <pre><code class="algo">algorithme Salutation
+
+variables
+    nom : chaine
+    age : entier
+
+debut
+    // Demander le nom
+    ecrire("Comment vous appelez-vous ? ")
+    lire(nom)
+
+    // Demander l'âge
+    ecrire("Quel âge avez-vous ? ")
+    lire(age)
+
+    // Afficher un message personnalisé
+    ecrireln()
+    ecrireln("Bonjour ", nom, " !")
+    ecrireln("Vous avez ", age, " ans.")
+
+    // Condition simple
+    si age >= 18 alors
+        ecrireln("Vous êtes majeur.")
+    sinon
+        ecrireln("Vous êtes mineur.")
+    finsi
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Exemple d'exécution</div>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem; margin-top: 0.5rem;">Comment vous appelez-vous ? <strong>Alice</strong>
+Quel âge avez-vous ? <strong>20</strong>
+
+Bonjour Alice !
+Vous avez 20 ans.
+Vous êtes majeur.</pre>
+            </div>
+
+            <h3>Nouveaux concepts introduits</h3>
+
+            <ul>
+                <li><strong>Variables</strong> : <code>nom</code> (de type chaîne) et <code>age</code> (de type entier)</li>
+                <li><strong>Entrée</strong> : <code>lire()</code> pour récupérer des données de l'utilisateur</li>
+                <li><strong>Sortie</strong> : <code>ecrire()</code> et <code>ecrireln()</code> pour afficher des informations</li>
+                <li><strong>Commentaires</strong> : Lignes commençant par <code>//</code> (ignorées lors de l'exécution)</li>
+                <li><strong>Condition</strong> : <code>si...alors...sinon</code> pour faire des choix</li>
+            </ul>
+
+            <h2>Les commentaires</h2>
+
+            <p>
+                Les commentaires permettent d'expliquer le code. Ils sont ignorés lors de l'exécution et servent
+                uniquement à la documentation.
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Exemples de commentaires</div>
+                <pre><code class="algo">algorithme ExempleCommentaires
+
+debut
+    // Ceci est un commentaire sur une ligne
+    ecrireln("Hello")  // Commentaire en fin de ligne
+
+    # On peut aussi utiliser le dièse pour les commentaires
+    ecrireln("World")
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-title">Bonne pratique</div>
+                <p>
+                    Commentez votre code pour expliquer <strong>pourquoi</strong> vous faites quelque chose,
+                    pas <strong>ce que</strong> vous faites (si c'est évident). Un code bien écrit devrait
+                    être auto-documenté.
+                </p>
+            </div>
+
+            <h2>Conventions de nommage</h2>
+
+            <p>
+                Pour rendre votre code plus lisible, suivez ces conventions :
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Élément</th>
+                        <th>Convention</th>
+                        <th>Exemples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Algorithme</td>
+                        <td>PascalCase (majuscule à chaque mot)</td>
+                        <td><code>CalculerMoyenne</code>, <code>TrierTableau</code></td>
+                    </tr>
+                    <tr>
+                        <td>Variables</td>
+                        <td>camelCase (minuscule puis majuscules)</td>
+                        <td><code>nomUtilisateur</code>, <code>ageEtudiant</code></td>
+                    </tr>
+                    <tr>
+                        <td>Constantes</td>
+                        <td>MAJUSCULES_AVEC_UNDERSCORES</td>
+                        <td><code>PI</code>, <code>TAUX_TVA</code></td>
+                    </tr>
+                    <tr>
+                        <td>Fonctions</td>
+                        <td>camelCase avec verbe</td>
+                        <td><code>calculerSomme</code>, <code>afficherResultat</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Exercices</h2>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exercice 1 : Présentation</div>
+                <p>
+                    Écrivez un algorithme qui demande à l'utilisateur son nom, son prénom et sa ville,
+                    puis affiche une phrase de présentation complète.
+                </p>
+                <p><strong>Exemple de sortie :</strong></p>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem;">Je m'appelle Alice Dupont et j'habite à Paris.</pre>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exercice 2 : Calcul simple</div>
+                <p>
+                    Écrivez un algorithme qui demande deux nombres à l'utilisateur et affiche leur somme,
+                    leur différence, leur produit et leur quotient.
+                </p>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exercice 3 : Année de naissance</div>
+                <p>
+                    Écrivez un algorithme qui demande l'âge de l'utilisateur et calcule son année de naissance
+                    approximative (en supposant que nous sommes en 2026).
+                </p>
+            </div>
+
+            <h2>Points clés à retenir</h2>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résumé du chapitre</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Un algorithme est une suite d'instructions pour résoudre un problème</li>
+                    <li>La structure de base : <code>algorithme</code> → <code>variables</code> → <code>debut</code> → <code>fin</code></li>
+                    <li><code>ecrire()</code> et <code>ecrireln()</code> pour afficher</li>
+                    <li><code>lire()</code> pour récupérer des données</li>
+                    <li>Les commentaires avec <code>//</code> ou <code>#</code></li>
+                    <li>Importance des conventions de nommage</li>
+                </ul>
+            </div>
+
+            <hr style="margin: 3rem 0;">
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="../index.html" class="badge badge-secondary" style="padding: 0.75rem 1.5rem; text-decoration: none;">
+                    ← Retour à l'accueil
+                </a>
+                <a href="02-variables-types.html" class="badge badge-primary" style="padding: 0.75rem 1.5rem; text-decoration: none;">
+                    Chapitre suivant : Variables et Types →
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/algo-highlighter.js"></script>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
+

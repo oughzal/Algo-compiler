@@ -484,8 +484,7 @@ class Parser(private val tokens: List<Token>) {
 
         // Vérifier si on a un "pas"
         var step: Expression? = null
-        if (current().type == TokenType.IDENTIFICATEUR &&
-            current().value.lowercase() == "pas") {
+        if (current().type == TokenType.PAS) {
             advance() // consommer "pas"
             step = parseExpression()
         }

@@ -6,6 +6,20 @@
 
 Un compilateur/interpréteur de pseudo-code français écrit en Kotlin, conçu pour faciliter l'apprentissage de la programmation avec une syntaxe française naturelle.
 
+## 📱 NOUVEAU : Application Mobile Android !
+
+Une **application Android complète** est maintenant disponible ! IDE mobile avec Jetpack Compose pour créer, éditer et exécuter des algorithmes sur Android.
+
+➡️ **[Voir le projet Android](algo-compiler-android/)** | **[Documentation Mobile](APPLICATION_MOBILE_ANDROID.md)**
+
+**Fonctionnalités** :
+- ✨ Éditeur de code avec numéros de ligne
+- 📁 Gestionnaire de fichiers et dossiers
+- ▶️ Compilation et exécution en temps réel
+- 📺 Console intégrée
+- 🎨 Interface Material Design 3
+- 📱 Compatible Android 7.0+
+
 ## Nouveautés importantes
 
 - **✨ NOUVEAU** : **Évaluation en court-circuit** : Les opérateurs `et` et `ou` utilisent maintenant l'évaluation en court-circuit (short-circuit) comme dans Kotlin - améliore les performances et évite les erreurs inutiles ([voir doc](EVALUATION_COURT_CIRCUIT.md))

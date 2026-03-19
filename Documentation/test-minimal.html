@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Minimal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        pre {
+            background: #282c34;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        code {
+            color: #abb2bf;
+            font-family: monospace;
+        }
+        .algo-keyword { color: #c678dd; font-weight: 600; }
+        .algo-type { color: #e06c75; }
+        .algo-string { color: #98c379; }
+        .algo-number { color: #d19a66; }
+    </style>
+</head>
+<body>
+    <h1>Test Minimal du Highlighter</h1>
+
+    <h2>Avant coloration (texte brut) :</h2>
+    <pre><code class="algo">algorithme Test
+variables
+    x : entier
+debut
+    x = 10
+    ecrireln("Hello")
+fin</code></pre>
+
+    <h2>Inspection :</h2>
+    <div id="debug"></div>
+
+    <script src="assets/js/algo-highlighter.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const code = document.querySelector('code.algo');
+                const debug = document.getElementById('debug');
+
+                debug.innerHTML = `
+                    <p><strong>Contenu textContent:</strong><br><pre>${escapeHtml(code.textContent)}</pre></p>
+                    <p><strong>Contenu innerHTML:</strong><br><pre>${escapeHtml(code.innerHTML)}</pre></p>
+                    <p><strong>Classes:</strong> ${code.className}</p>
+                    <p><strong>Highlighter exists:</strong> ${typeof algoHighlighter !== 'undefined'}</p>
+                `;
+
+                function escapeHtml(text) {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+

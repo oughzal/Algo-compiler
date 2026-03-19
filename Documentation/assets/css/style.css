@@ -1,0 +1,535 @@
+/**
+ * Styles pour la documentation Algo Compiler
+ * Version: 1.0.0
+ * Date: 2026-03-13
+ */
+
+/* ============================================
+   VARIABLES CSS
+   ============================================ */
+:root {
+    /* Couleurs principales */
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+
+    /* Couleurs de fond */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-dark: #212529;
+    --bg-code: #f5f5f5;
+
+    /* Couleurs de texte */
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-muted: #adb5bd;
+
+    /* Coloration syntaxique Algo */
+    --algo-keyword: #d73a49;
+    --algo-type: #005cc5;
+    --algo-string: #22863a;
+    --algo-char: #22863a;
+    --algo-number: #005cc5;
+    --algo-comment: #6a737d;
+    --algo-operator: #d73a49;
+    --algo-operator-logical: #e36209;
+    --algo-builtin: #6f42c1;
+    --algo-constant: #005cc5;
+
+    /* Bordures et ombres */
+    --border-color: #dee2e6;
+    --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+    --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);
+    --shadow-lg: 0 1rem 3rem rgba(0,0,0,.175);
+
+    /* Espacements */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    /* Police */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Monaco, "Courier New", monospace;
+}
+
+/* ============================================
+   BASE
+   ============================================ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--bg-primary);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+    z-index: 1000;
+}
+
+.main-content {
+    margin-left: 280px;
+    padding: var(--spacing-xl);
+    min-height: 100vh;
+    background: var(--bg-primary);
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.nav-brand img {
+    width: 40px;
+    height: 40px;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.nav-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.05em;
+}
+
+.nav-item {
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-link {
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+}
+
+.nav-link.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ============================================
+   TYPOGRAPHIE
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+
+h1 {
+    font-size: 2.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: var(--spacing-md);
+}
+
+h2 {
+    font-size: 2rem;
+    margin-top: 3rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+h5 {
+    font-size: 1.125rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   BLOCS DE CODE
+   ============================================ */
+code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    padding: 0.2em 0.4em;
+    background: var(--bg-code);
+    border-radius: 0.25rem;
+    color: var(--danger-color);
+}
+
+pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: var(--spacing-lg);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+    box-shadow: var(--shadow-sm);
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Blocs de code avec titre */
+.code-block {
+    margin: var(--spacing-lg) 0;
+}
+
+.code-block-header {
+    background: var(--bg-dark);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 0.5rem 0.5rem 0 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.code-block-header::before {
+    content: "📄";
+}
+
+.code-block pre {
+    margin: 0;
+    border-radius: 0 0 0.5rem 0.5rem;
+    border-top: none;
+}
+
+/* ============================================
+   COLORATION SYNTAXIQUE ALGO
+   ============================================ */
+.algo-keyword {
+    color: var(--algo-keyword);
+    font-weight: 600;
+}
+
+.algo-type {
+    color: var(--algo-type);
+    font-weight: 500;
+}
+
+.algo-string {
+    color: var(--algo-string);
+}
+
+.algo-char {
+    color: var(--algo-char);
+}
+
+.algo-number {
+    color: var(--algo-number);
+}
+
+.algo-comment {
+    color: var(--algo-comment);
+    font-style: italic;
+}
+
+.algo-operator {
+    color: var(--algo-operator);
+    font-weight: 600;
+}
+
+.algo-operator-logical {
+    color: var(--algo-operator-logical);
+    font-weight: 600;
+}
+
+.algo-builtin {
+    color: var(--algo-builtin);
+    font-weight: 500;
+}
+
+.algo-constant {
+    color: var(--algo-constant);
+    font-weight: 500;
+}
+
+/* Numéros de ligne */
+.with-line-numbers {
+    counter-reset: line;
+}
+
+.line-number {
+    display: inline-block;
+    width: 2.5em;
+    text-align: right;
+    color: var(--text-muted);
+    user-select: none;
+    margin-right: var(--spacing-md);
+    border-right: 1px solid var(--border-color);
+    padding-right: var(--spacing-sm);
+}
+
+/* ============================================
+   BOÎTES D'INFORMATION
+   ============================================ */
+.alert {
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    border-radius: 0.5rem;
+    border-left: 4px solid;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    border-color: var(--info-color);
+    color: #0c5460;
+}
+
+.alert-success {
+    background: #d4edda;
+    border-color: var(--success-color);
+    color: #155724;
+}
+
+.alert-warning {
+    background: #fff3cd;
+    border-color: var(--warning-color);
+    color: #856404;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    border-color: var(--danger-color);
+    color: #721c24;
+}
+
+.alert-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.alert-info .alert-title::before { content: "ℹ️"; }
+.alert-success .alert-title::before { content: "✅"; }
+.alert-warning .alert-title::before { content: "⚠️"; }
+.alert-danger .alert-title::before { content: "❌"; }
+
+/* ============================================
+   TABLEAUX
+   ============================================ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-lg) 0;
+    background: var(--bg-primary);
+    box-shadow: var(--shadow-sm);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+thead {
+    background: var(--primary-color);
+    color: white;
+}
+
+th, td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    font-weight: 600;
+}
+
+tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem;
+}
+
+.badge-primary { background: var(--primary-color); color: white; }
+.badge-success { background: var(--success-color); color: white; }
+.badge-warning { background: var(--warning-color); color: var(--text-primary); }
+.badge-danger { background: var(--danger-color); color: white; }
+.badge-info { background: var(--info-color); color: white; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: var(--spacing-md);
+        left: var(--spacing-md);
+        z-index: 1001;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: 0.375rem;
+        cursor: pointer;
+    }
+}
+
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+}
+
+/* ============================================
+   UTILITAIRES
+   ============================================ */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-muted { color: var(--text-muted); }
+.text-primary { color: var(--primary-color); }
+.text-success { color: var(--success-color); }
+.text-danger { color: var(--danger-color); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ============================================
+   IMPRESSION
+   ============================================ */
+@media print {
+    .sidebar,
+    .menu-toggle {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    pre {
+        page-break-inside: avoid;
+    }
+}
+

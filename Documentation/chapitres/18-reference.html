@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Référence Complète - Algo Compiler</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../../icon.png" type="image/png">
+</head>
+<body>
+    <nav class="sidebar">
+        <a href="../index.html" class="nav-brand">
+            <img src="../../icon.png" alt="Algo Logo">
+            <span>Algo Compiler</span>
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-section">
+                <div class="nav-section-title">Navigation</div>
+                <ul>
+                    <li class="nav-item"><a href="../index.html" class="nav-link">🏠 Accueil</a></li>
+                    <li class="nav-item"><a href="18-reference.html" class="nav-link active">📖 Référence</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+    <main class="main-content">
+        <div class="fade-in">
+            <h1>📖 Référence Complète du Langage Algo</h1>
+
+            <p class="text-muted" style="font-size: 1.125rem;">
+                Guide de référence complet de la syntaxe et des fonctionnalités d'Algo Compiler.
+            </p>
+
+            <nav style="background: var(--bg-secondary); padding: var(--spacing-lg); border-radius: 0.5rem; margin: var(--spacing-xl) 0;">
+                <h3 style="margin-top: 0;">Table des matières</h3>
+                <ul style="column-count: 2; column-gap: 2rem;">
+                    <li><a href="#structure">Structure d'un algorithme</a></li>
+                    <li><a href="#types">Types de données</a></li>
+                    <li><a href="#operateurs">Opérateurs</a></li>
+                    <li><a href="#entrees-sorties">Entrées/Sorties</a></li>
+                    <li><a href="#conditions">Structures conditionnelles</a></li>
+                    <li><a href="#boucles">Boucles</a></li>
+                    <li><a href="#tableaux">Tableaux</a></li>
+                    <li><a href="#fonctions">Fonctions et Procédures</a></li>
+                    <li><a href="#fonctions-integrees">Fonctions intégrées</a></li>
+                    <li><a href="#mots-cles">Mots-clés réservés</a></li>
+                </ul>
+            </nav>
+
+            <h2 id="structure">Structure d'un algorithme</h2>
+
+            <div class="code-block">
+                <div class="code-block-header">Structure complète</div>
+                <pre><code class="algo">algorithme NomAlgorithme
+
+constantes
+    PI : reel = 3.14159
+    MAX : entier = 100
+
+variables
+    x, y : entier
+    nom : chaine
+
+fonction maFonction(param : entier) : entier
+variables
+    resultat : entier
+debut
+    resultat = param * 2
+    retourner resultat
+fin
+
+procedure maProcedure(param : entier)
+debut
+    ecrireln("Valeur : ", param)
+fin
+
+debut
+    // Corps principal de l'algorithme
+    x = 10
+    ecrireln(x)
+fin</code></pre>
+            </div>
+
+            <h2 id="types">Types de données</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Exemples</th>
+                        <th>Valeurs par défaut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>entier</code></td>
+                        <td>Nombre entier</td>
+                        <td>-5, 0, 42, 1000</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><code>reel</code> / <code>réel</code></td>
+                        <td>Nombre décimal</td>
+                        <td>3.14, -0.5, 2.0</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+                        <td><code>chaine</code> / <code>chaîne</code></td>
+                        <td>Texte</td>
+                        <td>"Bonjour", "Alice"</td>
+                        <td>""</td>
+                    </tr>
+                    <tr>
+                        <td><code>caractere</code> / <code>caractère</code></td>
+                        <td>Un caractère</td>
+                        <td>'A', 'z', '5'</td>
+                        <td>' '</td>
+                    </tr>
+                    <tr>
+                        <td><code>booleen</code> / <code>booléen</code></td>
+                        <td>Vrai ou faux</td>
+                        <td>vrai, faux</td>
+                        <td>faux</td>
+                    </tr>
+                    <tr>
+                        <td><code>tableau</code></td>
+                        <td>Collection d'éléments</td>
+                        <td>T : tableau[10] de entier</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Déclaration de variables</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">variables
+    // Simple
+    x : entier
+    prix : reel
+    nom : chaine
+
+    // Multiple
+    a, b, c : entier
+
+    // Avec initialisation
+    age : entier = 25
+    pi : reel = 3.14159
+    actif : booleen = vrai
+
+    // Tableaux
+    T : tableau[10] de entier
+    M : tableau[5][5] de reel
+
+    // Avec initialisation directe
+    nombres : tableau[5] de entier = [1, 2, 3, 4, 5]</code></pre>
+            </div>
+
+            <h2 id="operateurs">Opérateurs</h2>
+
+            <h3>Opérateurs arithmétiques</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Opérateur</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                        <th>Résultat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>+</code></td>
+                        <td>Addition</td>
+                        <td><code>5 + 3</code></td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td><code>-</code></td>
+                        <td>Soustraction</td>
+                        <td><code>5 - 3</code></td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><code>*</code></td>
+                        <td>Multiplication</td>
+                        <td><code>5 * 3</code></td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td><code>/</code></td>
+                        <td>Division réelle</td>
+                        <td><code>7 / 2</code></td>
+                        <td>3.5</td>
+                    </tr>
+                    <tr>
+                        <td><code>DIV</code></td>
+                        <td>Division entière</td>
+                        <td><code>7 DIV 2</code></td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td><code>MOD</code> / <code>%</code></td>
+                        <td>Modulo (reste)</td>
+                        <td><code>7 MOD 3</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td><code>^</code> / <code>**</code></td>
+                        <td>Puissance</td>
+                        <td><code>2 ^ 3</code></td>
+                        <td>8</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Opérateurs de comparaison</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Opérateur</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>==</code></td>
+                        <td>Égal à</td>
+                        <td><code>x == 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>!=</code> / <code>&lt;&gt;</code></td>
+                        <td>Différent de</td>
+                        <td><code>x != 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;</code></td>
+                        <td>Inférieur à</td>
+                        <td><code>x &lt; 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;=</code></td>
+                        <td>Inférieur ou égal</td>
+                        <td><code>x &lt;= 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;</code></td>
+                        <td>Supérieur à</td>
+                        <td><code>x &gt; 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;=</code></td>
+                        <td>Supérieur ou égal</td>
+                        <td><code>x &gt;= 5</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Opérateurs logiques</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Opérateur</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>et</code> / <code>ET</code></td>
+                        <td>ET logique (court-circuit)</td>
+                        <td><code>x &gt; 0 et x &lt; 10</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>ou</code> / <code>OU</code></td>
+                        <td>OU logique (court-circuit)</td>
+                        <td><code>x &lt; 0 ou x &gt; 10</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>non</code> / <code>NON</code></td>
+                        <td>NON logique (négation)</td>
+                        <td><code>non actif</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Court-circuit</div>
+                <p style="margin-bottom: 0;">
+                    Les opérateurs <code>et</code> et <code>ou</code> utilisent l'évaluation en court-circuit :
+                    <br>• <code>A et B</code> : B n'est pas évalué si A est faux
+                    <br>• <code>A ou B</code> : B n'est pas évalué si A est vrai
+                </p>
+            </div>
+
+            <h2 id="entrees-sorties">Entrées/Sorties</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fonction</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ecrire(...)</code></td>
+                        <td>Affiche sans retour à la ligne</td>
+                        <td><code>ecrire("Bonjour")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>ecrireln(...)</code></td>
+                        <td>Affiche avec retour à la ligne</td>
+                        <td><code>ecrireln("Bonjour")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>lire(variable)</code></td>
+                        <td>Lit une valeur depuis l'entrée</td>
+                        <td><code>lire(x)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+                <pre><code class="algo">// Affichage simple
+ecrire("Hello ")
+ecrire("World")  // Affiche: Hello World
+
+// Avec retour à la ligne
+ecrireln("Ligne 1")
+ecrireln("Ligne 2")
+
+// Affichage multiple
+ecrireln("x = ", x, ", y = ", y)
+
+// Échappements spéciaux
+ecrireln("Ligne 1\nLigne 2")  // \n = retour ligne
+ecrire("Col1\tCol2")          // \t = tabulation
+
+// Lecture
+lire(nom)          // Lit une chaîne
+lire(age)          // Lit un entier
+lire(prix)         // Lit un réel</code></pre>
+            </div>
+
+            <h2 id="conditions">Structures conditionnelles</h2>
+
+            <h3>Instruction <code>si...alors...sinon</code></h3>
+
+            <div class="code-block">
+                <pre><code class="algo">// Simple
+si condition alors
+    // instructions
+finsi
+
+// Avec sinon
+si condition alors
+    // instructions si vrai
+sinon
+    // instructions si faux
+finsi
+
+// Avec sinonsi
+si condition1 alors
+    // instructions
+sinonsi condition2 alors
+    // instructions
+sinonsi condition3 alors
+    // instructions
+sinon
+    // instructions par défaut
+finsi</code></pre>
+            </div>
+
+            <h3>Expression conditionnelle</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">// Syntaxe
+variable = si condition alors valeur1 sinon valeur2
+
+// Exemple
+max = si a > b alors a sinon b
+statut = si age >= 18 alors "Majeur" sinon "Mineur"</code></pre>
+            </div>
+
+            <h3>Instruction <code>selon</code> (switch)</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">selon variable
+    cas valeur1 : instruction1
+    cas valeur2 : instruction2
+    cas valeur3 : instruction3
+    defaut : instructionParDefaut
+finselon</code></pre>
+            </div>
+
+            <h2 id="boucles">Boucles</h2>
+
+            <h3>Boucle <code>pour</code></h3>
+
+            <div class="code-block">
+                <pre><code class="algo">// Ascendante (pas = 1 par défaut)
+pour i de 1 à 10 faire
+    ecrireln(i)
+finpour
+
+// Descendante (pas = -1 par défaut)
+pour i de 10 à 1 faire
+    ecrireln(i)
+finpour
+
+// Avec pas positif
+pour i de 0 à 100 pas 10 faire
+    ecrireln(i)  // 0, 10, 20, ..., 100
+finpour
+
+// Avec pas négatif
+pour i de 100 à 0 pas -10 faire
+    ecrireln(i)  // 100, 90, 80, ..., 0
+finpour</code></pre>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-title">Règles du pas</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Le pas ne peut pas être 0</li>
+                    <li>Si debut ≤ fin : pas par défaut = +1</li>
+                    <li>Si debut > fin : pas par défaut = -1</li>
+                </ul>
+            </div>
+
+            <h3>Boucle <code>tantque</code></h3>
+
+            <div class="code-block">
+                <pre><code class="algo">tantque condition faire
+    // instructions répétées tant que condition est vraie
+fintantque</code></pre>
+            </div>
+
+            <h3>Boucle <code>repeter...jusqua</code></h3>
+
+            <div class="code-block">
+                <pre><code class="algo">repeter
+    // instructions (exécutées au moins une fois)
+jusqua condition  // répète jusqu'à ce que condition soit vraie</code></pre>
+            </div>
+
+            <h2 id="tableaux">Tableaux</h2>
+
+            <h3>Déclaration</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">variables
+    // Tableau 1D
+    T : tableau[10] de entier
+    noms : tableau[5] de chaine
+
+    // Tableau 2D (matrice)
+    M : tableau[3][3] de reel
+
+    // Avec initialisation
+    nombres : tableau[5] de entier = [1, 2, 3, 4, 5]</code></pre>
+            </div>
+
+            <h3>Accès aux éléments</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">// Lecture
+valeur = T[0]      // Premier élément
+valeur = T[9]      // Dernier élément (tableau de taille 10)
+
+// Écriture
+T[0] = 42
+T[i] = valeur
+
+// Matrices
+M[0][0] = 1.0      // Première ligne, première colonne
+valeur = M[i][j]</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Indices</div>
+                <p style="margin-bottom: 0;">
+                    Les tableaux commencent à l'indice <strong>0</strong>.
+                    Un tableau de taille N a des indices de 0 à N-1.
+                </p>
+            </div>
+
+            <h2 id="fonctions">Fonctions et Procédures</h2>
+
+            <h3>Fonction (retourne une valeur)</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">fonction nomFonction(param1 : type1, param2 : type2) : typeRetour
+variables
+    // Variables locales
+debut
+    // instructions
+    retourner valeur
+fin</code></pre>
+            </div>
+
+            <h3>Procédure (ne retourne rien)</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">procedure nomProcedure(param1 : type1, param2 : type2)
+variables
+    // Variables locales
+debut
+    // instructions
+fin</code></pre>
+            </div>
+
+            <h3>Passage par référence</h3>
+
+            <div class="code-block">
+                <pre><code class="algo">// Avec ref, reference ou varref
+procedure modifier(ref x : entier)
+debut
+    x = x + 1  // Modifie la variable originale
+fin
+
+// Utilisation
+variables
+    nombre : entier = 10
+debut
+    modifier(nombre)
+    ecrireln(nombre)  // Affiche 11</code></pre>
+            </div>
+
+            <h2 id="fonctions-integrees">Fonctions intégrées</h2>
+
+            <h3>Mathématiques</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fonction</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>abs(x)</code></td><td>Valeur absolue</td><td><code>abs(-5)</code> → 5</td></tr>
+                    <tr><td><code>racine(x)</code></td><td>Racine carrée</td><td><code>racine(9)</code> → 3.0</td></tr>
+                    <tr><td><code>puissance(x,y)</code></td><td>x à la puissance y</td><td><code>puissance(2,3)</code> → 8</td></tr>
+                    <tr><td><code>arrondi(x)</code></td><td>Arrondi au plus proche</td><td><code>arrondi(3.7)</code> → 4</td></tr>
+                    <tr><td><code>plancher(x)</code></td><td>Arrondi inférieur</td><td><code>plancher(3.7)</code> → 3</td></tr>
+                    <tr><td><code>plafond(x)</code></td><td>Arrondi supérieur</td><td><code>plafond(3.2)</code> → 4</td></tr>
+                    <tr><td><code>min(x,y)</code></td><td>Minimum</td><td><code>min(5,3)</code> → 3</td></tr>
+                    <tr><td><code>max(x,y)</code></td><td>Maximum</td><td><code>max(5,3)</code> → 5</td></tr>
+                    <tr><td><code>aleatoire()</code></td><td>Nombre aléatoire [0,1)</td><td><code>aleatoire()</code> → 0.537</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Chaînes de caractères</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fonction</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>longueur(s)</code></td><td>Longueur</td><td><code>longueur("abc")</code> → 3</td></tr>
+                    <tr><td><code>majuscule(s)</code></td><td>En majuscules</td><td><code>majuscule("abc")</code> → "ABC"</td></tr>
+                    <tr><td><code>minuscule(s)</code></td><td>En minuscules</td><td><code>minuscule("ABC")</code> → "abc"</td></tr>
+                    <tr><td><code>sousChaine(s,i,n)</code></td><td>Sous-chaîne</td><td><code>sousChaine("Hello",0,2)</code> → "He"</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Caractères</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fonction</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>ord(c)</code></td><td>Code ASCII</td><td><code>ord('A')</code> → 65</td></tr>
+                    <tr><td><code>chr(n)</code></td><td>Caractère depuis code</td><td><code>chr(65)</code> → 'A'</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Conversion</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fonction</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>versEntier(x)</code></td><td>Convertit en entier</td><td><code>versEntier(3.7)</code> → 3</td></tr>
+                    <tr><td><code>versReel(x)</code></td><td>Convertit en réel</td><td><code>versReel(5)</code> → 5.0</td></tr>
+                    <tr><td><code>versChaine(x)</code></td><td>Convertit en chaîne</td><td><code>versChaine(42)</code> → "42"</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="mots-cles">Mots-clés réservés</h2>
+
+            <div style="column-count: 3; column-gap: 2rem;">
+                <ul>
+                    <li>algorithme</li>
+                    <li>debut / début</li>
+                    <li>fin</li>
+                    <li>variables / var</li>
+                    <li>constantes / const</li>
+                    <li>si</li>
+                    <li>alors</li>
+                    <li>sinon</li>
+                    <li>sinonsi</li>
+                    <li>finsi</li>
+                    <li>selon</li>
+                    <li>cas</li>
+                    <li>defaut / défaut</li>
+                    <li>finselon</li>
+                    <li>pour</li>
+                    <li>de</li>
+                    <li>à</li>
+                    <li>pas</li>
+                    <li>faire</li>
+                    <li>finpour</li>
+                    <li>tantque</li>
+                    <li>fintantque</li>
+                    <li>repeter / répéter</li>
+                    <li>jusqua / jusqu'à</li>
+                    <li>fonction</li>
+                    <li>procedure / procédure</li>
+                    <li>retourner</li>
+                    <li>tableau</li>
+                    <li>ref / reference / varref</li>
+                    <li>entier</li>
+                    <li>reel / réel</li>
+                    <li>chaine / chaîne</li>
+                    <li>caractere / caractère</li>
+                    <li>booleen / booléen</li>
+                    <li>vrai</li>
+                    <li>faux</li>
+                    <li>et / ET</li>
+                    <li>ou / OU</li>
+                    <li>non / NON</li>
+                    <li>ecrire / écrire</li>
+                    <li>ecrireln / écrireln</li>
+                    <li>lire</li>
+                </ul>
+            </div>
+
+            <hr style="margin: 3rem 0;">
+
+            <div style="text-align: center;">
+                <a href="../index.html" class="badge badge-primary" style="padding: 0.75rem 1.5rem; text-decoration: none;">
+                    ← Retour à l'accueil
+                </a>
+            </div>
+
+            <p class="text-center text-muted" style="margin-top: 2rem;">
+                © 2026 Omar OUGHZAL - Algo Compiler v1.6.0
+            </p>
+        </div>
+    </main>
+
+    <script src="../assets/js/algo-highlighter.js"></script>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
+

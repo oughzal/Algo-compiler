@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 6 : Les Boucles - Algo Compiler</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" href="../../icon.png" type="image/png">
+</head>
+<body>
+    <nav class="sidebar">
+        <a href="../index.html" class="nav-brand">
+            <img src="../../icon.png" alt="Algo Logo">
+            <span>Algo Compiler</span>
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-section">
+                <div class="nav-section-title">Navigation</div>
+                <ul>
+                    <li class="nav-item"><a href="../index.html" class="nav-link">🏠 Accueil</a></li>
+                    <li class="nav-item"><a href="06-boucles.html" class="nav-link active">🔄 Boucles</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+    <main class="main-content">
+        <div class="fade-in">
+            <h1>🔄 Chapitre 6 : Les Boucles</h1>
+
+            <p>
+                Les <strong>boucles</strong> permettent de répéter des instructions plusieurs fois.
+                Elles sont essentielles en programmation pour automatiser des tâches répétitives.
+            </p>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Pourquoi utiliser des boucles ?</div>
+                <p>
+                    Imaginez que vous devez afficher les nombres de 1 à 100. Sans boucle, vous devriez
+                    écrire 100 lignes de code ! Avec une boucle, quelques lignes suffisent.
+                </p>
+            </div>
+
+            <h2>1️⃣ La boucle <code>pour</code></h2>
+
+            <p>
+                La boucle <code>pour</code> est utilisée quand on connaît à l'avance le <strong>nombre
+                d'itérations</strong> à effectuer.
+            </p>
+
+            <h3>Syntaxe de base</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Structure de la boucle pour</div>
+                <pre><code class="algo">pour variable de debut à fin faire
+    // Instructions à répéter
+finpour</code></pre>
+            </div>
+
+            <h3>Exemple simple</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Afficher les nombres de 1 à 5</div>
+                <pre><code class="algo">algorithme ComptageSimple
+
+variables
+    i : entier
+
+debut
+    pour i de 1 à 5 faire
+        ecrireln(i)
+    finpour
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résultat</div>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem; margin-top: 0.5rem;">1
+2
+3
+4
+5</pre>
+            </div>
+
+            <h3>🆕 Boucle avec pas (step)</h3>
+
+            <p>
+                Le mot-clé <code>pas</code> permet de spécifier l'<strong>incrément</strong> de la boucle :
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Syntaxe avec pas</div>
+                <pre><code class="algo">pour variable de debut à fin pas increment faire
+    // Instructions
+finpour</code></pre>
+            </div>
+
+            <h4>Exemples avec pas positif</h4>
+
+            <div class="code-block">
+                <div class="code-block-header">Nombres pairs de 0 à 20</div>
+                <pre><code class="algo">algorithme NombresPairs
+
+variables
+    i : entier
+
+debut
+    pour i de 0 à 20 pas 2 faire
+        ecrire(i, " ")
+    finpour
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résultat</div>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem; margin-top: 0.5rem;">0 2 4 6 8 10 12 14 16 18 20</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-block-header">Multiples de 5</div>
+                <pre><code class="algo">algorithme MultiplesDe5
+
+variables
+    i : entier
+
+debut
+    pour i de 0 à 50 pas 5 faire
+        ecrire(i, " ")
+    finpour
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résultat</div>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem; margin-top: 0.5rem;">0 5 10 15 20 25 30 35 40 45 50</pre>
+            </div>
+
+            <h4>Exemples avec pas négatif (compte à rebours)</h4>
+
+            <div class="code-block">
+                <div class="code-block-header">Compte à rebours automatique</div>
+                <pre><code class="algo">algorithme CompteARebours
+
+variables
+    i : entier
+
+debut
+    ecrireln("Décompte spatial :")
+    pour i de 10 à 0 faire
+        ecrireln(i)
+    finpour
+    ecrireln("🚀 Décollage !")
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Pas automatique</div>
+                <p style="margin-bottom: 0;">
+                    Si vous ne spécifiez pas le <code>pas</code> et que <code>debut > fin</code>,
+                    le pas sera automatiquement <strong>-1</strong> (décrémentation).
+                </p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-block-header">Pas négatif explicite</div>
+                <pre><code class="algo">algorithme PasNegatif
+
+variables
+    i : entier
+
+debut
+    pour i de 20 à 0 pas -2 faire
+        ecrire(i, " ")
+    finpour
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résultat</div>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem; margin-top: 0.5rem;">20 18 16 14 12 10 8 6 4 2 0</pre>
+            </div>
+
+            <h3>Règles importantes du pas</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Pas par défaut</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>debut ≤ fin</td>
+                        <td>+1 (ascendant)</td>
+                        <td><code>pour i de 1 à 10 faire</code></td>
+                    </tr>
+                    <tr>
+                        <td>debut > fin</td>
+                        <td>-1 (descendant)</td>
+                        <td><code>pour i de 10 à 1 faire</code></td>
+                    </tr>
+                    <tr>
+                        <td>Pas explicite positif</td>
+                        <td>Valeur spécifiée</td>
+                        <td><code>pour i de 0 à 100 pas 10 faire</code></td>
+                    </tr>
+                    <tr>
+                        <td>Pas explicite négatif</td>
+                        <td>Valeur spécifiée</td>
+                        <td><code>pour i de 100 à 0 pas -10 faire</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-danger">
+                <div class="alert-title">Attention</div>
+                <p style="margin-bottom: 0;">
+                    Le <code>pas</code> ne peut <strong>jamais être 0</strong>. Cela génèrerait une erreur d'exécution.
+                </p>
+            </div>
+
+            <h3>Applications pratiques</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Table de multiplication</div>
+                <pre><code class="algo">algorithme TableMultiplication
+
+variables
+    i, nombre, resultat : entier
+
+debut
+    ecrire("Entrez un nombre : ")
+    lire(nombre)
+
+    ecrireln("Table de ", nombre, " :")
+    pour i de 1 à 10 faire
+        resultat = nombre * i
+        ecrireln(nombre, " × ", i, " = ", resultat)
+    finpour
+fin</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-block-header">Somme des nombres pairs</div>
+                <pre><code class="algo">algorithme SommePairs
+
+variables
+    i, somme : entier
+
+debut
+    somme = 0
+    pour i de 0 à 100 pas 2 faire
+        somme = somme + i
+    finpour
+
+    ecrireln("La somme des nombres pairs de 0 à 100 est : ", somme)
+    // Résultat : 2550
+fin</code></pre>
+            </div>
+
+            <h2>2️⃣ La boucle <code>tantque</code></h2>
+
+            <p>
+                La boucle <code>tantque</code> répète des instructions <strong>tant qu'une condition est vraie</strong>.
+                Elle est utilisée quand on ne connaît pas à l'avance le nombre d'itérations.
+            </p>
+
+            <h3>Syntaxe</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Structure de la boucle tantque</div>
+                <pre><code class="algo">tantque condition faire
+    // Instructions à répéter
+fintantque</code></pre>
+            </div>
+
+            <h3>Exemple</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Deviner un nombre</div>
+                <pre><code class="algo">algorithme DevinerNombre
+
+variables
+    secret, proposition : entier
+
+debut
+    secret = 42
+    proposition = 0
+
+    ecrireln("Devinez le nombre (entre 1 et 100)")
+
+    tantque proposition != secret faire
+        ecrire("Votre proposition : ")
+        lire(proposition)
+
+        si proposition < secret alors
+            ecrireln("Trop petit !")
+        sinonsi proposition > secret alors
+            ecrireln("Trop grand !")
+        finsi
+    fintantque
+
+    ecrireln("Bravo ! Vous avez trouvé !")
+fin</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-block-header">Compter jusqu'à 100</div>
+                <pre><code class="algo">algorithme CompterJusqua100
+
+variables
+    compteur : entier
+
+debut
+    compteur = 1
+
+    tantque compteur <= 100 faire
+        ecrire(compteur, " ")
+        compteur = compteur + 1
+    fintantque
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-title">Attention aux boucles infinies !</div>
+                <p style="margin-bottom: 0;">
+                    Assurez-vous que la condition finira par devenir <code>faux</code>,
+                    sinon la boucle ne s'arrêtera jamais !
+                </p>
+            </div>
+
+            <h2>3️⃣ La boucle <code>repeter...jusqua</code></h2>
+
+            <p>
+                La boucle <code>repeter...jusqua</code> exécute les instructions <strong>au moins une fois</strong>,
+                puis répète <strong>jusqu'à ce qu'une condition soit vraie</strong>.
+            </p>
+
+            <h3>Syntaxe</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Structure de la boucle répéter</div>
+                <pre><code class="algo">repeter
+    // Instructions (exécutées au moins une fois)
+jusqua condition</code></pre>
+            </div>
+
+            <h3>Différence avec tantque</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Boucle</th>
+                        <th>Vérification</th>
+                        <th>Exécutions minimales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>tantque</code></td>
+                        <td>Au début (avant)</td>
+                        <td>0 ou plus</td>
+                    </tr>
+                    <tr>
+                        <td><code>repeter...jusqua</code></td>
+                        <td>À la fin (après)</td>
+                        <td>1 ou plus</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exemple</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">Menu avec validation</div>
+                <pre><code class="algo">algorithme MenuInteractif
+
+variables
+    choix : entier
+
+debut
+    repeter
+        ecrireln("=== MENU ===")
+        ecrireln("1. Option A")
+        ecrireln("2. Option B")
+        ecrireln("3. Quitter")
+        ecrire("Votre choix : ")
+        lire(choix)
+
+        si choix == 1 alors
+            ecrireln("Vous avez choisi l'option A")
+        sinonsi choix == 2 alors
+            ecrireln("Vous avez choisi l'option B")
+        sinonsi choix == 3 alors
+            ecrireln("Au revoir !")
+        sinon
+            ecrireln("Choix invalide !")
+        finsi
+
+        ecrireln()
+    jusqua choix == 3
+fin</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-block-header">Validation de saisie</div>
+                <pre><code class="algo">algorithme ValidationAge
+
+variables
+    age : entier
+
+debut
+    repeter
+        ecrire("Entrez votre âge (entre 0 et 120) : ")
+        lire(age)
+
+        si age < 0 ou age > 120 alors
+            ecrireln("Âge invalide ! Réessayez.")
+        finsi
+    jusqua age >= 0 et age <= 120
+
+    ecrireln("Âge valide : ", age, " ans")
+fin</code></pre>
+            </div>
+
+            <h2>Comparaison des boucles</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Boucle</th>
+                        <th>Quand l'utiliser ?</th>
+                        <th>Exemple typique</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>pour</code></td>
+                        <td>Nombre d'itérations connu</td>
+                        <td>Parcourir un tableau, afficher N nombres</td>
+                    </tr>
+                    <tr>
+                        <td><code>tantque</code></td>
+                        <td>Nombre d'itérations inconnu</td>
+                        <td>Deviner un nombre, lire jusqu'à EOF</td>
+                    </tr>
+                    <tr>
+                        <td><code>repeter</code></td>
+                        <td>Au moins une exécution nécessaire</td>
+                        <td>Menu, validation de saisie</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Boucles imbriquées</h2>
+
+            <p>
+                On peut placer une boucle à l'intérieur d'une autre boucle :
+            </p>
+
+            <div class="code-block">
+                <div class="code-block-header">Table de multiplication complète</div>
+                <pre><code class="algo">algorithme TableComplete
+
+variables
+    i, j, resultat : entier
+
+debut
+    pour i de 1 à 10 faire
+        ecrireln("Table de ", i, " :")
+        pour j de 1 à 10 faire
+            resultat = i * j
+            ecrireln("  ", i, " × ", j, " = ", resultat)
+        finpour
+        ecrireln()
+    finpour
+fin</code></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-block-header">Triangle d'étoiles</div>
+                <pre><code class="algo">algorithme TriangleEtoiles
+
+variables
+    i, j : entier
+
+debut
+    pour i de 1 à 5 faire
+        pour j de 1 à i faire
+            ecrire("* ")
+        finpour
+        ecrireln()
+    finpour
+fin</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résultat</div>
+                <pre style="background: white; border: 1px solid #ddd; padding: 0.5rem; margin-top: 0.5rem;">*
+* *
+* * *
+* * * *
+* * * * * </pre>
+            </div>
+
+            <h2>Exercices pratiques</h2>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exercice 1 : Somme des nombres</div>
+                <p>
+                    Écrivez un algorithme qui calcule la somme de tous les nombres de 1 à N
+                    (N saisi par l'utilisateur).
+                </p>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exercice 2 : Factorielle</div>
+                <p>
+                    Écrivez un algorithme qui calcule la factorielle d'un nombre N.<br>
+                    Rappel : N! = 1 × 2 × 3 × ... × N
+                </p>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exercice 3 : Nombres premiers</div>
+                <p>
+                    Écrivez un algorithme qui affiche tous les nombres premiers entre 1 et 100.
+                </p>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Exercice 4 : Suite de Fibonacci</div>
+                <p>
+                    Affichez les 20 premiers termes de la suite de Fibonacci.<br>
+                    Rappel : Fib(n) = Fib(n-1) + Fib(n-2), avec Fib(0) = 0 et Fib(1) = 1
+                </p>
+            </div>
+
+            <h2>Points clés à retenir</h2>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Résumé du chapitre</div>
+                <ul style="margin-bottom: 0;">
+                    <li><code>pour</code> : nombre d'itérations connu, avec support du <code>pas</code></li>
+                    <li><code>tantque</code> : répète tant qu'une condition est vraie</li>
+                    <li><code>repeter...jusqua</code> : exécute au moins une fois</li>
+                    <li>Le pas peut être positif (+) ou négatif (-)</li>
+                    <li>Attention aux boucles infinies avec <code>tantque</code></li>
+                    <li>Les boucles peuvent être imbriquées</li>
+                    <li>Utilisez la boucle appropriée selon le contexte</li>
+                </ul>
+            </div>
+
+            <hr style="margin: 3rem 0;">
+
+            <div style="display: flex; justify-content: space-between;">
+                <a href="../index.html" class="badge badge-secondary" style="padding: 0.75rem 1.5rem; text-decoration: none;">
+                    ← Retour à l'accueil
+                </a>
+                <a href="../index.html" class="badge badge-primary" style="padding: 0.75rem 1.5rem; text-decoration: none;">
+                    Continuer le cours →
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/algo-highlighter.js"></script>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
+

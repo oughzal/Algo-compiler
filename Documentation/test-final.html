@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Highlighter Algo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        pre {
+            background: #282c34;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        code {
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #abb2bf;
+        }
+        /* Coloration syntaxique */
+        .algo-keyword { color: #c678dd; font-weight: 600; }
+        .algo-type { color: #e06c75; font-weight: 500; }
+        .algo-string { color: #98c379; }
+        .algo-char { color: #98c379; }
+        .algo-number { color: #d19a66; }
+        .algo-comment { color: #5c6370; font-style: italic; }
+        .algo-operator { color: #56b6c2; font-weight: 600; }
+        .algo-operator-logical { color: #e5c07b; font-weight: 600; }
+        .algo-builtin { color: #61afef; font-weight: 500; }
+        .algo-constant { color: #d19a66; font-weight: 500; }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Test du Syntax Highlighter Algo</h1>
+
+    <p>Cette page teste le syntax highlighter. Le code ci-dessous devrait être automatiquement coloré.</p>
+
+    <h2>Exemple 1 : Code simple</h2>
+    <pre><code class="algo">algorithme Test
+variables
+    x : entier
+    nom : chaine
+debut
+    x = 10
+    nom = "Alice"
+    ecrireln("Bonjour ", nom)
+    ecrireln("x = ", x)
+fin</code></pre>
+
+    <h2>Exemple 2 : Boucle avec pas</h2>
+    <pre><code class="algo">algorithme BouclePas
+variables
+    i, somme : entier
+debut
+    // Calculer la somme des pairs
+    somme = 0
+    pour i de 0 à 100 pas 2 faire
+        somme = somme + i
+    finpour
+    ecrireln("Somme = ", somme)
+fin</code></pre>
+
+    <h2>Exemple 3 : Conditions et types</h2>
+    <pre><code class="algo">algorithme Conditions
+variables
+    age : entier
+    prix : reel
+    actif : booleen
+debut
+    age = 25
+    prix = 19.99
+    actif = vrai
+
+    si age >= 18 et actif alors
+        ecrireln("Accès autorisé")
+        ecrireln("Prix : ", prix, " €")
+    sinon
+        ecrireln("Accès refusé")
+    finsi
+fin</code></pre>
+
+    <h2>Exemple 4 : Fonctions</h2>
+    <pre><code class="algo">algorithme Mathematiques
+variables
+    x, y : reel
+    resultat : entier
+debut
+    x = 3.7
+    y = racine(16)
+    resultat = abs(-5) + arrondi(x)
+
+    ecrireln("x = ", x)
+    ecrireln("y = ", y)
+    ecrireln("résultat = ", resultat)
+fin</code></pre>
+
+    <div id="status"></div>
+
+    <script src="assets/js/algo-highlighter.js"></script>
+    <script>
+        // Vérification après chargement
+        setTimeout(() => {
+            const status = document.getElementById('status');
+            const blocks = document.querySelectorAll('code.algo');
+            const highlighted = document.querySelectorAll('.algo-highlighted');
+            const spans = document.querySelectorAll('code.algo span');
+
+            let html = '<h2>📊 Résultats du test</h2>';
+            html += `<p>Blocs de code trouvés : <strong>${blocks.length}</strong></p>`;
+            html += `<p>Blocs colorés : <strong>${highlighted.length}</strong></p>`;
+            html += `<p>Spans créés : <strong>${spans.length}</strong></p>`;
+
+            if (highlighted.length === blocks.length && spans.length > 0) {
+                html += '<div class="success"><strong>✓ TEST RÉUSSI !</strong><br>Tous les blocs ont été colorés correctement.</div>';
+            } else {
+                html += '<div class="error"><strong>✗ TEST ÉCHOUÉ</strong><br>La coloration n\'a pas fonctionné correctement.</div>';
+            }
+
+            status.innerHTML = html;
+        }, 1000);
+    </script>
+</body>
+</html>
+

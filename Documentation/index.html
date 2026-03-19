@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation complète du compilateur Algo - Apprenez l'algorithmique en français">
+    <meta name="keywords" content="algorithmique, algo, programmation, français, cours, tutoriel">
+    <meta name="author" content="Omar OUGHZAL">
+    <title>Cours d'Algorithmique - Algo Compiler</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="../icon.png" type="image/png">
+</head>
+<body>
+    <!-- Menu latéral -->
+    <nav class="sidebar">
+        <a href="index.html" class="nav-brand">
+            <img src="../icon.png" alt="Algo Logo">
+            <span>Algo Compiler</span>
+        </a>
+
+        <ul class="nav-menu">
+            <li class="nav-section">
+                <div class="nav-section-title">Introduction</div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">🏠 Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/01-introduction.html" class="nav-link">📚 Qu'est-ce que l'algorithmique ?</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-section">
+                <div class="nav-section-title">Les Bases</div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="chapitres/02-variables-types.html" class="nav-link">🔢 Variables et Types</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/03-operateurs.html" class="nav-link">➕ Opérateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/04-entrees-sorties.html" class="nav-link">💬 Entrées/Sorties</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-section">
+                <div class="nav-section-title">Structures de Contrôle</div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="chapitres/05-conditions.html" class="nav-link">🔀 Conditions (Si...Alors)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/06-boucles.html" class="nav-link">🔄 Boucles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/07-selon.html" class="nav-link">🎯 Instruction Selon</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-section">
+                <div class="nav-section-title">Structures de Données</div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="chapitres/08-tableaux.html" class="nav-link">📊 Tableaux</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/09-matrices.html" class="nav-link">🔢 Matrices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/10-chaines.html" class="nav-link">📝 Chaînes de caractères</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-section">
+                <div class="nav-section-title">Fonctions</div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="chapitres/11-fonctions-procedures.html" class="nav-link">⚙️ Fonctions et Procédures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/12-fonctions-integrees.html" class="nav-link">🛠️ Fonctions Intégrées</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-section">
+                <div class="nav-section-title">Concepts Avancés</div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="chapitres/13-recursivite.html" class="nav-link">♻️ Récursivité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/14-passage-reference.html" class="nav-link">🔗 Passage par Référence</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/15-algorithmique-avancee.html" class="nav-link">🚀 Algorithmes Classiques</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-section">
+                <div class="nav-section-title">Ressources</div>
+                <ul>
+                    <li class="nav-item">
+                        <a href="chapitres/16-exemples-complets.html" class="nav-link">💡 Exemples Complets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/17-exercices.html" class="nav-link">✏️ Exercices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="chapitres/18-reference.html" class="nav-link">📖 Référence Complète</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Bouton menu mobile -->
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="fade-in">
+            <h1>📚 Cours d'Algorithmique avec Algo Compiler</h1>
+
+            <p class="text-muted" style="font-size: 1.125rem;">
+                Bienvenue dans le cours complet d'algorithmique utilisant le langage Algo !
+            </p>
+
+            <div class="alert alert-info">
+                <div class="alert-title">À propos de ce cours</div>
+                <p>
+                    Ce cours vous apprendra l'algorithmique de manière progressive, depuis les concepts de base
+                    jusqu'aux algorithmes avancés. Chaque chapitre contient des explications théoriques,
+                    la syntaxe Algo correspondante, et de nombreux exemples pratiques.
+                </p>
+            </div>
+
+            <h2>🎯 Objectifs du cours</h2>
+            <ul>
+                <li>Comprendre les concepts fondamentaux de l'algorithmique</li>
+                <li>Maîtriser la syntaxe du langage Algo</li>
+                <li>Développer une pensée logique et structurée</li>
+                <li>Résoudre des problèmes avec des algorithmes efficaces</li>
+                <li>Se préparer à la programmation dans d'autres langages</li>
+            </ul>
+
+            <h2>📋 Structure du cours</h2>
+
+            <h3>1️⃣ Introduction</h3>
+            <p>
+                Découvrez ce qu'est l'algorithmique, pourquoi elle est importante, et comment
+                installer et utiliser Algo Compiler.
+            </p>
+            <ul>
+                <li><a href="chapitres/01-introduction.html">Qu'est-ce que l'algorithmique ?</a></li>
+            </ul>
+
+            <h3>2️⃣ Les Bases</h3>
+            <p>
+                Apprenez les éléments fondamentaux : variables, types de données, opérateurs,
+                et interactions avec l'utilisateur.
+            </p>
+            <ul>
+                <li><a href="chapitres/02-variables-types.html">Variables et Types de données</a></li>
+                <li><a href="chapitres/03-operateurs.html">Opérateurs arithmétiques et logiques</a></li>
+                <li><a href="chapitres/04-entrees-sorties.html">Entrées et sorties (lire/écrire)</a></li>
+            </ul>
+
+            <h3>3️⃣ Structures de Contrôle</h3>
+            <p>
+                Maîtrisez les structures qui permettent de contrôler le flux d'exécution de vos algorithmes.
+            </p>
+            <ul>
+                <li><a href="chapitres/05-conditions.html">Les conditions (Si...Alors...Sinon)</a></li>
+                <li><a href="chapitres/06-boucles.html">Les boucles (Pour, TantQue, Répéter)</a></li>
+                <li><a href="chapitres/07-selon.html">L'instruction Selon (Switch)</a></li>
+            </ul>
+
+            <h3>4️⃣ Structures de Données</h3>
+            <p>
+                Apprenez à organiser et manipuler des collections de données.
+            </p>
+            <ul>
+                <li><a href="chapitres/08-tableaux.html">Tableaux (arrays)</a></li>
+                <li><a href="chapitres/09-matrices.html">Matrices (tableaux 2D)</a></li>
+                <li><a href="chapitres/10-chaines.html">Chaînes de caractères</a></li>
+            </ul>
+
+            <h3>5️⃣ Fonctions et Procédures</h3>
+            <p>
+                Structurez votre code avec des sous-programmes réutilisables.
+            </p>
+            <ul>
+                <li><a href="chapitres/11-fonctions-procedures.html">Créer des fonctions et procédures</a></li>
+                <li><a href="chapitres/12-fonctions-integrees.html">Utiliser les fonctions intégrées</a></li>
+            </ul>
+
+            <h3>6️⃣ Concepts Avancés</h3>
+            <p>
+                Explorez des concepts plus avancés pour résoudre des problèmes complexes.
+            </p>
+            <ul>
+                <li><a href="chapitres/13-recursivite.html">La récursivité</a></li>
+                <li><a href="chapitres/14-passage-reference.html">Passage par référence</a></li>
+                <li><a href="chapitres/15-algorithmique-avancee.html">Algorithmes classiques (tri, recherche...)</a></li>
+            </ul>
+
+            <h3>7️⃣ Pratique</h3>
+            <p>
+                Mettez en pratique vos connaissances avec des exemples complets et des exercices.
+            </p>
+            <ul>
+                <li><a href="chapitres/16-exemples-complets.html">Exemples complets commentés</a></li>
+                <li><a href="chapitres/17-exercices.html">Exercices avec solutions</a></li>
+                <li><a href="chapitres/18-reference.html">Référence complète du langage</a></li>
+            </ul>
+
+            <h2>🚀 Commencer le cours</h2>
+
+            <div class="alert alert-success">
+                <div class="alert-title">Prêt à commencer ?</div>
+                <p style="margin-bottom: 0;">
+                    Commencez par le premier chapitre :
+                    <a href="chapitres/01-introduction.html" style="font-weight: 600;">
+                        Introduction à l'algorithmique →
+                    </a>
+                </p>
+            </div>
+
+            <h2>💾 Installation d'Algo Compiler</h2>
+
+            <div class="alert alert-info">
+                <div class="alert-title">Prérequis</div>
+                <ul style="margin-bottom: 0; padding-left: 1.5rem;">
+                    <li>Java 21 ou supérieur (<a href="https://www.oracle.com/java/technologies/downloads/#java21" target="_blank">Télécharger Java</a>)</li>
+                    <li>Visual Studio Code (<a href="https://code.visualstudio.com/" target="_blank">Télécharger VS Code</a>)</li>
+                </ul>
+            </div>
+
+            <h3>Étapes d'installation</h3>
+
+            <ol>
+                <li>
+                    <strong>Télécharger le compilateur</strong><br>
+                    <a href="https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar"
+                       class="badge badge-primary" style="text-decoration: none; padding: 0.5rem 1rem; margin-top: 0.5rem; display: inline-block;">
+                        📥 Télécharger algo-compiler-1.6.0.jar
+                    </a>
+                </li>
+                <li>
+                    <strong>Installer l'extension VS Code</strong><br>
+                    <a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler"
+                       target="_blank"
+                       class="badge badge-primary" style="text-decoration: none; padding: 0.5rem 1rem; margin-top: 0.5rem; display: inline-block;">
+                        🧩 Installer l'extension
+                    </a>
+                </li>
+                <li>
+                    <strong>Configurer l'extension</strong><br>
+                    Dans VS Code, ouvrez les paramètres (Ctrl+,) et cherchez "Algo Compiler".
+                    Définissez le chemin vers le fichier JAR téléchargé.
+                </li>
+                <li>
+                    <strong>Créer votre premier algorithme</strong><br>
+                    Créez un fichier avec l'extension <code>.algo</code> et commencez à coder !
+                </li>
+            </ol>
+
+            <h3>Premier programme</h3>
+
+            <div class="code-block">
+                <div class="code-block-header">bonjour.algo</div>
+                <pre><code class="algo">algorithme Bonjour
+
+variables
+    nom : chaine
+
+debut
+    ecrire("Entrez votre nom : ")
+    lire(nom)
+    ecrireln("Bonjour ", nom, " !")
+fin</code></pre>
+            </div>
+
+            <h2>📞 Liens utiles</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ressource</th>
+                        <th>Description</th>
+                        <th>Lien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🌐 Site web</td>
+                        <td>Page principale du projet</td>
+                        <td><a href="https://oughzal.github.io/Algo-compiler" target="_blank">Visiter</a></td>
+                    </tr>
+                    <tr>
+                        <td>💻 GitHub</td>
+                        <td>Code source et releases</td>
+                        <td><a href="https://github.com/oughzal/Algo-compiler" target="_blank">Voir sur GitHub</a></td>
+                    </tr>
+                    <tr>
+                        <td>🧩 Extension VS Code</td>
+                        <td>Extension pour Visual Studio Code</td>
+                        <td><a href="https://marketplace.visualstudio.com/items?itemName=omarcomputer.algo-compiler" target="_blank">Marketplace</a></td>
+                    </tr>
+                    <tr>
+                        <td>📖 Documentation</td>
+                        <td>Guide complet</td>
+                        <td><a href="https://github.com/oughzal/Algo-compiler/blob/main/HELP.md" target="_blank">HELP.md</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border-color);">
+
+            <p class="text-center text-muted">
+                © 2026 Omar OUGHZAL - Tous droits réservés<br>
+                <a href="https://github.com/oughzal/Algo-compiler">Algo Compiler</a> - Documentation v1.0.0
+            </p>
+        </div>
+    </main>
+
+    <script src="assets/js/algo-highlighter.js"></script>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+
+        // Fermer le menu mobile au clic sur un lien
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.sidebar').classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

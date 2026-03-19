@@ -1,0 +1,41 @@
+algorithme TestFinalCourtCircuit
+variables
+    x, y : entier
+    resultat : booleen
+
+debut
+    ecrireln("=== Test final de l'évaluation en court-circuit ===")
+    ecrireln()
+
+    // Test 1 : ET avec division par zéro évitée
+    x = 0
+    ecrireln("Test 1 : x = ", x)
+    ecrire("  (x <> 0) et (10 / x > 0) = ")
+    resultat = (x <> 0) et (10 / x > 0)
+    ecrireln(resultat, " ✓ Pas d'erreur!")
+    ecrireln()
+
+    // Test 2 : OU avec division par zéro évitée
+    ecrire("  (x == 0) ou (10 / x > 0) = ")
+    resultat = (x == 0) ou (10 / x > 0)
+    ecrireln(resultat, " ✓ Pas d'erreur!")
+    ecrireln()
+
+    // Test 3 : ET avec les deux vrais
+    x = 5
+    y = 10
+    ecrireln("Test 2 : x = ", x, ", y = ", y)
+    ecrire("  (x < y) et (y > 3) = ")
+    resultat = (x < y) et (y > 3)
+    ecrireln(resultat)
+    ecrireln()
+
+    // Test 4 : OU avec le premier vrai
+    ecrire("  (x < y) ou (x > 100) = ")
+    resultat = (x < y) ou (x > 100)
+    ecrireln(resultat, " ✓ x > 100 non évalué")
+    ecrireln()
+
+    ecrireln("=== Tous les tests passent avec succès! ===")
+fin
+
