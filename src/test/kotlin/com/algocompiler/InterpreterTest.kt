@@ -494,11 +494,14 @@ class InterpreterTest {
             algorithme Test
             variables
                 s : chaine
-                len : entier
+                tab : tableau[3] de entier
+                len, lenTab : entier
             debut
                 s = "Hello"
                 len = longueur(s)
                 ecrireln(len)
+                lenTab = longueur(tab)
+                ecrireln(lenTab)
                 s = majuscule(s)
                 ecrireln(s)
                 s = minuscule(s)
@@ -507,7 +510,7 @@ class InterpreterTest {
         """.trimIndent()
 
         val output = executeCode(code)
-        assertEquals("5\nHELLO\nhello\n", output)
+        assertEquals("5\n3\nHELLO\nhello\n", output)
     }
 
     @Test

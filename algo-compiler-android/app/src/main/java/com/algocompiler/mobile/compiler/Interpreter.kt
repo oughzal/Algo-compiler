@@ -848,7 +848,11 @@ class Interpreter {
             // Fonctions de chaînes
             "longueur" -> {
                 if (args.isEmpty()) runtimeError("longueur() nécessite 1 argument")
-                args[0].toString().length
+                when (val value = args[0]) {
+                    is String -> value.length
+                    is List<*> -> value.size
+                    else -> value.toString().length
+                }
             }
             "majuscule" -> {
                 if (args.isEmpty()) runtimeError("majuscule() nécessite 1 argument")
