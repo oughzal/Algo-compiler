@@ -303,6 +303,24 @@ class InterpreterTest {
     }
 
     @Test
+    fun testStringCharacterAccessAndAssignment() {
+        val code = """
+            algorithme Test
+            variables
+                s : chaine
+            debut
+                s = "ABC"
+                ecrireln(s[0] == 'A')
+                s[1] = 'X'
+                ecrireln(s)
+            fin
+        """.trimIndent()
+
+        val output = executeCode(code)
+        assertEquals("true\nAXC\n", output)
+    }
+
+    @Test
     fun testConstant() {
         val code = """
             algorithme Test

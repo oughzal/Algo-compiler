@@ -353,12 +353,18 @@ class Interpreter {
         val value = evaluateExpression(assignment.expression)
         val index = toInt(evaluateExpression(assignment.index))
         val normalizedName = normalize(assignment.arrayName)
+        val target = variables[normalizedName] ?: runtimeError("Variable '${assignment.arrayName}' non définie")
+
+        if (target is String) {
+            setStringCharacter(assignment.arrayName, index, value)
+            return
+        }
 
         @Suppress("UNCHECKED_CAST")
         val array =
-                variables[normalizedName] as? MutableList<Any>
+                target as? MutableList<Any>
                         ?: runtimeError(
-                                "Variable '${assignment.arrayName}' n'est pas un tableau"
+                                "Variable '${assignment.arrayName}' n'est pas un tableau ou une chaine"
                         )
 
         if (index < 0 || index >= array.size) {
@@ -382,6 +388,40 @@ class Interpreter {
         }
 
         array[index] = castedValue
+    }
+
+    private fun getStringCharacter(name: String, index: Int): Char {
+        val normalizedName = normalize(name)
+        val value = variables[normalizedName] ?: runtimeError("Variable '$name' non définie")
+        val stringValue = value as? String ?: runtimeError("Variable '$name' n'est pas une chaîne")
+
+        if (index < 0 || index >= stringValue.length) {
+            runtimeError("Index $index hors limites pour la chaîne '$name'")
+        }
+
+        return stringValue[index]
+    }
+
+    private fun setStringCharacter(name: String, index: Int, value: Any) {
+        val normalizedName = normalize(name)
+        val currentValue = variables[normalizedName] ?: runtimeError("Variable '$name' non définie")
+        val stringValue = currentValue as? String ?: runtimeError("Variable '$name' n'est pas une chaîne")
+
+        if (index < 0 || index >= stringValue.length) {
+            runtimeError("Index $index hors limites pour la chaîne '$name'")
+        }
+
+        val charValue = when (value) {
+            is Char -> value
+            is String -> {
+                if (value.length == 1) value[0] else runtimeError("La valeur affectée à '$name[$index]' doit être un caractère unique")
+            }
+            else -> castToType(value, "caractere") as Char
+        }
+
+        val characters = stringValue.toCharArray()
+        characters[index] = charValue
+        variables[normalizedName] = characters.concatToString()
     }
 
     private fun executeMatrixAssignment(assignment: MatrixAssignment) {
@@ -584,11 +624,18 @@ class Interpreter {
                     // Read input without automatic prompt
                     val input = readLine() ?: ""
 
+                    val existingValue = variables[normalizedName]
+                    if (existingValue is String) {
+                        val value: Any = if (input.isNotEmpty()) input[0] else '\u0000'
+                        setStringCharacter(target.arrayName, index, value)
+                        continue
+                    }
+
                     @Suppress("UNCHECKED_CAST")
                     val array =
-                            variables[normalizedName] as? MutableList<Any>
+                            existingValue as? MutableList<Any>
                                     ?: runtimeError(
-                                            "Variable '${target.arrayName}' n'est pas un tableau"
+                                            "Variable '${target.arrayName}' n'est pas un tableau ou une chaîne"
                                     )
 
                     if (index < 0 || index >= array.size) {
@@ -1008,13 +1055,19 @@ class Interpreter {
                             ?: runtimeError("Variable '${expression.name}' non définie")
             is ArrayAccess -> {
                 val normalizedName = normalize(expression.name)
+                val arrayValue = variables[normalizedName] ?: runtimeError("Variable '${expression.name}' non définie")
+                val index = toInt(evaluateExpression(expression.index))
+
+                if (arrayValue is String) {
+                    return getStringCharacter(expression.name, index)
+                }
+
                 @Suppress("UNCHECKED_CAST")
                 val array =
-                        variables[normalizedName] as? List<Any>
+                        arrayValue as? List<Any>
                                 ?: runtimeError(
-                                        "Variable '${expression.name}' n'est pas un tableau"
+                                        "Variable '${expression.name}' n'est pas un tableau ou une chaîne"
                                 )
-                val index = toInt(evaluateExpression(expression.index))
                 if (index < 0 || index >= array.size) {
                     runtimeError(
                             "Index $index hors limites pour le tableau '${expression.name}'"
