@@ -47,6 +47,21 @@ class InterpreterTest {
     }
 
     @Test
+    fun testAssignmentRequiresDeclaredVariable() {
+        val code = """
+            algorithme Test
+            debut
+                x = 5
+            fin
+        """.trimIndent()
+
+        val exception = assertFailsWith<Exception> {
+            executeCode(code)
+        }
+        assertTrue(exception.message!!.contains("non déclarée"))
+    }
+
+    @Test
     fun testCharacterAssignment() {
         val code = """
             algorithme Test
@@ -206,6 +221,23 @@ class InterpreterTest {
     }
 
     @Test
+    fun testForLoopRequiresDeclaredVariable() {
+        val code = """
+            algorithme Test
+            debut
+                pour i de 1 à 3 faire
+                    ecrireln(i)
+                finpour
+            fin
+        """.trimIndent()
+
+        val exception = assertFailsWith<Exception> {
+            executeCode(code)
+        }
+        assertTrue(exception.message!!.contains("non déclarée"))
+    }
+
+    @Test
     fun testWhileLoop() {
         val code = """
             algorithme Test
@@ -251,7 +283,7 @@ class InterpreterTest {
                 x : entier
             debut
                 x = 2
-                selon(x)
+                selon x faire
                     cas 1 : ecrireln("un")
                     cas 2 : ecrireln("deux")
                     cas 3 : ecrireln("trois")
@@ -272,7 +304,7 @@ class InterpreterTest {
                 x : entier
             debut
                 x = 99
-                selon(x)
+                selon x faire
                     cas 1 : ecrireln("un")
                     cas 2 : ecrireln("deux")
                     defaut : ecrireln("autre")
@@ -318,6 +350,30 @@ class InterpreterTest {
 
         val output = executeCode(code)
         assertEquals("true\nAXC\n", output)
+    }
+
+    @Test
+    fun testStringAlgorithmWithIndexReadWriteInLoop() {
+        val code = """
+            algorithme Test
+            variables
+                s : chaine
+                i : entier
+            debut
+                s = "algo"
+                i = 0
+                tantque i < longueur(s) faire
+                    si s[i] == 'a' alors
+                        s[i] = 'A'
+                    finsi
+                    i = i + 1
+                fintantque
+                ecrireln(s)
+            fin
+        """.trimIndent()
+
+        val output = executeCode(code)
+        assertEquals("Algo\n", output)
     }
 
     @Test

@@ -2,6 +2,23 @@
 
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
 
+## [1.8.4] - 2026-10-11
+
+### 🔧 Publication
+- ✅ Incrémentation de version pour publication Marketplace
+
+## [1.8.3] - 2026-10-11
+
+### 🔧 Publication
+- ✅ Incrémentation de version pour publication Marketplace
+
+## [1.8.2] - 2026-10-11
+
+### ✨ Mise à jour syntaxe `selon`
+- ✅ Snippet `selon` mis à jour vers la nouvelle forme : `selon expression faire ... finselon`
+- ✅ Alignement de l'extension VS Code avec le parseur du compilateur
+- ✅ Ajout de la commande **`Algo: Configurer l'environnement Algo`** (setup guidé Java + téléchargement du JAR avec consentement)
+
 ## [1.8.1] - 2025-12-18
 
 ### ⚡ Nouvelle Fonctionnalité Majeure
@@ -309,7 +326,7 @@ max(a, b)          // max(a, b) = 7
 
 ### ✨ Ajouté
 - 🔀 **Instruction `selon` (switch/when)**
-  - Syntaxe style Kotlin : `selon(expr) cas val: action finselon`
+  - Syntaxe style Kotlin : `selon expr faire ... finselon`
   - Break automatique (pas de fall-through)
   - Support entiers, chaînes, caractères
   - Cas par défaut optionnel : `defaut:`

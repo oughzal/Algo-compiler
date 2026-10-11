@@ -547,9 +547,8 @@ class Parser(private val tokens: List<Token>) {
     private fun parseWhenStatement(): WhenStatement {
         val selonToken = current()
         expect(TokenType.SELON)
-        expect(TokenType.PAREN_GAUCHE)
         val expression = parseExpression()
-        expect(TokenType.PAREN_DROITE)
+        expect(TokenType.FAIRE)
         skipNewlines()
 
         val cases = mutableListOf<WhenCase>()

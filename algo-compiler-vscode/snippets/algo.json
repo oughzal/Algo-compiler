@@ -156,7 +156,7 @@
     "Selon": {
         "prefix": "selon",
         "body": [
-            "selon(${1:expression})",
+            "selon ${1:expression} faire",
             "    cas ${2:valeur1}: ${3}",
             "    cas ${4:valeur2}: ${5}",
             "    defaut: $0",
@@ -441,4 +441,3 @@
         "description": "Afficher une matrice"
     }
 }
-

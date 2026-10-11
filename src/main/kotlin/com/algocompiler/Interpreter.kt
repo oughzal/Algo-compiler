@@ -307,6 +307,9 @@ class Interpreter {
         if (constants.contains(normalizedName)) {
             runtimeError("Impossible de modifier la constante '${assignment.variable}'")
         }
+        if (!variables.containsKey(normalizedName)) {
+            runtimeError("Variable '${assignment.variable}' non déclarée")
+        }
         val value = evaluateExpression(assignment.expression)
 
         // Vérifier si la variable existante est un tableau ou une matrice
@@ -496,6 +499,14 @@ class Interpreter {
     }
 
     private fun executeForLoop(forLoop: ForLoop) {
+        val loopVariableName = normalize(forLoop.variable)
+        if (constants.contains(loopVariableName)) {
+            runtimeError("Impossible de modifier la constante '${forLoop.variable}'")
+        }
+        if (!variables.containsKey(loopVariableName)) {
+            runtimeError("Variable '${forLoop.variable}' non déclarée")
+        }
+
         val start = evaluateExpression(forLoop.start)
         val end = evaluateExpression(forLoop.end)
 
@@ -516,7 +527,7 @@ class Interpreter {
         if (stepValue > 0) {
             // Boucle ascendante
             while (i <= endInt) {
-                variables[normalize(forLoop.variable)] = i
+                variables[loopVariableName] = i
                 for (statement in forLoop.body) {
                     executeStatement(statement)
                 }
@@ -525,7 +536,7 @@ class Interpreter {
         } else {
             // Boucle descendante
             while (i >= endInt) {
-                variables[normalize(forLoop.variable)] = i
+                variables[loopVariableName] = i
                 for (statement in forLoop.body) {
                     executeStatement(statement)
                 }
@@ -608,7 +619,7 @@ class Interpreter {
                     val input = readLine() ?: ""
 
                     // If variable exists and is a Char -> store first char
-                    val existing = variables[normalizedName]
+                    val existing = variables[normalizedName] ?: runtimeError("Variable '${target.name}' non déclarée")
                     val value: Any = when {
                         existing is Char -> (if (input.isNotEmpty()) input[0] else '\u0000')
                         existing is MutableList<*> && (existing.getOrNull(0) is Char) ->
@@ -625,6 +636,7 @@ class Interpreter {
                     val input = readLine() ?: ""
 
                     val existingValue = variables[normalizedName]
+                        ?: runtimeError("Variable '${target.arrayName}' non déclarée")
                     if (existingValue is String) {
                         val value: Any = if (input.isNotEmpty()) input[0] else '\u0000'
                         setStringCharacter(target.arrayName, index, value)

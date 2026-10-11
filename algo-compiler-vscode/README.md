@@ -13,7 +13,7 @@ Extension Visual Studio Code pour **Algo-Compiler** - Écrivez, éditez et exéc
 ### 1. Télécharger le Compilateur
 🔗 **[algo-compiler-1.6.0.jar](https://github.com/oughzal/Algo-compiler/releases/download/release/algo-compiler-1.6.0.jar)** ← Cliquez pour télécharger
 
-📍 **Placer le fichier à** : `c:\algo-compiler-1.6.0.jar`
+📍 **Placer le fichier à** : `c:\algo-compiler\algo-compiler-1.6.0.jar`
 
 ### 2. Installer Java 21+
 ☕ **[Java 21+](https://www.oracle.com/java/technologies/downloads/#java21)** ← Télécharger si nécessaire
@@ -22,6 +22,11 @@ Extension Visual Studio Code pour **Algo-Compiler** - Écrivez, éditez et exéc
 📦 Dans VS Code : Extensions → Rechercher "Algo Compiler" → Installer
 
 **C'est tout ! L'extension détectera automatiquement le compilateur.**
+
+💡 **Nouveau : configuration assistée**
+- Ouvrir la palette de commandes (`Ctrl+Shift+P`)
+- Lancer **`Algo: Configurer l'environnement Algo`**
+- L'extension peut télécharger le JAR automatiquement (avec votre consentement) et guider l'installation de Java si nécessaire.
 
 ---
 
@@ -446,7 +451,7 @@ Accédez via `File > Preferences > Settings` → Rechercher "Algo Compiler"
 
 | Paramètre | Description | Défaut |
 |-----------|-------------|--------|
-| `algoCompiler.compilerPath` | Chemin vers algo-compiler-1.0.0.jar | Auto-détecté |
+| `algoCompiler.compilerPath` | Chemin vers algo-compiler-1.6.0.jar | Auto-détecté |
 | `algoCompiler.javaPath` | Chemin vers l'exécutable Java | `java` |
 | `algoCompiler.clearOutputBeforeRun` | Effacer la sortie avant exécution | `true` |
 | `algoCompiler.showExecutionTime` | Afficher le temps d'exécution | `true` |
@@ -455,7 +460,7 @@ Accédez via `File > Preferences > Settings` → Rechercher "Algo Compiler"
 
 ```json
 {
-  "algoCompiler.compilerPath": "C:\\Program Files\\algo-compiler\\algo-compiler-1.0.0.jar",
+  "algoCompiler.compilerPath": "C:\\algo-compiler\\algo-compiler-1.6.0.jar",
   "algoCompiler.javaPath": "C:\\Program Files\\Java\\jdk-21\\bin\\java.exe",
   "algoCompiler.clearOutputBeforeRun": true,
   "algoCompiler.showExecutionTime": true
@@ -579,4 +584,3 @@ Développé avec ❤️ pour faciliter l'apprentissage de l'algorithmique en fra
 ---
 
 **Bon algorithme ! 🚀**
-

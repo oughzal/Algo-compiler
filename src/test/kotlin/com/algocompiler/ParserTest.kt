@@ -256,7 +256,7 @@ class ParserTest {
             variables
                 x : entier
             debut
-                selon(x)
+                selon x faire
                     cas 1 : ecrire("un")
                     cas 2 : ecrire("deux")
                     defaut : ecrire("autre")
@@ -337,6 +337,49 @@ class ParserTest {
         assertTrue(program.statements[0] is ArrayAssignment)
         val arrayAssign = program.statements[0] as ArrayAssignment
         assertEquals("tab", arrayAssign.arrayName)
+    }
+
+    @Test
+    fun testStringCharacterAccess() {
+        val code = """
+            algorithme Test
+            variables
+                s : chaine
+                c : caractere
+            debut
+                c = s[0]
+            fin
+        """.trimIndent()
+
+        val lexer = Lexer(code)
+        val tokens = lexer.tokenize()
+        val parser = Parser(tokens)
+        val program = parser.parse()
+
+        assertTrue(program.statements[0] is Assignment)
+        val assignment = program.statements[0] as Assignment
+        assertTrue(assignment.expression is ArrayAccess)
+    }
+
+    @Test
+    fun testStringCharacterAssignment() {
+        val code = """
+            algorithme Test
+            variables
+                s : chaine
+            debut
+                s[1] = 'X'
+            fin
+        """.trimIndent()
+
+        val lexer = Lexer(code)
+        val tokens = lexer.tokenize()
+        val parser = Parser(tokens)
+        val program = parser.parse()
+
+        assertTrue(program.statements[0] is ArrayAssignment)
+        val arrayAssign = program.statements[0] as ArrayAssignment
+        assertEquals("s", arrayAssign.arrayName)
     }
 
     @Test
@@ -445,4 +488,3 @@ class ParserTest {
         assertEquals("==", (assignment.expression as BinaryOp).operator)
     }
 }
-

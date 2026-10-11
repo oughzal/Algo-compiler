@@ -2,7 +2,7 @@
     "name": "algo-compiler",
     "displayName": "Algo Compiler",
     "description": "Compilateur de pseudo-code français: Court-circuit ET/OU, Passage par référence (ref), Variables globales, Matrices 2D, 40+ fonctions, sinonSi, expressions - Coloration, snippets, exécution directe",
-    "version": "1.8.1",
+    "version": "1.8.4",
     "icon": "images/icon.png",
     "publisher": "omarcomputer",
     "license": "MIT",
@@ -41,7 +41,8 @@
     "activationEvents": [
         "onLanguage:algo",
         "onCommand:algo-compiler.run",
-        "onCommand:algo-compiler.build"
+        "onCommand:algo-compiler.build",
+        "onCommand:algo-compiler.setup"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -88,6 +89,12 @@
                 "title": "Compiler le fichier Algo",
                 "category": "Algo",
                 "icon": "$(gear)"
+            },
+            {
+                "command": "algo-compiler.setup",
+                "title": "Configurer l'environnement Algo",
+                "category": "Algo",
+                "icon": "$(tools)"
             }
         ],
         "menus": {
@@ -108,6 +115,10 @@
                     "command": "algo-compiler.build",
                     "when": "resourceLangId == algo",
                     "group": "navigation"
+                },
+                {
+                    "command": "algo-compiler.setup",
+                    "group": "navigation"
                 }
             ],
             "commandPalette": [
@@ -118,6 +129,9 @@
                 {
                     "command": "algo-compiler.build",
                     "when": "resourceLangId == algo"
+                },
+                {
+                    "command": "algo-compiler.setup"
                 }
             ]
         },
@@ -134,8 +148,8 @@
             "properties": {
                 "algoCompiler.compilerPath": {
                     "type": "string",
-                    "default": "c:\\algo-compiler-1.6.0.jar",
-                    "description": "Chemin vers le JAR du compilateur Algo (par défaut: c:\\algo-compiler-1.6.0.jar)"
+                    "default": "c:\\algo-compiler\\algo-compiler-1.6.0.jar",
+                    "description": "Chemin vers le JAR du compilateur Algo (par défaut: c:\\algo-compiler\\algo-compiler-1.6.0.jar)"
                 },
                 "algoCompiler.javaPath": {
                     "type": "string",

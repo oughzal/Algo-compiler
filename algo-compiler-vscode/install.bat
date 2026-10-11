@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo  Installation Extension Algo Compiler v1.3.0
+echo  Installation Extension Algo Compiler v1.8.2
 echo ========================================
 echo.
 
@@ -46,12 +46,12 @@ echo ========================================
 echo  Installation terminee avec succes!
 echo ========================================
 echo.
-echo Le fichier algo-compiler-1.0.0.vsix a ete cree.
+echo Le fichier algo-compiler-1.8.2.vsix a ete cree.
 echo.
 echo Pour installer l'extension dans VS Code:
 echo 1. Ouvrir VS Code
 echo 2. Ctrl+Shift+P
 echo 3. Taper: Extensions: Install from VSIX...
-echo 4. Selectionner le fichier algo-compiler-1.0.0.vsix
+echo 4. Selectionner le fichier algo-compiler-1.8.2.vsix
 echo.
 pause
