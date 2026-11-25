@@ -4,12 +4,29 @@ import kotlin.math.*
 
 class ReturnException(val value: Any?) : Exception()
 
+private data class PointerValue(
+    val targetName: String? = null,
+    val arrayName: String? = null,
+    val index: Int? = null
+)
+
+private data class ArrayElementReference(
+    val arrayName: String,
+    val index: Int
+)
+
+private object NullPointerValue
+
 class Interpreter {
     private val variables = mutableMapOf<String, Any>()
     private val constants = mutableSetOf<String>()
     private val functions = mutableMapOf<String, FunctionDeclaration>()
-    private val variableTypes = mutableMapOf<String, String>() // Stocker les types déclarés
-    private var currentLine = 0 // Numéro de ligne en cours d'exécution
+    private val variableTypes = mutableMapOf<String, String>()
+
+    // Types des structures déclarées
+    private val structureTypes = mutableMapOf<String, StructureDeclaration>()
+
+    private var currentLine = 0
 
     // Helper pour lancer une erreur d'exécution avec le numéro de ligne
     private fun runtimeError(message: String): Nothing {
@@ -31,10 +48,22 @@ class Interpreter {
                 .replace("ç", "c")
     }
 
-    fun execute(program: Program) {
-        // Store functions
+   fun execute(program: Program) {
+    // Store functions
         for (func in program.functions) {
             functions[normalize(func.name)] = func
+        }
+
+        // Register structure types
+        structureTypes.clear()
+        for (structure in program.structures) {
+            val structureName = normalize(structure.name)
+
+            if (structureTypes.containsKey(structureName)) {
+                runtimeError("Le type '$structureName' est déjà déclaré")
+            }
+
+            structureTypes[structureName] = structure
         }
 
         // Initialize variables
@@ -59,6 +88,12 @@ class Interpreter {
 
         // Stocker le type de la variable
         variableTypes[normalizedName] = normalizedType
+
+        // Initialize pointer variables
+        if (normalizedType.startsWith("^")) {
+            variables[normalizedName] = NullPointerValue
+            return
+        }
 
         if (varDecl.arraySize != null && varDecl.arraySize2 != null) {
             // Initialize matrix (2D array)
@@ -116,13 +151,22 @@ class Interpreter {
             }
         } else {
             // Initialize simple variable
-            if (varDecl.initialValue != null) {
-                val value = evaluateExpression(varDecl.initialValue)
-                // Appliquer le casting selon le type déclaré
-                variables[normalizedName] = castToType(value, normalizedType)
-            } else {
-                // With default value
-                variables[normalizedName] =
+                if (structureTypes.containsKey(normalizedType)) {
+                    if (varDecl.initialValue != null) {
+                        runtimeError(
+                            "L'initialisation directe d'une structure n'est pas encore supportée"
+                        )
+                    }
+
+                    variables[normalizedName] =
+                        createStructureInstance(normalizedType)
+
+                } else if (varDecl.initialValue != null) {
+                    val value = evaluateExpression(varDecl.initialValue)
+                    variables[normalizedName] = castToType(value, normalizedType)
+
+                } else {
+                    variables[normalizedName] =
                         when (normalizedType) {
                             "entier" -> 0
                             "reel" -> 0.0
@@ -131,6 +175,72 @@ class Interpreter {
                             "booleen" -> false
                             else -> 0
                         }
+                }
+            }
+        }
+
+    private fun createStructureInstance(
+        typeName: String,
+        activeTypes: MutableSet<String> = mutableSetOf()
+    ): MutableMap<String, Any> {
+        val normalizedType = normalize(typeName)
+
+        val structure = structureTypes[normalizedType]
+            ?: runtimeError("Type de structure '$typeName' non déclaré")
+
+        if (!activeTypes.add(normalizedType)) {
+            runtimeError("Déclaration récursive du type '$typeName'")
+        }
+
+        val instance = mutableMapOf<String, Any>()
+
+        for (field in structure.fields) {
+            val fieldName = normalize(field.name)
+            val fieldType = normalize(field.type)
+
+            val value: Any = when {
+                field.arraySize != null && field.arraySize2 != null -> {
+                    MutableList(field.arraySize) {
+                        MutableList(field.arraySize2) {
+                            defaultValueForType(fieldType, activeTypes)
+                        }
+                    }
+                }
+
+                field.arraySize != null -> {
+                    MutableList(field.arraySize) {
+                        defaultValueForType(fieldType, activeTypes)
+                    }
+                }
+
+                else -> defaultValueForType(fieldType, activeTypes)
+            }
+
+            instance[fieldName] = value
+        }
+
+        activeTypes.remove(normalizedType)
+        return instance
+    }
+
+    private fun defaultValueForType(
+        typeName: String,
+        activeTypes: MutableSet<String>
+    ): Any {
+        val normalizedType = normalize(typeName)
+
+        return when (normalizedType) {
+            "entier" -> 0
+            "reel" -> 0.0
+            "chaine" -> ""
+            "caractere" -> '\u0000'
+            "booleen" -> false
+            else -> {
+                if (normalizedType.startsWith("^")) {
+                    NullPointerValue
+                } else {
+                    createStructureInstance(normalizedType, activeTypes)
+                }
             }
         }
     }
@@ -142,12 +252,106 @@ class Interpreter {
         constants.add(normalizedName)
     }
 
+    // Lire un champ d'une structure, y compris les champs imbriqués
+    private fun evaluateFieldAccess(access: FieldAccess): Any {
+        val target = evaluateExpression(access.target)
+
+        @Suppress("UNCHECKED_CAST")
+        val fields = target as? MutableMap<String, Any>
+            ?: runtimeError("La cible n'est pas une structure")
+
+        val fieldName = normalize(access.fieldName)
+
+        return fields[fieldName]
+            ?: runtimeError("Champ '${access.fieldName}' non déclaré")
+    }
+
+    // Affecter une valeur à un champ d'une structure
+    private fun assignFieldValue(target: Expression, value: Any) {
+        val access = target as? FieldAccess
+            ?: runtimeError("La cible de l'affectation doit être un champ")
+
+        val structure = evaluateExpression(access.target)
+
+        @Suppress("UNCHECKED_CAST")
+        val fields = structure as? MutableMap<String, Any>
+            ?: runtimeError("La cible n'est pas une structure")
+
+        val fieldName = normalize(access.fieldName)
+
+        if (!fields.containsKey(fieldName)) {
+            runtimeError("Champ '${access.fieldName}' non déclaré")
+        }
+
+        val existingValue = fields[fieldName]
+            ?: runtimeError("Champ '${access.fieldName}' non initialisé")
+
+        val castedValue = when (existingValue) {
+            is Int, is Double, is String, is Char, is Boolean ->
+                castToType(value, when (existingValue) {
+                    is Int -> "entier"
+                    is Double -> "reel"
+                    is String -> "chaine"
+                    is Char -> "caractere"
+                    is Boolean -> "booleen"
+                    else -> "inconnu"
+                })
+
+            is MutableMap<*, *> ->
+                runtimeError("L'affectation directe d'une structure n'est pas supportée")
+
+            else -> value
+        }
+
+        fields[fieldName] = castedValue
+    }
+
+    // Convertir une saisie selon le type actuel du champ
+    private fun readFieldValue(target: Expression) {
+        val access = target as? FieldAccess
+            ?: runtimeError("La cible de Lire doit être un champ")
+
+        val existingValue = evaluateFieldAccess(access)
+        val input = readLine() ?: ""
+
+        val value: Any = when (existingValue) {
+            is Int -> input.toIntOrNull()
+                ?: runtimeError("Valeur entière invalide")
+
+            is Double -> input.toDoubleOrNull()
+                ?: runtimeError("Valeur réelle invalide")
+
+            is Boolean -> when (normalize(input.trim())) {
+                "vrai", "true" -> true
+                "faux", "false" -> false
+                else -> runtimeError("Valeur booléenne invalide")
+            }
+
+            is Char -> if (input.isNotEmpty()) input[0] else '\u0000'
+
+            is String -> input
+
+            else -> runtimeError("Type de champ non supporté pour Lire")
+        }
+
+        assignFieldValue(target, value)
+    }
+
     private fun executeStatement(statement: Statement) {
         // Mettre à jour le numéro de ligne courant
         currentLine = statement.line
 
         when (statement) {
             is Assignment -> executeAssignment(statement)
+
+            is FieldAssignment -> {
+                val value = evaluateExpression(statement.expression)
+                assignFieldValue(statement.target, value)
+            }
+            is PointerAssignment -> assignThroughPointer(
+                statement.pointer,
+                evaluateExpression(statement.expression)
+            )
             is ArrayAssignment -> executeArrayAssignment(statement)
             is MatrixAssignment -> executeMatrixAssignment(statement)
             is IfStatement -> executeIfStatement(statement)
@@ -188,6 +392,10 @@ class Interpreter {
             is CharLiteral -> "'${expr.value}'"
             is BooleanLiteral -> if (expr.value) "vrai" else "faux"
             is Variable -> expr.name
+            is FieldAccess ->
+            "${expressionToString(expr.target)}.${expr.fieldName}"
+            is AddressOf -> "&${expressionToString(expr.target)}"
+            is Dereference -> "*${expressionToString(expr.pointer)}"
             is ArrayAccess -> "${expr.name}[${expressionToString(expr.index)}]"
             is MatrixAccess -> "${expr.name}[${expressionToString(expr.index1)}][${expressionToString(expr.index2)}]"
             is FunctionCallExpression -> {
@@ -229,6 +437,22 @@ class Interpreter {
                 val normalizedName = normalize(expr.name)
                 val value = variables[normalizedName] ?: constants.firstOrNull { normalize(it) == normalizedName }?.let { variables[it] }
                 formatValueForExpression(value)
+            }
+            is FieldAccess -> {
+                try {
+                    formatValueForExpression(evaluateExpression(expr))
+                } catch (_: Exception) {
+                    "${expressionToStringWithValues(expr.target)}.${expr.fieldName}"
+                }
+            }
+            is AddressOf -> "&${expressionToString(expr.target)}"
+
+            is Dereference -> {
+                try {
+                    formatValueForExpression(evaluateExpression(expr))
+                } catch (_: Exception) {
+                    "*${expressionToStringWithValues(expr.pointer)}"
+                }
             }
             is ArrayAccess -> {
                 try {
@@ -302,6 +526,98 @@ class Interpreter {
         }
     }
 
+    private fun getPointerValue(pointer: Any): PointerValue {
+    val pointerValue = pointer as? PointerValue
+        ?: runtimeError("La valeur utilisée n'est pas un pointeur valide")
+
+    if (pointerValue.targetName != null) {
+        if (!variables.containsKey(pointerValue.targetName)) {
+            runtimeError("Le pointeur référence une variable inexistante")
+        }
+        return pointerValue
+    }
+
+    val arrayName = pointerValue.arrayName
+        ?: runtimeError("Adresse de pointeur invalide")
+
+    val index = pointerValue.index
+        ?: runtimeError("Index de pointeur invalide")
+
+    val array = variables[arrayName] as? List<*>
+        ?: runtimeError("Le tableau référencé n'existe plus")
+
+    if (index < 0 || index >= array.size) {
+        runtimeError("Index de pointeur hors limites")
+    }
+
+    return pointerValue
+}
+
+private fun readPointerValue(pointer: Any): Any {
+    val pointerValue = getPointerValue(pointer)
+
+    if (pointerValue.targetName != null) {
+        return variables[pointerValue.targetName]
+            ?: runtimeError("La variable référencée n'est pas initialisée")
+    }
+
+    val arrayName = pointerValue.arrayName!!
+    val index = pointerValue.index!!
+
+    val array = variables[arrayName] as List<*>
+
+    return array[index]
+        ?: runtimeError("L'élément référencé n'est pas initialisé")
+}
+
+private fun writePointerValue(pointer: Any, value: Any) {
+    val pointerValue = getPointerValue(pointer)
+
+    if (pointerValue.targetName != null) {
+        val targetName = pointerValue.targetName
+
+        if (constants.contains(targetName)) {
+            runtimeError("Impossible de modifier une constante via un pointeur")
+        }
+
+        val targetType = variableTypes[targetName]
+
+        variables[targetName] = if (targetType != null) {
+            castToType(value, targetType)
+        } else {
+            value
+        }
+
+        return
+    }
+
+    val arrayName = pointerValue.arrayName!!
+    val index = pointerValue.index!!
+
+    if (constants.contains(arrayName)) {
+        runtimeError("Impossible de modifier une constante via un pointeur")
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    val array = variables[arrayName] as? MutableList<Any>
+        ?: runtimeError("Le tableau référencé n'est pas modifiable")
+
+    val elementType = variableTypes[arrayName]
+
+    array[index] = if (elementType != null) {
+        castToType(value, elementType)
+    } else {
+        value
+    }
+}
+
+private fun assignThroughPointer(pointer: Expression, value: Any) {
+    val pointerValue = evaluateExpression(pointer)
+    writePointerValue(pointerValue, value)
+}
+
+
+
     private fun executeAssignment(assignment: Assignment) {
         val normalizedName = normalize(assignment.variable)
         if (constants.contains(normalizedName)) {
@@ -312,45 +628,71 @@ class Interpreter {
         }
         val value = evaluateExpression(assignment.expression)
 
-        // Vérifier si la variable existante est un tableau ou une matrice
-        val existingValue = variables[normalizedName]
 
-        if (existingValue is MutableList<*>) {
-            // C'est un tableau ou une matrice
-            if (existingValue.firstOrNull() is MutableList<*>) {
-                // C'est une matrice (2D)
-                if (value is List<*>) {
-                    val targetType = variableTypes[normalizedName]
-                    @Suppress("UNCHECKED_CAST")
-                    variables[normalizedName] = (value as List<List<Any>>).map { row ->
-                        row.map { if (targetType != null) castToType(it, targetType) else it }.toMutableList()
-                    }.toMutableList()
-                } else {
-                    runtimeError("Impossible d'affecter une valeur non-matrice à la matrice '${assignment.variable}'")
-                }
+    // Vérifier si la variable existante est un tableau ou une matrice
+    val existingValue = variables[normalizedName]
+
+    // Pointer variable assignment: p <- &x
+    val targetType = variableTypes[normalizedName]
+
+    if (targetType?.startsWith("^") == true) {
+        val pointerValue = value as? PointerValue
+            ?: runtimeError("Une variable pointeur doit recevoir une adresse (&variable)")
+
+        val pointedName = pointerValue.targetName
+            ?: pointerValue.arrayName
+            ?: runtimeError("Adresse de pointeur invalide")
+
+        val pointedType = variableTypes[pointedName]
+        val expectedType = targetType.removePrefix("^")
+
+        if (pointedType != expectedType) {
+            runtimeError(
+                "Type de pointeur incompatible: attendu ^$expectedType, reçu ^${pointedType ?: "inconnu"}"
+            )
+        }
+
+        variables[normalizedName] = pointerValue
+        return
+    }
+
+    if (existingValue is MutableList<*>) {
+        // C'est un tableau ou une matrice
+        if (existingValue.firstOrNull() is MutableList<*>) {
+            // C'est une matrice (2D)
+            if (value is List<*>) {
+                @Suppress("UNCHECKED_CAST")
+                variables[normalizedName] = (value as List<List<Any>>).map { row ->
+                    row.map { if (targetType != null) castToType(it, targetType) else it }.toMutableList()
+                }.toMutableList()
             } else {
-                // C'est un tableau (1D)
-                if (value is List<*>) {
-                    val targetType = variableTypes[normalizedName]
-                    @Suppress("UNCHECKED_CAST")
-                    variables[normalizedName] = (value as List<Any>).map {
-                        if (targetType != null) castToType(it, targetType) else it
-                    }.toMutableList()
-                } else {
-                    runtimeError("Impossible d'affecter une valeur non-tableau au tableau '${assignment.variable}'")
-                }
+                runtimeError("Impossible d'affecter une valeur non-matrice à la matrice '${assignment.variable}'")
             }
         } else {
-            // C'est une variable simple
-            val targetType = variableTypes[normalizedName]
-            val castedValue = if (targetType != null) {
-                castToType(value, targetType)
+            // C'est un tableau (1D)
+            if (value is List<*>) {
+                @Suppress("UNCHECKED_CAST")
+                variables[normalizedName] = (value as List<Any>).map {
+                    if (targetType != null) castToType(it, targetType) else it
+                }.toMutableList()
             } else {
-                value
+                runtimeError("Impossible d'affecter une valeur non-tableau au tableau '${assignment.variable}'")
             }
-            variables[normalizedName] = castedValue
         }
+    } else {
+        // C'est une variable simple
+        val castedValue = if (targetType != null) {
+            castToType(value, targetType)
+        } else {
+            value
+        }
+        variables[normalizedName] = castedValue
     }
+    }
+
+
+
+
 
     private fun executeArrayAssignment(assignment: ArrayAssignment) {
         val value = evaluateExpression(assignment.expression)
@@ -663,51 +1005,99 @@ class Interpreter {
 
                     array[index] = value
                 }
+
+                is FieldReadTarget -> {
+                    readFieldValue(target.target)
+                }
             }
         }
     }
 
-    private fun executeFunctionCall(name: String, arguments: List<Expression>): Any? {
-        // Check if it's a built-in function
-        val normalizedName = normalize(name)
-        val builtInResult = tryExecuteBuiltInFunction(normalizedName, arguments)
-        if (builtInResult != null || isBuiltInFunction(normalizedName)) {
-            return builtInResult
+
+
+private fun executeFunctionCall(name: String, arguments: List<Expression>): Any? {
+    // Check if it's a built-in function
+    val normalizedName = normalize(name)
+    val builtInResult = tryExecuteBuiltInFunction(normalizedName, arguments)
+
+    if (builtInResult != null || isBuiltInFunction(normalizedName)) {
+        return builtInResult
+    }
+
+    val function = functions[normalizedName]
+        ?: runtimeError("Fonction '$name' non définie")
+
+    // Names of parameters and local variables
+    val scopedNames = (
+        function.parameters.map { normalize(it.name) } +
+        function.variables.map { normalize(it.name) }
+    ).toSet()
+
+    // Save previous values and types
+    val savedVariables = mutableMapOf<String, Any>()
+    val savedTypes = mutableMapOf<String, String>()
+
+    for (variableName in scopedNames) {
+        variables[variableName]?.let {
+            savedVariables[variableName] = it
         }
 
-        val function = functions[normalizedName] ?: runtimeError("Fonction '$name' non définie")
+        variableTypes[variableName]?.let {
+            savedTypes[variableName] = it
+        }
+    }
 
-        // Sauvegarder seulement les paramètres et variables locales de la fonction
-        // Les autres variables (globales) restent accessibles et modifiables
-        val localVariablesBackup = mutableMapOf<String, Any?>()
-        val referenceMap = mutableMapOf<String, String>()
+    val referenceMap = mutableMapOf<String, String>()
+    val arrayReferenceMap = mutableMapOf<String, ArrayElementReference>()
 
+    var returnValue: Any? = null
+
+    try {
         // Initialize function parameters
         for ((i, param) in function.parameters.withIndex()) {
             val paramName = normalize(param.name)
 
-            // Sauvegarder si une variable de ce nom existe déjà
-            if (variables.containsKey(paramName)) {
-                localVariablesBackup[paramName] = variables[paramName]
-            }
-
             if (i < arguments.size) {
                 if (param.isByReference) {
-                    // Passage par référence
-                    val arg = arguments[i]
-                    if (arg is Variable) {
-                        val originalVarName = normalize(arg.name)
-                        referenceMap[paramName] = originalVarName
-                        variables[paramName] = variables[originalVarName] ?: runtimeError("Variable '${arg.name}' non définie")
-                    } else if (arg is ArrayAccess) {
-                        val arrayName = normalize(arg.name)
-                        referenceMap[paramName] = arrayName
-                        variables[paramName] = variables[arrayName] ?: runtimeError("Tableau '${arg.name}' non défini")
-                    } else {
-                        runtimeError("Le passage par référence nécessite une variable, pas une expression")
+                    when (val arg = arguments[i]) {
+                        is Variable -> {
+                            val originalName = normalize(arg.name)
+
+                            referenceMap[paramName] = originalName
+
+                            variables[paramName] = variables[originalName]
+                                ?: runtimeError("Variable '${arg.name}' non définie")
+                        }
+
+                        is ArrayAccess -> {
+                            val arrayName = normalize(arg.name)
+
+                            val arrayValue = variables[arrayName]
+                                ?: runtimeError("Tableau '${arg.name}' non défini")
+
+                            val index = toInt(evaluateExpression(arg.index))
+
+                            @Suppress("UNCHECKED_CAST")
+                            val array = arrayValue as? List<Any>
+                                ?: runtimeError("Variable '${arg.name}' n'est pas un tableau")
+
+                            if (index < 0 || index >= array.size) {
+                                runtimeError("Index $index hors limites pour le tableau '${arg.name}'")
+                            }
+
+                            arrayReferenceMap[paramName] =
+                                ArrayElementReference(arrayName, index)
+
+                            variables[paramName] = array[index]
+                        }
+
+                        else -> {
+                            runtimeError(
+                                "Le passage par référence nécessite une variable, pas une expression"
+                            )
+                        }
                     }
                 } else {
-                    // Passage par valeur
                     variables[paramName] = evaluateExpression(arguments[i])
                 }
             } else {
@@ -715,18 +1105,12 @@ class Interpreter {
             }
         }
 
-        // Initialize function local variables
+        // Initialize local variables
         for (varDecl in function.variables) {
-            val varName = normalize(varDecl.name)
-            // Sauvegarder si une variable de ce nom existe déjà
-            if (variables.containsKey(varName)) {
-                localVariablesBackup[varName] = variables[varName]
-            }
             initializeVariable(varDecl)
         }
 
         // Execute function body
-        var returnValue: Any? = null
         try {
             for (statement in function.body) {
                 executeStatement(statement)
@@ -735,34 +1119,43 @@ class Interpreter {
             returnValue = e.value
         }
 
-        // Mettre à jour les variables passées par référence
-        for ((paramName, originalVarName) in referenceMap) {
-            variables[originalVarName] = variables[paramName]!!
+        // Update variables passed by reference
+        for ((paramName, originalName) in referenceMap) {
+            variables[originalName] = variables[paramName]
+                ?: runtimeError("Paramètre '$paramName' non initialisé")
         }
 
-        // Restaurer ou supprimer les variables locales
-        for ((varName, savedValue) in localVariablesBackup) {
-            if (savedValue != null) {
-                variables[varName] = savedValue
-            }
+        // Update array elements passed by reference
+        for ((paramName, reference) in arrayReferenceMap) {
+            @Suppress("UNCHECKED_CAST")
+            val array = variables[reference.arrayName] as? MutableList<Any>
+                ?: runtimeError("Tableau référencé invalide")
+
+            array[reference.index] = variables[paramName]
+                ?: runtimeError("Paramètre '$paramName' non initialisé")
         }
 
-        // Supprimer les nouvelles variables locales qui n'existaient pas avant
-        for (param in function.parameters) {
-            val paramName = normalize(param.name)
-            if (!localVariablesBackup.containsKey(paramName)) {
-                variables.remove(paramName)
+    } finally {
+        // Always restore previous variables and their types
+        for (variableName in scopedNames) {
+            if (savedVariables.containsKey(variableName)) {
+                variables[variableName] = savedVariables.getValue(variableName)
+            } else {
+                variables.remove(variableName)
             }
-        }
-        for (varDecl in function.variables) {
-            val varName = normalize(varDecl.name)
-            if (!localVariablesBackup.containsKey(varName)) {
-                variables.remove(varName)
-            }
-        }
 
-        return returnValue
+            if (savedTypes.containsKey(variableName)) {
+                variableTypes[variableName] = savedTypes.getValue(variableName)
+            } else {
+                variableTypes.remove(variableName)
+            }
+        }
     }
+
+    return returnValue
+}
+
+
 
     private fun isBuiltInFunction(name: String): Boolean {
         return name.lowercase() in
@@ -1069,6 +1462,58 @@ class Interpreter {
             is BooleanLiteral -> expression.value
             is Variable -> variables[normalize(expression.name)]
                             ?: runtimeError("Variable '${expression.name}' non définie")
+            is FieldAccess -> evaluateFieldAccess(expression)
+           is AddressOf -> {
+    when (val target = expression.target) {
+
+        is Variable -> {
+            val targetName = normalize(target.name)
+
+            if (!variables.containsKey(targetName)) {
+                runtimeError("Variable '${target.name}' non définie")
+            }
+
+            if (constants.contains(targetName)) {
+                runtimeError("Impossible de prendre l'adresse d'une constante")
+            }
+
+            PointerValue(targetName = targetName)
+        }
+
+        is ArrayAccess -> {
+            val arrayName = normalize(target.name)
+
+            if (constants.contains(arrayName)) {
+                runtimeError("Impossible de prendre l'adresse d'un élément constant")
+            }
+
+            val arrayValue = variables[arrayName]
+                ?: runtimeError("Tableau '${target.name}' non défini")
+
+            if (arrayValue !is MutableList<*>) {
+                runtimeError("La variable '${target.name}' n'est pas un tableau modifiable")
+            }
+
+            val index = toInt(evaluateExpression(target.index))
+
+            if (index < 0 || index >= arrayValue.size) {
+                runtimeError("Index $index hors limites pour '${target.name}'")
+            }
+
+            PointerValue(
+                arrayName = arrayName,
+                index = index
+            )
+        }
+
+        else -> runtimeError("Adresse invalide")
+    }
+}
+
+            is Dereference -> {
+                val pointerValue = evaluateExpression(expression.pointer)
+                readPointerValue(pointerValue)
+            }
             is ArrayAccess -> {
                 val normalizedName = normalize(expression.name)
                 val arrayValue = variables[normalizedName] ?: runtimeError("Variable '${expression.name}' non définie")
@@ -1455,6 +1900,7 @@ class Interpreter {
                     }
                 } + "]"
             }
+
             else -> value.toString()
         }
     }

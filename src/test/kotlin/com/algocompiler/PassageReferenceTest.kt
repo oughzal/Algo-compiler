@@ -5,6 +5,30 @@ import kotlin.test.*
 class PassageReferenceTest {
 
     @Test
+    fun testVarParameterAsReference() {
+        val code = """
+            algorithme Test
+            variables
+                x : entier
+
+            procedure modifier(var n : entier)
+            debut
+                n = 20
+            fin
+
+            debut
+                x = 10
+                modifier(x)
+            fin
+        """.trimIndent()
+
+        val program = Parser(Lexer(code).tokenize()).parse()
+
+        assertEquals(1, program.functions.size)
+        assertTrue(program.functions[0].parameters[0].isByReference)
+    }
+
+    @Test
     fun testPassageReferenceSimple() {
         val code = """
             algorithme Test

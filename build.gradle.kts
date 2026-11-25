@@ -12,11 +12,24 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+
     testImplementation(kotlin("test"))
+}
+
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+        }
+    }
 }
 
 application {
     mainClass.set("com.algocompiler.MainKt")
+}
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
 }
 
 tasks.jar {

@@ -1,0 +1,21 @@
+Algorithme TestChangementPointeur
+
+Variables
+    x, y : Entier
+    p : ^Entier
+
+Debut
+    x <- 10
+    y <- 20
+
+    p <- &x
+    Ecrireln("Premiere valeur : ", *p)
+
+    p <- &y
+    Ecrireln("Deuxieme valeur : ", *p)
+
+    *p <- 50
+
+    Ecrireln("x = ", x)
+    Ecrireln("y = ", y)
+Fin

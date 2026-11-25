@@ -264,15 +264,11 @@ async function findCompilerJar(): Promise<string | null> {
     const workspaceFolders = vscode.workspace.workspaceFolders;
 
     const possiblePaths = [
-        // Chemin par défaut
+        // Windows default paths
         path.join('c:\\algo-compiler', COMPILER_FILE_NAME),
-        // Ancien chemin (compatibilité)
         `c:\\${COMPILER_FILE_NAME}`,
-        // Versions alternatives (support des futures versions)
-        'c:\\algo-compiler-1.7.0.jar',
-        'c:\\algo-compiler-1.8.0.jar',
-        'c:\\algo-compiler-1.8.1.jar',
-        'c:\\algo-compiler-1.8.2.jar',
+
+        // Linux default path
         getDefaultCompilerPath(),
     ];
 

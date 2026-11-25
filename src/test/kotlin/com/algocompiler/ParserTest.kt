@@ -4,6 +4,48 @@ import kotlin.test.*
 
 class ParserTest {
 
+
+    @Test
+    fun testVarAsVariableSection() {
+        val code = """
+            algorithme Test
+            var
+                x : entier
+            debut
+                x = 10
+            fin
+        """.trimIndent()
+
+        val program = Parser(Lexer(code).tokenize()).parse()
+
+        assertEquals(1, program.variables.size)
+        assertEquals("x", program.variables[0].name)
+        assertEquals("entier", program.variables[0].type)
+    }
+
+    @Test
+    fun testVarAsLocalVariableSection() {
+        val code = """
+            algorithme Test
+
+            procedure calculer()
+            var
+                temp : entier
+            debut
+                temp = 10
+            fin
+
+            debut
+            fin
+        """.trimIndent()
+
+        val program = Parser(Lexer(code).tokenize()).parse()
+
+        assertEquals(1, program.functions.size)
+        assertEquals(1, program.functions[0].variables.size)
+        assertEquals("temp", program.functions[0].variables[0].name)
+    }
+
     @Test
     fun testSimpleProgram() {
         val code = """

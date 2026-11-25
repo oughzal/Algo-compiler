@@ -1,0 +1,47 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Algo Compiler",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["build"],
+            "windows": {
+                "command": "${workspaceFolder}\\gradlew.bat"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Algo Compiler",
+            "type": "process",
+            "command": "java",
+            "args": [
+                "-jar",
+                "${workspaceFolder}/build/libs/algo-compiler-1.6.0.jar",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build and Run Algo Compiler",
+            "dependsOn": [
+                "Build Algo Compiler",
+                "Run Algo Compiler"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        }
+    ]
+}
