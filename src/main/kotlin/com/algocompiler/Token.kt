@@ -1,3 +1,4 @@
+
 package com.algocompiler
 
 enum class TokenType {
@@ -7,6 +8,9 @@ enum class TokenType {
     FIN,
     VARIABLES,
     CONSTANTES,
+    TYPE,
+    ENREGISTREMENT,
+    FINENREGISTREMENT,
     SI,
     ALORS,
     SINON,
@@ -46,6 +50,7 @@ enum class TokenType {
     PLUS,
     MOINS,
     MULT,
+    ADRESSE,
     DIV,
     DIV_ENTIERE,
     MOD,
@@ -65,6 +70,7 @@ enum class TokenType {
     VIRGULE,
     DEUX_POINTS,
     POINT_VIRGULE,
+    POINT,
     PAREN_GAUCHE,
     PAREN_DROITE,
     CROCHET_GAUCHE,
@@ -83,4 +89,9 @@ enum class TokenType {
     NEWLINE
 }
 
-data class Token(val type: TokenType, val value: String, val line: Int, val column: Int)
+data class Token(
+    val type: TokenType,
+    val value: String,
+    val line: Int,
+    val column: Int
+)

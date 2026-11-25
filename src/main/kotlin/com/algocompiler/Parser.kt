@@ -5,6 +5,8 @@ import com.algocompiler.ParseException
 class Parser(private val tokens: List<Token>) {
     private var pos = 0
 
+    private val declaredStructureTypes = mutableSetOf<String>()
+
     private fun current(): Token = tokens.getOrNull(pos) ?: Token(TokenType.EOF, "", -1, -1)
 
     private fun advance() {
@@ -33,14 +35,27 @@ class Parser(private val tokens: List<Token>) {
         }
     }
 
+    private fun isVariableSectionStart(): Boolean {
+    return current().type == TokenType.VARIABLES ||
+           current().type == TokenType.VAR
+}
+
     fun parse(): Program {
         skipNewlines()
         expect(TokenType.ALGORITHME)
         val name = expect(TokenType.IDENTIFICATEUR).value
         skipNewlines()
 
+        val structures = mutableListOf<StructureDeclaration>()
+
+        if (current().type == TokenType.TYPE) {
+            advance()
+            skipNewlines()
+            structures.addAll(parseStructureDeclarations())
+        }
+
         val variables = mutableListOf<VariableDeclaration>()
-        if (current().type == TokenType.VARIABLES) {
+        if (isVariableSectionStart()) {
             advance()
             skipNewlines()
             variables.addAll(parseVariableDeclarations())
@@ -64,7 +79,7 @@ class Parser(private val tokens: List<Token>) {
         }
 
         // Check if there are more variables after functions
-        if (current().type == TokenType.VARIABLES) {
+        if (isVariableSectionStart()) {
             advance()
             skipNewlines()
             variables.addAll(parseVariableDeclarations())
@@ -85,7 +100,45 @@ class Parser(private val tokens: List<Token>) {
 
         expect(TokenType.FIN)
 
-        return Program(name, variables, constants, functions, statements)
+        return Program(
+            name,
+            variables,
+            constants,
+            functions,
+            statements,
+            structures = structures
+        )
+
+    }
+
+
+    private fun parseStructureDeclarations(): List<StructureDeclaration> {
+        val structures = mutableListOf<StructureDeclaration>()
+
+        while (current().type == TokenType.IDENTIFICATEUR) {
+            val nameToken = expect(TokenType.IDENTIFICATEUR)
+            val name = nameToken.value
+            val normalizedName = name.lowercase()
+
+            if (!declaredStructureTypes.add(normalizedName)) {
+                error("Le type '$name' est déjà déclaré", nameToken)
+            }
+
+            expect(TokenType.AFFECTATION)
+            expect(TokenType.ENREGISTREMENT)
+            skipNewlines()
+
+            val fields = parseVariableDeclarations()
+
+            expect(TokenType.FINENREGISTREMENT)
+            skipNewlines()
+
+            structures.add(
+                StructureDeclaration(name, fields, nameToken.line)
+            )
+        }
+
+        return structures
     }
 
     private fun parseVariableDeclarations(): List<VariableDeclaration> {
@@ -124,17 +177,43 @@ class Parser(private val tokens: List<Token>) {
                 expect(TokenType.DE)
             }
 
-            val type =
-                    when (current().type) {
-                        TokenType.ENTIER -> "entier"
-                        TokenType.REEL -> "reel"
-                        TokenType.CHAINE -> "chaine"
-                        TokenType.CARACTERE -> "caractere"
-                        TokenType.BOOLEEN -> "booleen"
-                        else ->
-                                error("Type de variable invalide")
+            val type = if (current().type == TokenType.PUISSANCE) {
+                advance()
+
+                val pointedType = when (current().type) {
+                    TokenType.ENTIER -> "entier"
+                    TokenType.REEL -> "reel"
+                    TokenType.CHAINE -> "chaine"
+                    TokenType.CARACTERE -> "caractere"
+                    TokenType.BOOLEEN -> "booleen"
+                    else -> error("Type de pointeur invalide")
+                }
+
+                advance()
+                "^$pointedType"
+            } else {
+                    val normalType = when (current().type) {
+                    TokenType.ENTIER -> "entier"
+                    TokenType.REEL -> "reel"
+                    TokenType.CHAINE -> "chaine"
+                    TokenType.CARACTERE -> "caractere"
+                    TokenType.BOOLEEN -> "booleen"
+
+                    // Type personnalisé : Etudiant, Adresse...
+                    TokenType.IDENTIFICATEUR -> {
+                        val customType = current().value
+                        if (customType.lowercase() !in declaredStructureTypes) {
+                            error("Type de variable invalide")
+                        }
+                        customType
                     }
-            advance()
+
+                    else -> error("Type de variable invalide")
+                }
+
+                advance()
+                normalType
+            }
 
             // Check for initialization (= value)
             var initialValue: Expression? = null
@@ -223,7 +302,7 @@ class Parser(private val tokens: List<Token>) {
         skipNewlines()
 
         val variables = mutableListOf<VariableDeclaration>()
-        if (current().type == TokenType.VARIABLES) {
+        if (isVariableSectionStart()) {
             advance()
             skipNewlines()
             variables.addAll(parseVariableDeclarations())
@@ -247,52 +326,83 @@ class Parser(private val tokens: List<Token>) {
     }
 
     private fun parseParameter(): VariableDeclaration {
-        // Vérifier si c'est un passage par référence (var, ref, reference)
-        var isByReference = false
-        if (current().type == TokenType.VAR) {
-            isByReference = true
-            advance()
-        }
+    // Passage par référence avec VAR
+    var isByReference = false
 
-        val name = expect(TokenType.IDENTIFICATEUR).value
-        expect(TokenType.DEUX_POINTS)
+    if (current().type == TokenType.VAR) {
+        isByReference = true
+        advance()
+    }
 
-        var isArray = false
-        var arraySize: Int? = null
+    val name = expect(TokenType.IDENTIFICATEUR).value
+    expect(TokenType.DEUX_POINTS)
 
-        if (current().type == TokenType.TABLEAU) {
-            isArray = true
-            advance()
-            if (current().type == TokenType.CROCHET_GAUCHE) {
-                advance()
-                if (current().type == TokenType.NOMBRE) {
-                    arraySize = current().value.toInt()
-                    advance()
-                }
-                expect(TokenType.CROCHET_DROIT)
-            }
-            expect(TokenType.DE)
-        }
+    var isArray = false
+    var arraySize: Int? = null
 
-        val type =
-                when (current().type) {
-                    TokenType.ENTIER -> "entier"
-                    TokenType.REEL -> "reel"
-                    TokenType.CHAINE -> "chaine"
-                    TokenType.CARACTERE -> "caractere"
-                    TokenType.BOOLEEN -> "booleen"
-                    else ->
-                            error("Type de paramètre invalide")
-                }
+    if (current().type == TokenType.TABLEAU) {
+        isArray = true
         advance()
 
-        return VariableDeclaration(name, type, if (isArray) arraySize else null, null, null, isByReference)
+        if (current().type == TokenType.CROCHET_GAUCHE) {
+            advance()
+
+            if (current().type == TokenType.NOMBRE) {
+                arraySize = current().value.toInt()
+                advance()
+            }
+
+            expect(TokenType.CROCHET_DROIT)
+        }
+
+        expect(TokenType.DE)
     }
+
+    // Support des pointeurs : ^Entier, ^Reel...
+    val type = if (current().type == TokenType.PUISSANCE) {
+        advance()
+
+        val pointedType = when (current().type) {
+            TokenType.ENTIER -> "entier"
+            TokenType.REEL -> "reel"
+            TokenType.CHAINE -> "chaine"
+            TokenType.CARACTERE -> "caractere"
+            TokenType.BOOLEEN -> "booleen"
+            else -> error("Type de pointeur invalide")
+        }
+
+        advance()
+        "^$pointedType"
+
+    } else {
+        val normalType = when (current().type) {
+            TokenType.ENTIER -> "entier"
+            TokenType.REEL -> "reel"
+            TokenType.CHAINE -> "chaine"
+            TokenType.CARACTERE -> "caractere"
+            TokenType.BOOLEEN -> "booleen"
+            else -> error("Type de paramètre invalide")
+        }
+
+        advance()
+        normalType
+    }
+
+    return VariableDeclaration(
+        name,
+        type,
+        if (isArray) arraySize else null,
+        null,
+        null,
+        isByReference
+    )
+}
 
     private fun parseStatement(): Statement {
         skipNewlines()
 
         return when (current().type) {
+            TokenType.MULT -> parsePointerAssignment()
             TokenType.IDENTIFICATEUR -> parseAssignmentOrFunctionCall()
             TokenType.SI -> parseIfStatement()
             TokenType.POUR -> parseForLoop()
@@ -314,9 +424,44 @@ class Parser(private val tokens: List<Token>) {
         }
     }
 
+    private fun parsePointerAssignment(): Statement {
+        val startToken = current()
+
+        expect(TokenType.MULT)
+
+        val pointerExpression = parseUnary()
+
+        expect(TokenType.AFFECTATION)
+
+        val expression = parseExpression()
+
+        return PointerAssignment(
+            pointerExpression,
+            expression,
+            startToken.line
+        )
+    }
+
     private fun parseAssignmentOrFunctionCall(): Statement {
         val startToken = current()
-        val name = expect(TokenType.IDENTIFICATEUR).value
+        val nameToken = expect(TokenType.IDENTIFICATEUR)
+        val name = nameToken.value
+
+        // Affectation à un champ : e.nom <- "Ali"
+        if (current().type == TokenType.POINT) {
+            val target = parseFieldAccessSuffix(
+                Variable(name, nameToken.line)
+            )
+
+            expect(TokenType.AFFECTATION)
+            val expression = parseExpression()
+
+            return FieldAssignment(
+                target,
+                expression,
+                nameToken.line
+            )
+        }
 
         return when (current().type) {
             TokenType.AFFECTATION -> {
@@ -660,34 +805,42 @@ class Parser(private val tokens: List<Token>) {
 
     private fun parseReadStatement(): ReadStatement {
         expect(TokenType.LIRE)
+
         if (current().type == TokenType.PAREN_GAUCHE) {
             advance()
         }
 
         val targets = mutableListOf<ReadTarget>()
 
-        // Parse first target
-        val name = expect(TokenType.IDENTIFICATEUR).value
-        if (current().type == TokenType.CROCHET_GAUCHE) {
-            advance()
-            val index = parseExpression()
-            expect(TokenType.CROCHET_DROIT)
-            targets.add(ArrayReadTarget(name, index))
-        } else {
-            targets.add(SimpleReadTarget(name))
-        }
+        fun parseOneTarget(): ReadTarget {
+            val nameToken = expect(TokenType.IDENTIFICATEUR)
+            val name = nameToken.value
+            val base = Variable(name, nameToken.line)
 
-        while (current().type == TokenType.VIRGULE) {
-            advance()
-            val varName = expect(TokenType.IDENTIFICATEUR).value
+            // Record field: Lire(e.nom) or Lire(e.adresse.ville)
+            if (current().type == TokenType.POINT) {
+                val fieldAccess = parseFieldAccessSuffix(base)
+                return FieldReadTarget(fieldAccess, nameToken.line)
+            }
+
+            // Array element: Lire(T[i])
             if (current().type == TokenType.CROCHET_GAUCHE) {
                 advance()
                 val index = parseExpression()
                 expect(TokenType.CROCHET_DROIT)
-                targets.add(ArrayReadTarget(varName, index))
-            } else {
-                targets.add(SimpleReadTarget(varName))
+
+                return ArrayReadTarget(name, index)
             }
+
+            // Regular variable: Lire(x)
+            return SimpleReadTarget(name)
+        }
+
+        targets.add(parseOneTarget())
+
+        while (current().type == TokenType.VIRGULE) {
+            advance()
+            targets.add(parseOneTarget())
         }
 
         if (current().type == TokenType.PAREN_DROITE) {
@@ -829,7 +982,45 @@ class Parser(private val tokens: List<Token>) {
             return UnaryOp("non", parseUnary(), opToken.line)
         }
 
+        // Address of: &x or &T[i]
+        if (current().type == TokenType.ADRESSE) {
+            val opToken = current()
+            advance()
+
+            val target = parsePrimary()
+
+            if (target !is Variable && target !is ArrayAccess) {
+                error("L'adresse doit référencer une variable ou un élément de tableau")
+            }
+
+            return AddressOf(target, opToken.line)
+        }
+
+        // Dereference: *p
+        if (current().type == TokenType.MULT) {
+            val opToken = current()
+            advance()
+
+            return Dereference(parseUnary(), opToken.line)
+        }
+
         return parsePrimary()
+    }
+
+    private fun parseFieldAccessSuffix(base: Expression): Expression {
+        var expression = base
+
+        while (current().type == TokenType.POINT) {
+            advance()
+            val field = expect(TokenType.IDENTIFICATEUR)
+            expression = FieldAccess(
+                expression,
+                field.value,
+                field.line
+            )
+        }
+
+        return expression
     }
 
     private fun parsePrimary(): Expression {
@@ -896,6 +1087,12 @@ class Parser(private val tokens: List<Token>) {
                         expect(TokenType.PAREN_DROITE)
                         FunctionCallExpression(name, arguments, token.line)
                     }
+                        TokenType.POINT -> {
+                        parseFieldAccessSuffix(
+                            Variable(name, token.line)
+                        )
+                    }
+
                     else -> Variable(name, token.line)
                 }
             }

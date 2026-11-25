@@ -12,9 +12,12 @@ class Lexer(private val input: String) {
                     "debut" to TokenType.DEBUT,
                     "fin" to TokenType.FIN,
                     "variables" to TokenType.VARIABLES,
-                    "var" to TokenType.VARIABLES,
+                    "var" to TokenType.VAR,
                     "constantes" to TokenType.CONSTANTES,
                     "const" to TokenType.CONSTANTES,
+                    "type" to TokenType.TYPE,
+                    "enregistrement" to TokenType.ENREGISTREMENT,
+                    "finenregistrement" to TokenType.FINENREGISTREMENT,
                     "si" to TokenType.SI,
                     "alors" to TokenType.ALORS,
                     "sinon" to TokenType.SINON,
@@ -127,16 +130,22 @@ class Lexer(private val input: String) {
         }
     }
 
+
     private fun readNumber(): Token {
         val startCol = column
         val sb = StringBuilder()
         var hasDecimal = false
 
-        while (current()?.isDigit() == true || current() == '.') {
+        while (current()?.isDigit() == true ||
+            (current() == '.' &&
+            !hasDecimal &&
+            pos + 1 < input.length &&
+            input[pos + 1].isDigit())
+        ) {
             if (current() == '.') {
-                if (hasDecimal) break
                 hasDecimal = true
             }
+
             sb.append(current())
             advance()
         }
@@ -296,6 +305,10 @@ class Lexer(private val input: String) {
                                 Token(TokenType.MULT, "*", line, startCol)
                             }
                         }
+                        '&' -> {
+                            advance()
+                            Token(TokenType.ADRESSE, "&", line, startCol)
+                        }
                         '^' -> {
                             advance()
                             Token(TokenType.PUISSANCE, "^", line, startCol)
@@ -319,6 +332,10 @@ class Lexer(private val input: String) {
                         ';' -> {
                             advance()
                             Token(TokenType.POINT_VIRGULE, ";", line, startCol)
+                        }
+                        '.' -> {
+                            advance()
+                            Token(TokenType.POINT, ".", line, startCol)
                         }
                         '(' -> {
                             advance()
@@ -345,18 +362,27 @@ class Lexer(private val input: String) {
                                 Token(TokenType.AFFECTATION, "=", line, startCol)
                             }
                         }
-                        '<' -> {
-                            advance()
-                            if (current() == '=') {
-                                advance()
-                                Token(TokenType.INFERIEUR_EGAL, "<=", line, startCol)
-                            } else if (current() == '>') {
-                                advance()
-                                Token(TokenType.DIFFERENT, "<>", line, startCol)
-                            } else {
-                                Token(TokenType.INFERIEUR, "<", line, startCol)
-                            }
-                        }
+                       '<' -> {
+			    advance()
+
+			    when (current()) {
+				'-' -> {
+				    advance()
+				    Token(TokenType.AFFECTATION, "<-", line, startCol)
+				}
+				'=' -> {
+				    advance()
+				    Token(TokenType.INFERIEUR_EGAL, "<=", line, startCol)
+				}
+				'>' -> {
+				    advance()
+				    Token(TokenType.DIFFERENT, "<>", line, startCol)
+				}
+				else -> {
+				    Token(TokenType.INFERIEUR, "<", line, startCol)
+				}
+			    }
+			}
                         '>' -> {
                             advance()
                             if (current() == '=') {

@@ -836,4 +836,182 @@ class InterpreterTest {
         val output = executeCode(code)
         assertEquals("-8\n4\n", output)
     }
+    @Test
+    fun testVarParameterModifiesOriginalVariable() {
+        val code = """
+            algorithme Test
+            variables
+                x : entier
+
+            procedure modifier(var n : entier)
+            debut
+                n = 20
+            fin
+
+            debut
+                x = 10
+                modifier(x)
+                ecrireln(x)
+            fin
+        """.trimIndent()
+
+        val output = executeCode(code)
+        assertEquals("20\n", output)
+    }
+
+    @Test
+    fun testRefParametersSwapValues() {
+        val code = """
+            algorithme Test
+            variables
+                a, b : entier
+
+            procedure echanger(ref x : entier, ref y : entier)
+            variables
+                temp : entier
+            debut
+                temp = x
+                x = y
+                y = temp
+            fin
+
+            debut
+                a = 10
+                b = 20
+                echanger(a, b)
+                ecrireln(a)
+                ecrireln(b)
+            fin
+        """.trimIndent()
+
+        val output = executeCode(code)
+        assertEquals("20\n10\n", output)
+    }
+
+    @Test
+    fun testArrayElementPassedByReference() {
+        val code = """
+            algorithme Test
+            variables
+                T : Tableau[3] de Entier
+
+            procedure modifier(ref n : entier)
+            debut
+                n = 99
+            fin
+
+            debut
+                T[0] = 10
+                T[1] = 20
+                T[2] = 30
+
+                modifier(T[1])
+
+                ecrireln(T[0])
+                ecrireln(T[1])
+                ecrireln(T[2])
+            fin
+        """.trimIndent()
+
+        val output = executeCode(code)
+        assertEquals("10\n99\n30\n", output)
+    }
+
+    @Test
+    fun testFunctionLocalVariablesAreCleanedUp() {
+        val code = """
+            algorithme Test
+            variables
+                x : entier
+
+            procedure calculer()
+            variables
+                temp : entier
+            debut
+                temp = 50
+                x = temp
+            fin
+
+            debut
+                x = 10
+                calculer()
+                ecrireln(x)
+            fin
+        """.trimIndent()
+
+        val output = executeCode(code)
+        assertEquals("50\n", output)
+    }
+
+    @Test
+    fun testLocalVariableRestoresGlobalVariable() {
+        val code = """
+            algorithme Test
+            variables
+                temp : entier
+
+            procedure calculer()
+            variables
+                temp : entier
+            debut
+                temp = 50
+            fin
+
+            debut
+                temp = 10
+                calculer()
+                ecrireln(temp)
+            fin
+        """.trimIndent()
+
+        val output = executeCode(code)
+        assertEquals("10\n", output)
+    }
+
+    @Test
+    fun testLocalVariablesAreRestoredAfterRuntimeError() {
+        val code = """
+            algorithme Test
+            variables
+                temp : entier
+
+            procedure provoquerErreur()
+            variables
+                temp : entier
+            debut
+                temp = 50
+                inconnu()
+            fin
+
+            debut
+                temp = 10
+                provoquerErreur()
+            fin
+        """.trimIndent()
+
+        val interpreter = Interpreter()
+
+        val program1 = Parser(Lexer(code).tokenize()).parse()
+
+        val exception = assertFailsWith<Exception> {
+            interpreter.execute(program1)
+        }
+
+        assertTrue(exception.message!!.contains("non définie"))
+
+        val verificationCode = """
+            algorithme Verification
+            debut
+                ecrireln(temp)
+            fin
+        """.trimIndent()
+
+        val output = captureOutput {
+            val program2 = Parser(Lexer(verificationCode).tokenize()).parse()
+            interpreter.execute(program2)
+        }
+
+        assertEquals("10\n", output)
+    }
+
 }
